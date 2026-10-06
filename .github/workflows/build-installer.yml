@@ -23,6 +23,8 @@ jobs:
       - name: Extract installer source
         shell: pwsh
         run: |
+          $b64 = (Get-Content "installer/source_payload.b64" -Raw).Trim()
+          [IO.File]::WriteAllBytes("installer/installer_source_payload.zip", [Convert]::FromBase64String($b64))
           New-Item -ItemType Directory -Force -Path installer/source | Out-Null
           Expand-Archive -Path installer/installer_source_payload.zip -DestinationPath installer/source -Force
 
