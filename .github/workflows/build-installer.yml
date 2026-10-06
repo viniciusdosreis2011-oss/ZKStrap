@@ -95,6 +95,6 @@ jobs:
       - name: Summary
         shell: pwsh
         run: |
-          "### ZKStrap Installer ready" >> $env:GITHUB_STEP_SUMMARY
-          "SHA-256: `${{ steps.hash.outputs.sha256 }}`" >> $env:GITHUB_STEP_SUMMARY
-          "Fixed URL: https://github.com/${{ github.repository }}/releases/download/installer-latest/ZKStrapInstaller.exe" >> $env:GITHUB_STEP_SUMMARY
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "### ZKStrap Installer ready"
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "SHA-256: ${{ steps.hash.outputs.sha256 }}"
+          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "Fixed URL: https://github.com/${{ github.repository }}/releases/download/installer-latest/ZKStrapInstaller.exe"
