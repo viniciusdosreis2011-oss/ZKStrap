@@ -1,0 +1,98 @@
+name: Build ZKStrap Installer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'installer/**'
+      - '.github/workflows/build-installer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-installer:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract installer source
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path installer/source | Out-Null
+          Expand-Archive -Path installer/installer_source_payload.zip -DestinationPath installer/source -Force
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+          cache: 'pip'
+          cache-dependency-path: installer/source/requirements.txt
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r installer/source/requirements.txt
+
+      - name: Build single EXE
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed `
+            --name "ZKStrapInstaller" `
+            --collect-all customtkinter `
+            --distpath "dist_installer" `
+            --workpath "build_installer" `
+            "installer/source/ZKStrapInstaller.py"
+
+          if (-not (Test-Path "dist_installer/ZKStrapInstaller.exe")) {
+            throw "ZKStrapInstaller.exe was not generated."
+          }
+
+      - name: Calculate SHA-256
+        id: hash
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash "dist_installer/ZKStrapInstaller.exe" -Algorithm SHA256).Hash.ToLower()
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          $hash | Out-File -FilePath "dist_installer/ZKStrapInstaller.exe.sha256" -Encoding ascii
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrapInstaller
+          path: |
+            dist_installer/ZKStrapInstaller.exe
+            dist_installer/ZKStrapInstaller.exe.sha256
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish fixed installer download
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "installer-latest"
+          gh release view $tag --repo "${{ github.repository }}" *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag `
+              --repo "${{ github.repository }}" `
+              --title "ZKStrap Installer - Fixed Download" `
+              --notes "Rolling installer build. The ZKStrapInstaller.exe asset is replaced automatically." `
+              --prerelease
+          }
+
+          gh release upload $tag "dist_installer/ZKStrapInstaller.exe" --clobber --repo "${{ github.repository }}"
+          gh release upload $tag "dist_installer/ZKStrapInstaller.exe.sha256" --clobber --repo "${{ github.repository }}"
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          "### ZKStrap Installer ready" >> $env:GITHUB_STEP_SUMMARY
+          "SHA-256: `${{ steps.hash.outputs.sha256 }}`" >> $env:GITHUB_STEP_SUMMARY
+          "Fixed URL: https://github.com/${{ github.repository }}/releases/download/installer-latest/ZKStrapInstaller.exe" >> $env:GITHUB_STEP_SUMMARY
