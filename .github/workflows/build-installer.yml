@@ -48,6 +48,9 @@ jobs:
           python -m PyInstaller --noconfirm --clean --onefile --windowed `
             --name "ZKStrapInstaller" `
             --collect-all customtkinter `
+            --icon "installer/source/installer_icon.ico" `
+            --add-data "installer/source/installer_icon.png;." `
+            --add-data "installer/source/installer_icon.ico;." `
             --distpath "dist_installer" `
             --workpath "build_installer" `
             "installer/source/ZKStrapInstaller.py"
