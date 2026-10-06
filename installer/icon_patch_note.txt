@@ -1,0 +1,1 @@
+Installer icon patch is generated during CI from the original installer payload. This avoids changing the payload archive directly.
