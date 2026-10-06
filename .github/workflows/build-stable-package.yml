@@ -1,0 +1,162 @@
+name: Build Stable Windows Package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-stable-package.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-stable:
+    runs-on: windows-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Resolve latest Stable release
+        id: rel
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $json = gh release list --repo '${{ github.repository }}' --exclude-pre-releases --exclude-drafts --limit 20 --json tagName,name,publishedAt | ConvertFrom-Json
+          $release = $json | Where-Object { $_.tagName -match '^v\d+\.\d+\.\d+$' } | Select-Object -First 1
+          if (-not $release) { throw 'No Stable ZKStrap release found.' }
+          $tag = $release.tagName
+          $view = gh release view $tag --repo '${{ github.repository }}' --json assets,publishedAt | ConvertFrom-Json
+          $source = $view.assets | Where-Object { $_.name -like '*UPDATE_CENTER*.zip' } | Select-Object -First 1
+          if (-not $source) { throw 'No UPDATE_CENTER source ZIP found in release.' }
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+          "source=$($source.name)" >> $env:GITHUB_OUTPUT
+          "published=$($view.publishedAt)" >> $env:GITHUB_OUTPUT
+
+      - name: Download source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download '${{ steps.rel.outputs.tag }}' --repo '${{ github.repository }}' --pattern '${{ steps.rel.outputs.source }}' --dir input
+          Expand-Archive -Path (Join-Path input '${{ steps.rel.outputs.source }}') -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted ZKStrap source folder.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE\requirements.txt" pyinstaller
+
+      - name: Build ZKUpdater
+        shell: pwsh
+        working-directory: source
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onefile --windowed `
+            --name "ZKUpdater" `
+            --distpath "updater_dist" `
+            --workpath "updater_build" `
+            --specpath "updater_spec" `
+            "ZKUpdater.py"
+          if (-not (Test-Path "updater_dist\ZKUpdater.exe")) { throw 'ZKUpdater.exe was not generated.' }
+
+      - name: Build ZKStrap ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed `
+            --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" `
+            --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" `
+            --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" `
+            --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" `
+            --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" `
+            --hidden-import "pycaw.api.endpointvolume" `
+            --hidden-import "comtypes" `
+            --hidden-import "comtypes.client" `
+            --collect-all "pycaw" `
+            --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" `
+            --add-data "zkstrap_icon.ico;." `
+            --add-data "zkstrap_icon.png;." `
+            --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist\ZKStrap\ZKStrap.exe")) { throw 'ZKStrap.exe was not generated.' }
+          Copy-Item "updater_dist\ZKUpdater.exe" "dist\ZKStrap\ZKUpdater.exe" -Force
+
+      - name: Create installable ZIP with EXE at root
+        id: pkg
+        shell: pwsh
+        run: |
+          $tag = '${{ steps.rel.outputs.tag }}'
+          $version = $tag.TrimStart('v','V')
+          $name = "ZKStrap-v$version-win64.zip"
+          $dist = Join-Path $env:ZK_SOURCE 'dist\ZKStrap'
+          if (-not (Test-Path (Join-Path $dist 'ZKStrap.exe'))) { throw 'Final package is missing ZKStrap.exe.' }
+          Compress-Archive -Path "$dist\*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash = (Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size = (Get-Item $name).Length
+          "name=$name" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Upload compiled package to Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload '${{ steps.rel.outputs.tag }}' '${{ steps.pkg.outputs.name }}' --clobber --repo '${{ github.repository }}'
+
+      - name: Point Stable channel to compiled package
+        shell: pwsh
+        run: |
+          $tag = '${{ steps.rel.outputs.tag }}'
+          $version = $tag.TrimStart('v','V')
+          $asset = '${{ steps.pkg.outputs.name }}'
+          $url = 'https://github.com/${{ github.repository }}/releases/download/' + $tag + '/' + $asset
+          $manifest = [ordered]@{
+            channel = 'stable'
+            version = $version
+            published_at = '${{ steps.rel.outputs.published }}'
+            mandatory = $false
+            min_updater_version = '1.0.0'
+            package_url = $url
+            sha256 = '${{ steps.pkg.outputs.sha256 }}'
+            size_bytes = [int64]'${{ steps.pkg.outputs.size }}'
+            notes = @('Primeira versão Stable pública com Update Center e instalador automático.')
+          }
+          $manifest | ConvertTo-Json -Depth 5 | Set-Content -Path channels/stable.json -Encoding utf8
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/stable.json
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "Use compiled $asset for Stable"
+            git push origin main
+          }
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### Installable ZKStrap package ready'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Release: ${{ steps.rel.outputs.tag }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Package: ${{ steps.pkg.outputs.name }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'SHA-256: ${{ steps.pkg.outputs.sha256 }}'
