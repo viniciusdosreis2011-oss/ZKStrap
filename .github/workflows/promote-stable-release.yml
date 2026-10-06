@@ -1,0 +1,105 @@
+name: Promote Stable Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to promote, e.g. v3.18.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  promote-stable:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve release
+        id: release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ('${{ github.event_name }}' -eq 'release') {
+            $tag = '${{ github.event.release.tag_name }}'
+          } else {
+            $tag = '${{ inputs.tag }}'
+          }
+          $json = gh release view $tag --repo '${{ github.repository }}' --json tagName,isPrerelease,assets,body,publishedAt | ConvertFrom-Json
+          if ($json.isPrerelease) { throw 'Stable promotion refuses prerelease builds.' }
+          $asset = $json.assets | Where-Object { $_.name -like '*.zip' -and $_.name -notlike '*Installer*' } | Select-Object -First 1
+          if (-not $asset) { throw 'No ZKStrap ZIP asset found in this Release.' }
+          "tag=$($json.tagName)" >> $env:GITHUB_OUTPUT
+          "asset=$($asset.name)" >> $env:GITHUB_OUTPUT
+          "url=$($asset.url)" >> $env:GITHUB_OUTPUT
+          "published=$($json.publishedAt)" >> $env:GITHUB_OUTPUT
+          $body = [string]$json.body
+          $body64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($body))
+          "body64=$body64" >> $env:GITHUB_OUTPUT
+
+      - name: Download package and calculate SHA-256
+        id: pkg
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ steps.release.outputs.tag }}'
+          $asset = '${{ steps.release.outputs.asset }}'
+          New-Item -ItemType Directory -Force -Path package | Out-Null
+          gh release download $tag --repo '${{ github.repository }}' --pattern $asset --dir package
+          $path = Join-Path package $asset
+          if (-not (Test-Path $path)) { throw 'Package download failed.' }
+          $hash = (Get-FileHash $path -Algorithm SHA256).Hash.ToLower()
+          $size = (Get-Item $path).Length
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Update Stable manifest
+        shell: pwsh
+        run: |
+          $tag = '${{ steps.release.outputs.tag }}'
+          $version = $tag.TrimStart('v','V')
+          $asset = '${{ steps.release.outputs.asset }}'
+          $url = 'https://github.com/${{ github.repository }}/releases/download/' + $tag + '/' + $asset
+          $body = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('${{ steps.release.outputs.body64 }}'))
+          $notes = @()
+          if ($body.Trim()) {
+            $notes = $body -split "`r?`n" | Where-Object { $_.Trim() } | Select-Object -First 8
+          }
+          if (-not $notes) { $notes = @("ZKStrap $version Stable") }
+          $manifest = [ordered]@{
+            channel = 'stable'
+            version = $version
+            published_at = '${{ steps.release.outputs.published }}'
+            mandatory = $false
+            min_updater_version = '1.0.0'
+            package_url = $url
+            sha256 = '${{ steps.pkg.outputs.sha256 }}'
+            size_bytes = [int64]'${{ steps.pkg.outputs.size }}'
+            notes = @($notes)
+          }
+          $manifest | ConvertTo-Json -Depth 5 | Set-Content -Path channels/stable.json -Encoding utf8
+
+      - name: Commit Stable manifest
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/stable.json
+          if (git diff --cached --quiet) { exit 0 }
+          git commit -m "Promote ${{ steps.release.outputs.tag }} to Stable"
+          git push
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### Stable channel updated'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Release: ${{ steps.release.outputs.tag }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Package: ${{ steps.release.outputs.asset }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'SHA-256: ${{ steps.pkg.outputs.sha256 }}'
