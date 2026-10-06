@@ -17,8 +17,11 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false }}
     runs-on: windows-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
 
       - name: Resolve release
         id: release
@@ -94,7 +97,7 @@ jobs:
           git add channels/stable.json
           if (git diff --cached --quiet) { exit 0 }
           git commit -m "Promote ${{ steps.release.outputs.tag }} to Stable"
-          git push
+          git push origin main
 
       - name: Summary
         shell: pwsh
