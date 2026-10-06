@@ -42,15 +42,48 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r installer/source/requirements.txt
 
+      - name: Generate installer download icon
+        shell: pwsh
+        run: |
+          @'
+          from PIL import Image, ImageDraw
+          from pathlib import Path
+
+          out = Path("installer/source")
+          size = 256
+          img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+          d = ImageDraw.Draw(img)
+
+          # ZKStrap purple tile
+          d.rounded_rectangle((12, 12, 244, 244), radius=58, fill=(151, 77, 255, 255))
+
+          # Geometric Z mark
+          dark = (12, 12, 16, 255)
+          d.polygon([(48, 58), (166, 58), (150, 84), (48, 84)], fill=dark)
+          d.polygon([(144, 80), (174, 80), (91, 190), (58, 190)], fill=dark)
+          d.polygon([(58, 178), (160, 178), (160, 204), (58, 204)], fill=dark)
+
+          # Download badge
+          cx, cy, r = 192, 192, 47
+          d.ellipse((cx-r, cy-r, cx+r, cy+r), fill=(19, 20, 28, 255), outline=(238, 231, 255, 255), width=4)
+          white = (255, 255, 255, 255)
+          d.rounded_rectangle((cx-7, cy-28, cx+7, cy+9), radius=5, fill=white)
+          d.polygon([(cx-24, cy+1), (cx, cy+26), (cx+24, cy+1), (cx+10, cy+1), (cx+10, cy-4), (cx-10, cy-4), (cx-10, cy+1)], fill=white)
+          d.rounded_rectangle((cx-28, cy+31, cx+28, cy+39), radius=4, fill=white)
+
+          img.save(out / "zkstrap_icon.png", optimize=True)
+          img.save(out / "zkstrap_icon.ico", format="ICO", sizes=[(16,16),(24,24),(32,32),(48,48),(64,64),(128,128),(256,256)])
+          '@ | python -
+
       - name: Build single EXE
         shell: pwsh
         run: |
           python -m PyInstaller --noconfirm --clean --onefile --windowed `
             --name "ZKStrapInstaller" `
             --collect-all customtkinter `
-            --icon "installer/source/installer_icon.ico" `
-            --add-data "installer/source/installer_icon.png;." `
-            --add-data "installer/source/installer_icon.ico;." `
+            --icon "installer/source/zkstrap_icon.ico" `
+            --add-data "installer/source/zkstrap_icon.png;." `
+            --add-data "installer/source/zkstrap_icon.ico;." `
             --distpath "dist_installer" `
             --workpath "build_installer" `
             "installer/source/ZKStrapInstaller.py"
