@@ -1,12 +1,12 @@
 {
   "channel": "stable",
   "version": "3.18.0",
-  "published_at": "2026-10-06T23:48:14Z",
+  "published_at": "10/06/2026 23:48:14",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.0/ZKStrap_v3_18_0_UPDATE_CENTER.zip",
-  "sha256": "280642a9f27a45445dfed3641f39b711458c1e459496df1362a7af77ff4cc76a",
-  "size_bytes": 75688333,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.0/ZKStrap-v3.18.0-win64.zip",
+  "sha256": "3d86a0853ca30fd55fc29d12d27140764af1740f7344a42e8bb57abdf8b6e5ec",
+  "size_bytes": 110283083,
   "notes": [
     "Primeira versão Stable pública com Update Center e instalador automático."
   ]
