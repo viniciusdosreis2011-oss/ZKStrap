@@ -1,0 +1,154 @@
+name: Release ZKStrap v3.18.1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-v3.18.1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted ZKStrap source folder.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode v3.18.1 patch payloads
+        shell: pwsh
+        run: |
+          $base64 = (Get-Content 'patches/v3_18_1_base.py.gz.b64' -Raw).Trim()
+          $post64 = (Get-Content 'patches/v3_18_1_post.py.gz.b64' -Raw).Trim()
+          [IO.File]::WriteAllBytes('patch_base.gz', [Convert]::FromBase64String($base64))
+          [IO.File]::WriteAllBytes('patch_post.gz', [Convert]::FromBase64String($post64))
+          python -c "import gzip,pathlib; pathlib.Path('patch_base.py').write_bytes(gzip.decompress(pathlib.Path('patch_base.gz').read_bytes())); pathlib.Path('patch_post.py').write_bytes(gzip.decompress(pathlib.Path('patch_post.gz').read_bytes()))"
+
+      - name: Apply and validate v3.18.1 patch
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python patch_base.py
+          python patch_post.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          $hash = (Get-FileHash "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne '88ae39d5c74f55fc04ff088428edc427d1f7665d06addc713caa1f6bdfa0b1b5') {
+            throw "Patched source SHA mismatch: $hash"
+          }
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Build ZKUpdater
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onefile --windowed `
+            --name "ZKUpdater" `
+            --distpath "updater_dist" `
+            --workpath "updater_build" `
+            --specpath "updater_spec" `
+            "ZKUpdater.py"
+          if (-not (Test-Path "updater_dist/ZKUpdater.exe")) { throw 'ZKUpdater.exe was not generated.' }
+
+      - name: Build ZKStrap v3.18.1 ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed `
+            --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" `
+            --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" `
+            --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" `
+            --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" `
+            --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" `
+            --hidden-import "pycaw.api.endpointvolume" `
+            --hidden-import "comtypes" `
+            --hidden-import "comtypes.client" `
+            --collect-all "pycaw" `
+            --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" `
+            --add-data "zkstrap_icon.ico;." `
+            --add-data "zkstrap_icon.png;." `
+            --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap.exe was not generated.' }
+          Copy-Item "updater_dist/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Create installable package
+        id: pkg
+        shell: pwsh
+        run: |
+          $dist = Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name = 'ZKStrap-v3.18.1-win64.zip'
+          if (-not (Test-Path (Join-Path $dist 'ZKStrap.exe'))) { throw 'Final package is missing ZKStrap.exe.' }
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash = (Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size = (Get-Item $name).Length
+          "name=$name" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Publish v3.18.1 Stable Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = 'v3.18.1'
+          gh release view $tag --repo '${{ github.repository }}' *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag '${{ steps.pkg.outputs.name }}' `
+              --repo '${{ github.repository }}' `
+              --title 'ZKStrap v3.18.1 — Fast Themes + Spotify Deck' `
+              --notes @'
+          ## v3.18.1
+          - Troca de temas sem reconstruir toda a interface, reduzindo travamentos e tela branca.
+          - Owner Lab não força mais rebuild completo ao retirar override de temas secretos.
+          - Detecção do Spotify Web melhorada e Spotify Desktop priorizado.
+          - Aba Spotify redesenhada em preto/verde com identidade própria.
+          - Volume do Spotify Desktop reforçado; Spotify Web ganha controle opcional com aviso sobre outras abas.
+          - Áudio ganha volume separado dos efeitos/SFX de 0% a 150%.
+          - Aba Resolução removida da navegação principal.
+          '@
+          } else {
+            gh release upload $tag '${{ steps.pkg.outputs.name }}' --clobber --repo '${{ github.repository }}'
+          }
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### ZKStrap v3.18.1 published'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Package: ${{ steps.pkg.outputs.name }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'SHA-256: ${{ steps.pkg.outputs.sha256 }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Size: ${{ steps.pkg.outputs.size }} bytes'
