@@ -35,7 +35,7 @@ jobs:
       - name: Decode patch payloads
         shell: pwsh
         run: |
-          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_3')) {
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2')) {
             $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
             [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
             python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
@@ -48,7 +48,7 @@ jobs:
           python v3_18_1_base.py
           python v3_18_1_post.py
           python v3_18_2.py
-          python v3_18_3.py
+          python patches/v3_18_3.py
           python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
 
       - name: Set up Python
