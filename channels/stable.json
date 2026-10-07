@@ -1,18 +1,17 @@
 {
   "channel": "stable",
-  "version": "3.18.6",
-  "published_at": "2026-10-07T21:23:02Z",
+  "version": "3.18.7",
+  "published_at": "2026-10-07T21:53:56Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.6/ZKStrap-v3.18.6-win64.zip",
-  "sha256": "11df130eec4b4e67e98244985744798b928933a1e0d872ea739bb9042e984161",
-  "size_bytes": 110301646,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.7/ZKStrap-v3.18.7-win64.zip",
+  "sha256": "500c82b764b7bce28d058873c39bc4d7c669c5167be4d3e43196242d03282b64",
+  "size_bytes": 110303467,
   "notes": [
-    "Scroll rápido agora passa por uma fila única e limitada para reduzir tearing/redraw.",
-    "Volume e mute do Spotify Web usam a sessão de mídia já detectada após opt-in explícito.",
-    "Mini-player do Spotify maior, com controles e capa mais legíveis.",
-    "Aplicar Configurações agora também aplica o cursor selecionado.",
-    "Apoio financeiro Em breve ficou visualmente desativado e menos chamativo.",
-    "Cards e ações principais ganharam ícones contextuais para reduzir a aparência de texto puro."
+    "Scroll refeito: remove os handlers globais duplicados do CustomTkinter e usa um único roteador no ZKStrap.",
+    "Rajadas de roda agora atualizam apenas a posição mais recente, descartando redraws intermediários.",
+    "Cards receberam cabeçalho visual maior em vez de apenas um ícone pequeno.",
+    "Módulos ganharam ícones contextuais maiores e estados ON/OFF mais claros.",
+    "Mantém as correções da 3.18.6 para Spotify, cursor, apoio e relatórios."
   ]
 }
