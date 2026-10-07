@@ -1,0 +1,67 @@
+name: Materialize ZKStrap v3.18.4 source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/materialize-v3.18.4-source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted ZKStrap source folder.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode patch payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+
+      - name: Apply patches through v3.18.4
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+
+      - name: Commit generated source snapshot
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path generated | Out-Null
+          Copy-Item "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" "generated/ZKStrap_v3_18_4.py" -Force
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add generated/ZKStrap_v3_18_4.py
+          if (-not (git diff --cached --quiet)) {
+            git commit -m 'Materialize v3.18.4 source snapshot'
+            git pull --rebase origin main
+            git push origin main
+          }
