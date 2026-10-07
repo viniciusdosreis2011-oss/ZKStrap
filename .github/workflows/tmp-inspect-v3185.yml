@@ -26,6 +26,8 @@ jobs:
           gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
           Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
           $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'source root missing' }
+          $env:ZK_SOURCE_DIR = $root.FullName
           "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
           foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
             $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
@@ -33,14 +35,13 @@ jobs:
             python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
           }
           python patches/v3_18_5_patchfix.py
-          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
           python v3_18_1_base.py
           python v3_18_1_post.py
           python v3_18_2.py
           python patches/v3_18_3.py
           python v3_18_4.py
           python patches/v3_18_5.py
-          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          python -m py_compile "$($root.FullName)/ZKStrap_v3_18_0.py"
       - name: Extract relevant snippets
         shell: pwsh
         run: |
@@ -54,8 +55,8 @@ jobs:
           for marker in markers:
               hits=[i for i,line in enumerate(s) if marker in line]
               out.append('\n===== '+marker+' =====')
-              for i in hits[:3]:
-                  a=max(0,i-25); b=min(len(s),i+140)
+              for i in hits[:4]:
+                  a=max(0,i-30); b=min(len(s),i+170)
                   out.extend(f'{j+1:05d}: {s[j]}' for j in range(a,b))
           Path('debug').mkdir(exist_ok=True)
           Path('debug/current_3185_snippets.txt').write_text('\n'.join(out),encoding='utf-8')
@@ -66,6 +67,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git pull --rebase origin main
           git add debug/current_3185_snippets.txt
           git commit -m 'Temporary v3.18.5 source snippets'
           git push
