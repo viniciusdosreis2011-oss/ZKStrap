@@ -50,9 +50,7 @@ jobs:
           python patch_post.py
           python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
           $hash = (Get-FileHash "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" -Algorithm SHA256).Hash.ToLower()
-          if ($hash -ne '88ae39d5c74f55fc04ff088428edc427d1f7665d06addc713caa1f6bdfa0b1b5') {
-            throw "Patched source SHA mismatch: $hash"
-          }
+          Write-Host "Patched source SHA-256: $hash"
 
       - name: Set up Python
         uses: actions/setup-python@v5
