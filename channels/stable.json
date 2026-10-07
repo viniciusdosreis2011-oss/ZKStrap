@@ -1,19 +1,15 @@
 {
   "channel": "stable",
-  "version": "3.18.1",
-  "published_at": "2026-10-07T00:25:19Z",
+  "version": "3.18.2",
+  "published_at": "2026-10-07T00:58:05Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.1/ZKStrap-v3.18.1-win64.zip",
-  "sha256": "aa3daeb4e54f7828aa08ac1c224e1f791b920c169924359ee230bdcde596a218",
-  "size_bytes": 110291512,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.2/ZKStrap-v3.18.2-win64.zip",
+  "sha256": "30ec5d0e823603223961e1a0a70ee940c98a863c6f40c411cfbe63495590cb86",
+  "size_bytes": 110294254,
   "notes": [
-    "Temas trocam sem reconstruir toda a interface.",
-    "Owner Lab sem rebuild completo ao desligar overrides.",
-    "Spotify Web com detecção melhorada e Spotify Desktop priorizado.",
-    "Spotify Deck redesenhado em preto e verde.",
-    "Volume do Spotify Desktop reforçado e controle Web opcional.",
-    "Volume independente dos efeitos/SFX de 0% a 150%.",
-    "Aba Resolução removida da navegação principal."
+    "Spotify Web: fallback por metadata musical completa.",
+    "Sessões VIDEO continuam bloqueadas.",
+    "Hover de temas SECRET toca apenas um SFX por entrada no card."
   ]
 }
