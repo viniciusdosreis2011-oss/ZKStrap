@@ -1,3 +1,5 @@
+export const config = { runtime: 'edge' };
+
 const ALLOWED_DIAGNOSTICS = new Set([
   'app_version', 'build', 'os', 'theme', 'page', 'update_channel',
   'roblox_running', 'roblox_version_folder', 'cpu_percent', 'ram_percent',
@@ -6,6 +8,17 @@ const ALLOWED_DIAGNOSTICS = new Set([
 
 const rateBuckets = globalThis.__zkstrapRateBuckets || new Map();
 globalThis.__zkstrapRateBuckets = rateBuckets;
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store',
+      'x-content-type-options': 'nosniff'
+    }
+  });
+}
 
 function cleanText(value, max = 1200) {
   let text = String(value ?? '');
@@ -17,7 +30,7 @@ function cleanText(value, max = 1200) {
 }
 
 function getIp(req) {
-  const raw = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown');
+  const raw = String(req.headers.get('x-forwarded-for') || 'unknown');
   return raw.split(',')[0].trim().slice(0, 80);
 }
 
@@ -51,36 +64,37 @@ function diagnosticLines(input) {
   return out.slice(0, 16);
 }
 
-export default async function handler(req, res) {
+export default async function handler(req) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ ok: false, error: 'method_not_allowed' });
+    return json({ ok: false, error: 'method_not_allowed' }, 405);
   }
 
   const webhook = process.env.DISCORD_WEBHOOK_URL;
   if (!webhook || !/^https:\/\/(?:canary\.|ptb\.)?discord(?:app)?\.com\/api\/webhooks\//i.test(webhook)) {
-    return res.status(503).json({ ok: false, error: 'support_not_configured' });
+    return json({ ok: false, error: 'support_not_configured' }, 503);
   }
 
-  const contentLength = Number(req.headers['content-length'] || 0);
+  const contentLength = Number(req.headers.get('content-length') || 0);
   if (contentLength > 16_384) {
-    return res.status(413).json({ ok: false, error: 'payload_too_large' });
+    return json({ ok: false, error: 'payload_too_large' }, 413);
   }
 
   const ip = getIp(req);
   if (!allowRequest(ip)) {
-    return res.status(429).json({ ok: false, error: 'rate_limited' });
+    return json({ ok: false, error: 'rate_limited' }, 429);
   }
 
-  let body = req.body;
-  if (typeof body === 'string') {
-    try { body = JSON.parse(body); } catch { body = null; }
+  let body;
+  try {
+    body = await req.json();
+  } catch {
+    return json({ ok: false, error: 'invalid_json' }, 400);
   }
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
-    return res.status(400).json({ ok: false, error: 'invalid_json' });
+    return json({ ok: false, error: 'invalid_json' }, 400);
   }
   if (body.source !== 'zkstrap-client') {
-    return res.status(400).json({ ok: false, error: 'invalid_source' });
+    return json({ ok: false, error: 'invalid_source' }, 400);
   }
 
   const type = cleanText(body.type || 'Feedback', 60);
@@ -88,7 +102,7 @@ export default async function handler(req, res) {
   const message = cleanText(body.message || '', 3500).trim();
   const appVersion = cleanText(body.app_version || '', 40);
   if (message.length < 5) {
-    return res.status(400).json({ ok: false, error: 'message_too_short' });
+    return json({ ok: false, error: 'message_too_short' }, 400);
   }
 
   const diag = diagnosticLines(body.diagnostics);
@@ -114,17 +128,22 @@ export default async function handler(req, res) {
     }]
   };
 
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
   try {
-    const upstream = await fetch(webhook, {
+    const upstream = await fetch(webhook + '?wait=true', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(discordPayload)
+      body: JSON.stringify(discordPayload),
+      signal: controller.signal
     });
     if (!upstream.ok) {
-      return res.status(502).json({ ok: false, error: 'discord_delivery_failed' });
+      return json({ ok: false, error: 'discord_delivery_failed', status: upstream.status }, 502);
     }
-    return res.status(200).json({ ok: true });
-  } catch {
-    return res.status(502).json({ ok: false, error: 'delivery_failed' });
+    return json({ ok: true }, 200);
+  } catch (err) {
+    return json({ ok: false, error: err && err.name === 'AbortError' ? 'discord_timeout' : 'delivery_failed' }, 502);
+  } finally {
+    clearTimeout(timer);
   }
 }
