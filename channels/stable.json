@@ -1,16 +1,18 @@
 {
   "channel": "stable",
-  "version": "3.18.4",
-  "published_at": "2026-10-07T02:06:05Z",
+  "version": "3.18.5",
+  "published_at": "2026-10-07T19:15:45Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.4/ZKStrap-v3.18.4-win64.zip",
-  "sha256": "03704175e90c71570a56eb8abcb2292e6175745e8507f2c8ca28c8a4049e9353",
-  "size_bytes": 110290641,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.5/ZKStrap-v3.18.5-win64.zip",
+  "sha256": "4d2b440058bb1ee95b14ee99dc8f7e4acddc892034fba66e7a4a9daa6cd475f1",
+  "size_bytes": 110299223,
   "notes": [
-    "Nova aba APOIAR.",
-    "Página oficial externa de apoio.",
-    "Nenhum dado bancário é armazenado no ZKStrap.",
-    "Botões para abrir e copiar o link de apoio."
+    "Relatórios de bug com diagnóstico automático e envio preparado para endpoint seguro.",
+    "Modo offline não trava a interface e oferece fallback local.",
+    "Safe Start para falhas repetidas de inicialização.",
+    "Melhor adaptação a escalas do Windows como 100%, 125% e 150%.",
+    "Links úteis adicionados à página Sobre.",
+    "Apoio financeiro marcado como Em breve."
   ]
 }
