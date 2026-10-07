@@ -1,0 +1,5 @@
+{
+  "enabled": false,
+  "endpoint": "",
+  "notes": "Public client config only. The Discord webhook must stay server-side behind the HTTPS proxy endpoint."
+}
