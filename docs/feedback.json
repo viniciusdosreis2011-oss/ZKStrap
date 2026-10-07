@@ -1,5 +1,5 @@
 {
-  "enabled": false,
-  "endpoint": "",
-  "notes": "Public client config only. The Discord webhook must stay server-side behind the HTTPS proxy endpoint."
+  "enabled": true,
+  "endpoint": "https://zkstrap-support-api.vercel.app/api/report",
+  "notes": "Public client config only. The Discord webhook stays server-side in Vercel."
 }
