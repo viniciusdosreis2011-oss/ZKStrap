@@ -1,10 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/report.js": {
-      "maxDuration": 10
-    }
-  },
   "headers": [
     {
       "source": "/api/report",
