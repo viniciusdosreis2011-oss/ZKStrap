@@ -1,0 +1,156 @@
+name: Release ZKStrap v3.18.5 R2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-v3.18.5-r2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode previous patch payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+
+      - name: Prepare v3.18.5 patch
+        shell: pwsh
+        run: |
+          python patches/v3_18_5_patchfix.py
+          python -m py_compile patches/v3_18_5.py
+
+      - name: Apply and validate patches
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          $src = Get-Content "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" -Raw
+          if ($src -notmatch 'APP_VERSION = "3\.18\.5"') { throw 'Version patch did not apply.' }
+          if ($src -notmatch 'def _collect_bug_diagnostics') { throw 'Diagnostic reporter missing.' }
+          if ($src -notmatch 'def _safe_start_begin') { throw 'Safe Start missing.' }
+          if ($src -notmatch 'def _network_probe_async') { throw 'Network probe missing.' }
+          if ($src -notmatch 'APOIO FINANCEIRO — EM BREVE') { throw 'Coming-soon support state missing.' }
+          if ($src -notmatch 'LINKS & SUPORTE') { throw 'About links missing.' }
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Build updater
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name "ZKUpdater" --distpath "updater_dist" --workpath "updater_build" --specpath "updater_spec" "ZKUpdater.py"
+          if (-not (Test-Path "updater_dist/ZKUpdater.exe")) { throw 'Updater build failed.' }
+
+      - name: Build ZKStrap ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed `
+            --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" `
+            --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" `
+            --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" `
+            --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" `
+            --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" `
+            --hidden-import "pycaw.api.endpointvolume" `
+            --hidden-import "comtypes" `
+            --hidden-import "comtypes.client" `
+            --collect-all "pycaw" `
+            --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" `
+            --add-data "zkstrap_icon.ico;." `
+            --add-data "zkstrap_icon.png;." `
+            --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap build failed.' }
+          Copy-Item "updater_dist/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Package
+        id: pkg
+        shell: pwsh
+        run: |
+          $dist = Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name = 'ZKStrap-v3.18.5-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash = (Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size = (Get-Item $name).Length
+          "name=$name" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Publish release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag='v3.18.5'
+          gh release view $tag --repo '${{ github.repository }}' *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag '${{ steps.pkg.outputs.name }}' --repo '${{ github.repository }}' --title 'ZKStrap v3.18.5 — Launch Polish' --notes @'
+          ## v3.18.5
+          - Bug reports attach technical diagnostics automatically without showing the diagnostic block in the user's text.
+          - Public client is prepared for a remote HTTPS support endpoint, with local fallback when offline.
+          - Online/offline indicator in Update Center.
+          - Safe Start recovery after repeated startup failures.
+          - Improved sizing on common Windows display scales.
+          - Official links and support shortcuts in About.
+          - Financial support marked Coming Soon until configured.
+          '@
+          } else {
+            gh release upload $tag '${{ steps.pkg.outputs.name }}' --clobber --repo '${{ github.repository }}'
+          }
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### ZKStrap v3.18.5 published'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'SHA-256: ${{ steps.pkg.outputs.sha256 }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Size: ${{ steps.pkg.outputs.size }} bytes'
