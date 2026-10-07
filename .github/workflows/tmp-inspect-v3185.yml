@@ -1,0 +1,71 @@
+name: Temp inspect v3.18.5
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tmp-inspect-v3185.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Reconstruct v3.18.5
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+      - name: Extract relevant snippets
+        shell: pwsh
+        run: |
+          @'
+          from pathlib import Path
+          import os
+          p=Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          s=p.read_text(encoding='utf-8').splitlines()
+          markers=['def _install_smooth_scroll','def _bind_outer_scroll','spotify_web_volume_optin','def _spotify_audio_volume_worker','def _spotify_show_mini','def aplicar_configuracoes','APOIO FINANCEIRO — EM BREVE','def _section_card']
+          out=[]
+          for marker in markers:
+              hits=[i for i,line in enumerate(s) if marker in line]
+              out.append('\n===== '+marker+' =====')
+              for i in hits[:3]:
+                  a=max(0,i-25); b=min(len(s),i+140)
+                  out.extend(f'{j+1:05d}: {s[j]}' for j in range(a,b))
+          Path('debug').mkdir(exist_ok=True)
+          Path('debug/current_3185_snippets.txt').write_text('\n'.join(out),encoding='utf-8')
+          '@ | Set-Content inspect.py -Encoding UTF8
+          python inspect.py
+      - name: Commit snippets
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add debug/current_3185_snippets.txt
+          git commit -m 'Temporary v3.18.5 source snippets'
+          git push
