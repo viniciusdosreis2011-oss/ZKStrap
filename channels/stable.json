@@ -1,13 +1,19 @@
 {
   "channel": "stable",
-  "version": "3.18.0",
-  "published_at": "10/06/2026 23:48:14",
+  "version": "3.18.1",
+  "published_at": "2026-10-07T00:25:19Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.0/ZKStrap-v3.18.0-win64.zip",
-  "sha256": "3d86a0853ca30fd55fc29d12d27140764af1740f7344a42e8bb57abdf8b6e5ec",
-  "size_bytes": 110283083,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.1/ZKStrap-v3.18.1-win64.zip",
+  "sha256": "aa3daeb4e54f7828aa08ac1c224e1f791b920c169924359ee230bdcde596a218",
+  "size_bytes": 110291512,
   "notes": [
-    "Primeira versão Stable pública com Update Center e instalador automático."
+    "Temas trocam sem reconstruir toda a interface.",
+    "Owner Lab sem rebuild completo ao desligar overrides.",
+    "Spotify Web com detecção melhorada e Spotify Desktop priorizado.",
+    "Spotify Deck redesenhado em preto e verde.",
+    "Volume do Spotify Desktop reforçado e controle Web opcional.",
+    "Volume independente dos efeitos/SFX de 0% a 150%.",
+    "Aba Resolução removida da navegação principal."
   ]
 }
