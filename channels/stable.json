@@ -1,16 +1,16 @@
 {
   "channel": "stable",
-  "version": "3.18.3",
-  "published_at": "2026-10-07T01:10:33Z",
+  "version": "3.18.4",
+  "published_at": "2026-10-07T02:06:05Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.3/ZKStrap-v3.18.3-win64.zip",
-  "sha256": "e3214e6120b3345ae877c43624acc077516fa950f0e62c1341299b413b85e097",
-  "size_bytes": 110285122,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.4/ZKStrap-v3.18.4-win64.zip",
+  "sha256": "03704175e90c71570a56eb8abcb2292e6175745e8507f2c8ca28c8a4049e9353",
+  "size_bytes": 110290641,
   "notes": [
-    "Hotfix de primeiro acesso: interface não perde mais os cliques.",
-    "Áudio de primeiro uso virou card não-modal.",
-    "Tutorial e vínculo Roblox continuam clicáveis.",
-    "F11 / Alt+Enter: fallback de tela cheia."
+    "Nova aba APOIAR.",
+    "Página oficial externa de apoio.",
+    "Nenhum dado bancário é armazenado no ZKStrap.",
+    "Botões para abrir e copiar o link de apoio."
   ]
 }
