@@ -22,3 +22,5 @@ jobs:
           echo "HTTP $code"
           cat response.json
           test "$code" = "200"
+
+# rerun after Edge migration
