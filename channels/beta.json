@@ -1,17 +1,17 @@
 {
   "channel": "beta",
-  "version": "3.18.9",
-  "published_at": "2026-10-09T21:06:15Z",
+  "version": "3.19.0",
+  "published_at": "2026-10-09T21:24:40Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.9-beta/ZKStrap-v3.18.9-beta-win64.zip",
-  "sha256": "6cea0a50112159a94b4babbdf4d3f83c6f38d0effe4441d774c6ca79aa8935df",
-  "size_bytes": 110305246,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.0-beta/ZKStrap-v3.19.0-beta-win64.zip",
+  "sha256": "75e8fdcaeaf74adbc21fa9fc4d899a602607c7740f1ec9d8863b0d637fc49f9a",
+  "size_bytes": 110306308,
   "notes": [
-    "Beta de teste do scroll: rajadas rápidas não desenham posições intermediárias.",
-    "Depois da rajada, somente o alvo final é aplicado.",
-    "Repaint completo do Windows limpa pixels antigos do CustomTkinter/GDI.",
-    "Uso normal da rodinha continua responsivo.",
-    "Mantém as correções de inicialização da 3.18.8."
+    "Scroll principal refeito com container próprio do ZKStrap em Canvas nativo.",
+    "Todos os CTkScrollableFrame foram removidos desta Beta.",
+    "A roda move um alvo contínuo e a página segue suavemente em um único loop de animação.",
+    "Movimentos rápidos continuam suaves em vez de pausar e teleportar no fim.",
+    "Stable 3.18.8 permanece intocada enquanto esta Beta é testada."
   ]
 }
