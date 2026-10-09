@@ -1,13 +1,17 @@
 {
   "channel": "beta",
-  "version": "3.17.2",
-  "published_at": "2026-10-05T00:00:00Z",
+  "version": "3.18.9",
+  "published_at": "2026-10-09T21:06:15Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "",
-  "sha256": "",
-  "size_bytes": 0,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.9-beta/ZKStrap-v3.18.9-beta-win64.zip",
+  "sha256": "6cea0a50112159a94b4babbdf4d3f83c6f38d0effe4441d774c6ca79aa8935df",
+  "size_bytes": 110305246,
   "notes": [
-    "Canal Beta inicial. Use para builds de teste antes de promover para Stable."
+    "Beta de teste do scroll: rajadas rápidas não desenham posições intermediárias.",
+    "Depois da rajada, somente o alvo final é aplicado.",
+    "Repaint completo do Windows limpa pixels antigos do CustomTkinter/GDI.",
+    "Uso normal da rodinha continua responsivo.",
+    "Mantém as correções de inicialização da 3.18.8."
   ]
 }
