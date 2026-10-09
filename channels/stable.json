@@ -1,17 +1,14 @@
 {
   "channel": "stable",
-  "version": "3.18.7",
-  "published_at": "2026-10-07T21:53:56Z",
+  "version": "3.18.6",
+  "published_at": "2026-10-07T21:23:02Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.7/ZKStrap-v3.18.7-win64.zip",
-  "sha256": "500c82b764b7bce28d058873c39bc4d7c669c5167be4d3e43196242d03282b64",
-  "size_bytes": 110303467,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.6/ZKStrap-v3.18.6-win64.zip",
+  "sha256": "11df130eec4b4e67e98244985744798b928933a1e0d872ea739bb9042e984161",
+  "size_bytes": 110301646,
   "notes": [
-    "Scroll refeito: remove os handlers globais duplicados do CustomTkinter e usa um único roteador no ZKStrap.",
-    "Rajadas de roda agora atualizam apenas a posição mais recente, descartando redraws intermediários.",
-    "Cards receberam cabeçalho visual maior em vez de apenas um ícone pequeno.",
-    "Módulos ganharam ícones contextuais maiores e estados ON/OFF mais claros.",
-    "Mantém as correções da 3.18.6 para Spotify, cursor, apoio e relatórios."
+    "Rollback temporário enquanto a inicialização da 3.18.7 é corrigida.",
+    "Mantém as correções estáveis de Spotify, cursor, apoio e relatórios."
   ]
 }
