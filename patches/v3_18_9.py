@@ -22,7 +22,7 @@ def regex_rep(pattern, replacement, label, flags=re.S):
 
 
 rep('APP_VERSION = "3.18.8"', 'APP_VERSION = "3.18.9"', 'version')
-rep('BUILD_TIMESTAMP = "Startup Hotfix + Callback Validation"', 'BUILD_TIMESTAMP = "Burst Safe Scroll + Windows Repaint"', 'timestamp')
+rep('BUILD_TIMESTAMP = "Support Callback Hotfix"', 'BUILD_TIMESTAMP = "Burst Safe Scroll + Windows Repaint"', 'timestamp')
 
 new_scroll_core = r'''    def _scroll_canvas_metrics(self, canvas):
         try:
