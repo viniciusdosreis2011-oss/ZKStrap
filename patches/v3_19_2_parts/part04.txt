@@ -1,0 +1,87 @@
+            im=Image.open(src).convert("RGBA")
+            if bool(getattr(self,"cursor_auto_remove_white",False)):
+                try:im=self._remover_fundo_branco_bordas(im)
+                except Exception:pass
+            bbox=im.getchannel("A").getbbox()
+            if bbox:im=im.crop(bbox)
+            canvas=Image.new("RGBA",(132,132),(0,0,0,0)); d=ImageDraw.Draw(canvas)
+            # Subtle checker makes transparent edges visible.
+            for yy in range(0,132,11):
+                for xx in range(0,132,11):
+                    c=(30,30,34,255) if ((xx//11+yy//11)%2==0) else (38,38,43,255)
+                    d.rectangle((xx,yy,xx+10,yy+10),fill=c)
+            target=max(20,min(92,int(getattr(self,"cursor_visual_size",24))*2))
+            scale=min(target/max(1,im.width),target/max(1,im.height))
+            nw=max(1,int(im.width*scale)); nh=max(1,int(im.height*scale)); im=im.resize((nw,nh),Image.Resampling.LANCZOS)
+            x=(132-nw)//2; y=(132-nh)//2; canvas.alpha_composite(im,(x,y))
+            self._cursor_preview_ctk=ctk.CTkImage(light_image=canvas,dark_image=canvas,size=(132,132))
+            lab.configure(image=self._cursor_preview_ctk,text="")
+        except Exception as exc:
+            try:lab.configure(image=None,text=f"Preview indisponível\n{exc}")
+            except Exception:pass
+
+    def _refresh_font_preview(self):
+        lab=getattr(self,"font_preview_label",None)
+        if lab is None:return
+        src=str(getattr(self,"game_font_source","") or "")
+        if not src or not os.path.isfile(src):
+            try:lab.configure(image=None,text=self._L("Escolha uma .TTF/.OTF para ver a prévia","Choose a .TTF/.OTF to preview","Elige una .TTF/.OTF para ver la vista previa","选择 .TTF/.OTF 查看预览","Choisissez un .TTF/.OTF pour l’aperçu"))
+            except Exception:pass
+            return
+        try:
+            from PIL import Image, ImageDraw, ImageFont
+            W,H=900,105; bg=(18,18,22,255); fg=(238,238,244,255); accent=(170,85,247,255)
+            im=Image.new("RGBA",(W,H),bg); d=ImageDraw.Draw(im)
+            font=ImageFont.truetype(src,30); small=ImageFont.truetype(src,18)
+            d.text((20,12),"ZKStrap  •  Blox Fruits  •  ABC abc 123",font=font,fill=fg)
+            d.text((21,61),os.path.basename(src),font=small,fill=accent)
+            self._font_preview_ctk=ctk.CTkImage(light_image=im,dark_image=im,size=(720,84))
+            lab.configure(image=self._font_preview_ctk,text="")
+        except Exception as exc:
+            try:lab.configure(image=None,text=f"Preview indisponível: {exc}")
+            except Exception:pass
+
+'''
+anchor='    def _font_target_dir(self):\n'
+if anchor not in s:
+    raise SystemExit('v3.19.2 patch: font helper anchor missing')
+s=s.replace(anchor,preview_helpers+anchor,1)
+
+# Cursor page preview under selector.
+cursor_anchor='        self.cursor_menu.set(self.cursor_pack); self.cursor_menu.pack(fill="x", padx=16, pady=(4,8))\n'
+if cursor_anchor not in s:
+    raise SystemExit('v3.19.2 patch: cursor page preview anchor missing')
+cursor_ui='''        self.cursor_menu.set(self.cursor_pack); self.cursor_menu.pack(fill="x", padx=16, pady=(4,8))
+        preview_row=ctk.CTkFrame(cursor_card,fg_color=t["card_active"],corner_radius=13,border_width=1,border_color=self._mix_hex(t.get("border",t["accent"]),t["accent"],.30)); preview_row.pack(fill="x",padx=16,pady=(2,10))
+        self.cursor_preview_label=ctk.CTkLabel(preview_row,text=self._L("Carregando prévia…","Loading preview…","Cargando vista previa…","正在加载预览…","Chargement de l’aperçu…"),width=150,height=150,text_color=t.get("muted","gray")); self.cursor_preview_label.pack(side="left",padx=12,pady=12)
+        ptxt=ctk.CTkFrame(preview_row,fg_color="transparent"); ptxt.pack(side="left",fill="both",expand=True,padx=(4,14),pady=12)
+        ctk.CTkLabel(ptxt,text=self._L("PRÉVIA DO CURSOR","CURSOR PREVIEW","VISTA PREVIA DEL CURSOR","光标预览","APERÇU DU CURSEUR"),text_color=t["accent"],font=ctk.CTkFont(family="Consolas",size=8,weight="bold")).pack(anchor="w")
+        ctk.CTkLabel(ptxt,text=self._L("A imagem acompanha o pack selecionado e o tamanho visual.","Preview follows the selected pack and visual size.","La vista previa sigue el pack y tamaño seleccionados.","预览会跟随所选光标包和大小。","L’aperçu suit le pack et la taille sélectionnés."),text_color=t.get("muted","gray"),wraplength=560,justify="left").pack(anchor="w",fill="x",pady=(5,0))
+        self.after(40,self._refresh_cursor_preview)
+'''
+s=s.replace(cursor_anchor,cursor_ui,1)
+
+# Font preview under selected filename.
+font_anchor='        self.lbl_game_font = ctk.CTkLabel(font_card, text=(os.path.basename(self.game_font_source) if self.game_font_source else ("Nenhuma fonte selecionada" if pt else "No font selected")), text_color=t["accent"], font=ctk.CTkFont(family="Segoe UI", size=11, weight="bold")); self.lbl_game_font.pack(anchor="w", padx=16, pady=(4,8))\n'
+if font_anchor not in s:
+    raise SystemExit('v3.19.2 patch: font page preview anchor missing')
+font_ui=font_anchor+'''        font_preview=ctk.CTkFrame(font_card,fg_color=t["card_active"],corner_radius=12,border_width=1,border_color=self._mix_hex(t.get("border",t["accent"]),t["accent"],.25)); font_preview.pack(fill="x",padx=16,pady=(0,10))
+        self.font_preview_label=ctk.CTkLabel(font_preview,text="",height=96,text_color=t.get("muted","gray")); self.font_preview_label.pack(fill="x",padx=10,pady=10)
+        self.after(40,self._refresh_font_preview)
+'''
+s=s.replace(font_anchor,font_ui,1)
+
+# Refresh previews when relevant selections change.
+rep(
+'''    def evento_cursor_pack(self, valor):
+        self.cursor_pack = str(valor)
+        self.salvar_config_app()
+        self.aplicar_cursor_pack(self.cursor_pack)
+''',
+'''    def evento_cursor_pack(self, valor):
+        self.cursor_pack = str(valor)
+        self.salvar_config_app()
+        try:self._refresh_cursor_preview()
+        except Exception:pass
+        self.aplicar_cursor_pack(self.cursor_pack)
+''',
