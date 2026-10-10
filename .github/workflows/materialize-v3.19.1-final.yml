@@ -1,0 +1,72 @@
+name: Materialize ZKStrap v3.19.1 Final Source
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/materialize-v3.19.1-final.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p input source
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          python - <<'PY'
+          import zipfile
+          zipfile.ZipFile('input/ZKStrap_v3_18_0_UPDATE_CENTER.zip').extractall('source')
+          PY
+          root=$(find source -mindepth 1 -maxdepth 1 -type d | head -n 1)
+          echo "ZK_SOURCE=$root" >> "$GITHUB_ENV"
+
+      - name: Decode patches
+        run: |
+          for name in v3_18_1_base v3_18_1_post v3_18_2 v3_18_4; do
+            NAME="$name" python - <<'PY'
+          import base64,gzip,pathlib,os
+          n=os.environ['NAME']
+          raw=pathlib.Path(f'patches/{n}.py.gz.b64').read_text().strip()
+          pathlib.Path(f'{n}.py').write_bytes(gzip.decompress(base64.b64decode(raw)))
+          PY
+          done
+          python patches/v3_18_5_patchfix.py
+
+      - name: Rebuild final v3.19.1 source
+        run: |
+          export ZK_SOURCE_DIR="$ZK_SOURCE"
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python -m py_compile "$ZK_SOURCE/ZKStrap_v3_18_0.py"
+          mkdir -p tmp
+          cp "$ZK_SOURCE/ZKStrap_v3_18_0.py" tmp/ZKStrap_v3_19_1_final.py
+
+      - name: Commit materialized source
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tmp/ZKStrap_v3_19_1_final.py
+          git commit -m 'Materialize v3.19.1 final source for review'
+          git pull --rebase origin main
+          git push origin main
