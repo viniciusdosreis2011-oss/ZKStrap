@@ -1,17 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.19.0",
-  "published_at": "2026-10-09T21:24:40Z",
+  "version": "3.19.1",
+  "published_at": "2026-10-10T22:09:16Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.0-beta/ZKStrap-v3.19.0-beta-win64.zip",
-  "sha256": "75e8fdcaeaf74adbc21fa9fc4d899a602607c7740f1ec9d8863b0d637fc49f9a",
-  "size_bytes": 110306308,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.1-beta/ZKStrap-v3.19.1-beta-win64.zip",
+  "sha256": "153f342e275714c3728ac53bbedd5e95c069501dfe208308063dc7130d191c18",
+  "size_bytes": 110316636,
   "notes": [
-    "Scroll principal refeito com container próprio do ZKStrap em Canvas nativo.",
-    "Todos os CTkScrollableFrame foram removidos desta Beta.",
-    "A roda move um alvo contínuo e a página segue suavemente em um único loop de animação.",
-    "Movimentos rápidos continuam suaves em vez de pausar e teleportar no fim.",
-    "Stable 3.18.8 permanece intocada enquanto esta Beta é testada."
+    "Mantém o scroll suave da 3.19.0 e força repaint apenas no viewport ativo para limpar rastros visuais do CustomTkinter.",
+    "Remove flush de layout a cada giro da rodinha.",
+    "Boot lazy: abre apenas shell + Home; as outras páginas são montadas somente na primeira vez que forem abertas.",
+    "Remove a varredura global de fontes do caminho crítico de inicialização.",
+    "Adiciona medições de tempo no boot e reduz atrasos artificiais da splash.",
+    "Stable continua na 3.18.8 até esta Beta ser aprovada."
   ]
 }
