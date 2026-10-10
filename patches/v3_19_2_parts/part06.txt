@@ -1,0 +1,31 @@
+            ("theme",L("PERSONALIZAR","CUSTOMIZE","PERSONALIZAR","个性化","PERSONNALISER"),L("Temas, identidade visual e aparência do app ficam aqui.","Themes and app identity live here.","Aquí están los temas y la apariencia del app.","主题和应用外观都在这里。","Les thèmes et l’apparence de l’app sont ici."),L("Teste à vontade: você pode voltar ao Core.","Experiment freely: you can always return to Core.","Prueba tranquilo: puedes volver a Core.","可以随意尝试，随时能回到 Core。","Testez librement : vous pouvez revenir au Core."),L("MISSÃO: abra um tema e veja a mudança completa.","MISSION: open a theme and inspect the full change.","MISIÓN: abre un tema y mira el cambio completo.","任务：打开一个主题并查看完整变化。","MISSION : ouvrez un thème et observez le changement.")),
+            ("updates",L("ATUALIZAÇÕES","UPDATES","ACTUALIZACIONES","更新","MISES À JOUR"),L("Aqui você verifica builds novas e lê o histórico sem aquele mar de cards repetidos.","Check new builds and read the lighter version history here.","Aquí revisas nuevas builds y el historial ligero.","在这里检查新版本并查看轻量更新历史。","Vérifiez les nouvelles builds et l’historique allégé ici."),L("Stable é para uso normal; Beta é para testar antes.","Stable is normal use; Beta is for testing first.","Stable es uso normal; Beta es para pruebas.","Stable 用于日常，Beta 用于测试。","Stable est pour l’usage normal ; Beta pour tester."),L("MISSÃO: localize o seletor Stable/Beta.","MISSION: find the Stable/Beta selector.","MISIÓN: encuentra el selector Stable/Beta.","任务：找到 Stable/Beta 选择器。","MISSION : trouvez le sélecteur Stable/Beta.")),
+            ("feedback",L("BUGS & SUGESTÕES","BUGS & FEEDBACK","BUGS & SUGERENCIAS","错误与建议","BUGS & SUGGESTIONS"),L("Se algo quebrar, mande o relato daqui. O diagnóstico técnico segue junto por trás.","If something breaks, report it here. Technical diagnostics are attached automatically.","Si algo falla, repórtalo aquí con diagnóstico automático.","如果出现问题，可在这里报告并自动附带诊断。","Si quelque chose casse, signalez-le ici avec diagnostic automatique."),L("Quanto mais específico, mais rápido fica corrigir.","Specific reports are much faster to fix.","Cuanto más específico, más rápido se corrige.","描述越具体，修复越快。","Plus le rapport est précis, plus la correction est rapide."),L("MISSÃO FINAL: saiba onde voltar quando encontrar um bug.","FINAL MISSION: remember where to return when you find a bug.","MISIÓN FINAL: recuerda dónde volver si encuentras un bug.","最终任务：记住遇到错误时来这里。","MISSION FINALE : retenez où revenir en cas de bug.")),
+        ]
+
+'''
+regex_rep(r'    def _tutorial_steps\(self\):\n.*?(?=    def _center_child_window\(self, win, width, height, dx=0, dy=0\):\n)',new_steps,'tutorial steps')
+
+# Upgrade the tutorial panel UI without creating a modal.
+rep('panel=ctk.CTkFrame(self.main_container,width=475,height=320,fg_color=t.get("panel",t["card"]),', 'panel=ctk.CTkFrame(self.main_container,width=510,height=405,fg_color=t.get("panel",t["card"]),', 'tutorial panel size',1)
+rep('        self._tutorial_tip=ctk.CTkLabel(panel,text="",wraplength=430,justify="left",anchor="w",text_color=t["accent"],font=ctk.CTkFont(family="Consolas",size=8)); self._tutorial_tip.pack(fill="x",padx=17,pady=(2,7))\n', '        self._tutorial_tip=ctk.CTkLabel(panel,text="",wraplength=455,justify="left",anchor="w",text_color=t["accent"],font=ctk.CTkFont(family="Consolas",size=8)); self._tutorial_tip.pack(fill="x",padx=17,pady=(2,5))\n        self._tutorial_mission=ctk.CTkLabel(panel,text="",wraplength=455,justify="left",anchor="w",height=44,corner_radius=10,fg_color=t["card_active"],text_color=t["text"],font=ctk.CTkFont(family="Segoe UI",size=9,weight="bold")); self._tutorial_mission.pack(fill="x",padx=17,pady=(1,7))\n', 'tutorial mission card',1)
+rep('        ctk.CTkButton(row,text="PULAR" if pt else "SKIP",command=lambda:self._tutorial_close(mark_complete=True),width=68,fg_color="transparent",border_width=1,border_color=t["card_active"],text_color=t.get("muted","gray")).pack(side="left",padx=6)\n', '        self._tutorial_skip=ctk.CTkButton(row,text=self._L("SAIR","EXIT","SALIR","退出","QUITTER"),command=self._tutorial_skip_click,width=72,fg_color="transparent",border_width=1,border_color=t["card_active"],text_color=t.get("muted","gray")); self._tutorial_skip.pack(side="left",padx=6)\n        self._tutorial_explore=ctk.CTkButton(row,text=self._L("DESTACAR","HIGHLIGHT","DESTACAR","高亮","SURLIGNER"),command=self._tutorial_explore_current,width=92,fg_color=t["card_active"],hover_color=t["hover"],text_color=t["accent"]); self._tutorial_explore.pack(side="left",padx=(0,6))\n', 'tutorial deliberate skip/action',1)
+
+# Render accepts mission as fifth tuple item.
+rep('        page,title,body,tip=steps[idx]\n', '        step=steps[idx]\n        page,title,body,tip=step[:4]\n        mission=step[4] if len(step)>4 else ""\n', 'tutorial render tuple',1)
+rep('        self._tutorial_tip.configure(text=("DICA // "+tip) if self.idioma=="pt" else ("TIP // "+tip))\n', '        self._tutorial_tip.configure(text=(self._L("DICA // ","TIP // ","TIP // ","提示 // ","ASTUCE // ")+tip))\n        try:self._tutorial_mission.configure(text=mission)\n        except Exception:pass\n', 'tutorial mission render',1)
+
+# Add tutorial interaction helpers before _tutorial_move.
+tutorial_interact = r'''    def _tutorial_explore_current(self):
+        try:
+            steps=self._tutorial_steps(); step=steps[self._tutorial_step_index]; page=step[0]
+            self.show_page(page,animate=True)
+            self.after(120,lambda:self._tutorial_place_spotlight(self._tutorial_target_widget(page)))
+            self.after(360,lambda:self._tutorial_place_spotlight(self._tutorial_target_widget(page)))
+        except Exception:pass
+
+    def _tutorial_skip_click(self):
+        now=time.monotonic(); armed=float(getattr(self,"_tutorial_skip_armed_until",0.0) or 0.0)
+        if now<armed:
+            self._tutorial_close(mark_complete=True); return
+        self._tutorial_skip_armed_until=now+3.0
