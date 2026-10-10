@@ -1,0 +1,123 @@
+from pathlib import Path
+import os, re, ast
+
+root = Path(os.environ.get('ZK_SOURCE_DIR', '.'))
+path = root / 'ZKStrap_v3_18_0.py'
+s = path.read_text(encoding='utf-8')
+
+
+def rep(old, new, label, count=1):
+    global s
+    if old not in s:
+        raise SystemExit(f'v3.19.2 patch: pattern not found: {label}')
+    s = s.replace(old, new, count)
+
+
+def regex_rep(pattern, replacement, label, flags=re.S):
+    global s
+    ns, n = re.subn(pattern, replacement, s, count=1, flags=flags)
+    if n != 1:
+        raise SystemExit(f'v3.19.2 patch: regex pattern not found/ambiguous: {label} ({n})')
+    s = ns
+
+
+# ---------------------------------------------------------------------------
+# VERSION
+# ---------------------------------------------------------------------------
+rep('APP_VERSION = "3.19.1"', 'APP_VERSION = "3.19.2"', 'version')
+s, n = re.subn(r'BUILD_TIMESTAMP = "[^"]*"', 'BUILD_TIMESTAMP = "Update Render + First Run UX + Preview Polish"', s, count=1)
+if n != 1:
+    raise SystemExit('v3.19.2 patch: BUILD_TIMESTAMP missing')
+
+# ---------------------------------------------------------------------------
+# LANGUAGE MODEL — 5 launch languages, English fallback for deep technical text.
+# ---------------------------------------------------------------------------
+rep(
+'''        self.idioma = self.config_data.get("language", "pt")
+        if self.idioma not in ("pt", "en"):
+            self.idioma = "pt"
+''',
+'''        self.idioma = str(self.config_data.get("language", "pt") or "pt").lower()
+        if self.idioma not in ("pt", "en", "es", "zh", "fr"):
+            self.idioma = "pt"
+        self.language_selected = bool(self.config_data.get("language_selected", False))
+''',
+'language init'
+)
+
+# Extend the legacy translation dictionary so old code never KeyErrors on new locales.
+lang_fallback = r'''        # v3.19.2: additional launch locales. Deep/legacy strings fall back to
+        # English until that screen has an explicit translation, while the shell,
+        # onboarding and tutorial are localized below.
+        _extra_locale_overrides = {
+            "es": {
+                "diretorio_buscando":"Directorio: Buscando...", "diretorio_nao_encontrado":"Directorio: No encontrado",
+                "salvar_compilacao":"APLICAR AJUSTES", "resetar":"RESTAURAR ORIGINAL", "limpar_logs":"LIMPIAR LOGS Y CACHÉ",
+                "fechar_pesados":"CERRAR APPS PESADAS", "sobre_tab":"ACERCA DE", "config_tab":"AJUSTES",
+                "manut_tab":"RENDIMIENTO", "sugest_tab":"SUGERENCIAS Y BUGS", "enviar":"ENVIAR",
+                "msg_error":"Error", "msg_warning":"Aviso", "msg_ok":"OK", "tooltip_lang":"Elige el idioma de la interfaz."
+            },
+            "zh": {
+                "diretorio_buscando":"目录：正在搜索...", "diretorio_nao_encontrado":"目录：未找到",
+                "salvar_compilacao":"应用设置", "resetar":"恢复默认", "limpar_logs":"清理日志和缓存",
+                "fechar_pesados":"关闭高占用应用", "sobre_tab":"关于", "config_tab":"设置",
+                "manut_tab":"性能", "sugest_tab":"建议与错误", "enviar":"发送",
+                "msg_error":"错误", "msg_warning":"提示", "msg_ok":"确定", "tooltip_lang":"选择界面语言。"
+            },
+            "fr": {
+                "diretorio_buscando":"Dossier : recherche...", "diretorio_nao_encontrado":"Dossier : introuvable",
+                "salvar_compilacao":"APPLIQUER LES RÉGLAGES", "resetar":"RÉTABLIR L'ORIGINAL", "limpar_logs":"NETTOYER LOGS ET CACHE",
+                "fechar_pesados":"FERMER LES APPS LOURDES", "sobre_tab":"À PROPOS", "config_tab":"RÉGLAGES",
+                "manut_tab":"PERFORMANCES", "sugest_tab":"SUGGESTIONS ET BUGS", "enviar":"ENVOYER",
+                "msg_error":"Erreur", "msg_warning":"Attention", "msg_ok":"OK", "tooltip_lang":"Choisissez la langue de l’interface."
+            },
+        }
+        for _code, _over in _extra_locale_overrides.items():
+            _base = dict(self.tr.get("en", {})); _base.update(_over); self.tr[_code] = _base
+
+'''
+anchor = '        self.texto_sobre = {\n'
+if anchor not in s:
+    raise SystemExit('v3.19.2 patch: translation fallback anchor missing')
+s = s.replace(anchor, lang_fallback + anchor, 1)
+
+# About fallback also needs all accepted language keys.
+about_anchor = '        _startup_splash_update(self,self._startup_state,.48,'
+idx = s.find(about_anchor)
+if idx < 0:
+    raise SystemExit('v3.19.2 patch: post-language boot anchor missing')
+# Insert only once, after texto_sobre was defined and before UI construction.
+insert = '''        for _code in ("es", "zh", "fr"):\n            if _code not in self.texto_sobre:\n                self.texto_sobre[_code] = self.texto_sobre.get("en", "")\n\n'''
+if insert.strip() not in s:
+    s = s[:idx] + insert + s[idx:]
+
+# ---------------------------------------------------------------------------
+# LOCALIZED SHELL + FIRST-RUN LANGUAGE PICKER
+# ---------------------------------------------------------------------------
+ux_helpers = r'''    def _L(self, pt, en, es=None, zh=None, fr=None):
+        code=str(getattr(self,"idioma","pt") or "pt").lower()
+        vals={"pt":pt,"en":en,"es":es if es is not None else en,"zh":zh if zh is not None else en,"fr":fr if fr is not None else en}
+        return vals.get(code,en)
+
+    def _language_choices(self):
+        return [
+            ("pt","🇧🇷","Português","Brasil"),
+            ("en","🇺🇸","English","United States"),
+            ("es","🇪🇸","Español","España"),
+            ("zh","🇨🇳","中文","简体中文"),
+            ("fr","🇫🇷","Français","France"),
+        ]
+
+    def _maybe_show_first_run_language(self):
+        if bool(getattr(self,"language_selected",False)):
+            return
+        old=getattr(self,"_language_panel",None)
+        try:
+            if old is not None and old.winfo_exists():
+                old.lift(); return
+        except Exception:pass
+        host=getattr(self,"main_container",None)
+        if host is None:
+            try:self.after(120,self._maybe_show_first_run_language)
+            except Exception:pass
+            return
