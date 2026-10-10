@@ -1,18 +1,19 @@
 {
   "channel": "beta",
-  "version": "3.19.3",
-  "published_at": "2026-10-10T23:13:06Z",
+  "version": "3.19.4",
+  "published_at": "2026-10-10T23:24:28Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.3-beta/ZKStrap-v3.19.3-beta-win64.zip",
-  "sha256": "ebb75808525b8435de94468faca43ee19b4f99aa387153a50e920a9cf25495dd",
-  "size_bytes": 110334870,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.4-beta/ZKStrap-v3.19.4-beta-win64.zip",
+  "sha256": "265e9c17384c39cecc8bc14bb0af6ee5c9c469ccb67fa5f85172f762c2d57208",
+  "size_bytes": 110334459,
   "notes": [
-    "Corrige os rastros e duplicações de bordas/texto causados pelo repaint Win32 durante o scroll.",
-    "Scroll passa a agrupar eventos da rodinha e mover o Canvas sem animação intermediária agressiva.",
-    "Seletor de idioma agora usa bandeiras rasterizadas reais em vez de emoji BR/US/ES.",
-    "Tela de idioma foi redesenhada e aparece uma vez novamente para quem testou a 3.19.2.",
-    "Mantém Updates nativo, previews de cursor/fonte e sidebar reorganizada da 3.19.2.",
-    "Stable continua na 3.18.8 até a Beta ser aprovada."
+    "Updates usa histórico nativo leve para reduzir rastros visuais.",
+    "Scroll suave em Canvas nativo sem repaint Win32.",
+    "Preview real de cursor e fonte.",
+    "Primeiro acesso oferece Português, English, Español, 中文 e Français e salva a escolha.",
+    "Blox Hub removido; Combo Planner, Build Roulette, Creator Mode e ZK Assist ficam separados.",
+    "Tutorial exige testar/destacar cada etapa antes de avançar; sair não marca como concluído.",
+    "Stable continua na 3.18.8 até aprovação desta Beta."
   ]
 }
