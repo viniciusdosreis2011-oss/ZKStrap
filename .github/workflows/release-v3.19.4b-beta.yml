@@ -1,0 +1,196 @@
+name: Release ZKStrap v3.19.4 Beta AST Fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-v3.19.4b-beta.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode previous patch payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+
+      - name: Validate patch scripts
+        shell: pwsh
+        run: |
+          python -m py_compile patches/v3_18_5.py patches/v3_18_6.py patches/v3_18_7.py patches/v3_18_8.py patches/v3_18_9.py patches/v3_19_0.py patches/v3_19_1.py patches/v3_19_2.py patches/v3_19_3.py patches/v3_19_4_fixed.py
+
+      - name: Rebuild and validate v3.19.4
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          @'
+          import ast,os,pathlib
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          src=p.read_text(encoding='utf-8')
+          tree=ast.parse(src)
+          app=next((n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp'),None)
+          if app is None: raise SystemExit('ModernConfigApp missing')
+          methods={n.name for n in app.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          required={'aplicar_idioma','_maybe_show_first_run_language','_language_flag_image','_refresh_cursor_preview','_refresh_font_preview','_tutorial_render_step','_tutorial_explore_current','_tutorial_skip_click','_tutorial_move','_queue_scroll_step','_open_support_page','_copy_support_link'}
+          missing=sorted(required-methods)
+          if missing:raise SystemExit('Missing methods: '+', '.join(missing))
+          checks={
+            'version':'APP_VERSION = "3.19.4"',
+            'lang persist':'"language_selected": bool(getattr(self, "language_selected", False))',
+            'five lang menu':'values=["Português","English","Español","中文","Français"]',
+            'zk assist':'("ai","ZK ASSIST")',
+            'native updates':'update_changelog_text',
+            'cursor preview':'def _refresh_cursor_preview',
+            'font preview':'def _refresh_font_preview',
+            'smooth scroll':'Smooth target-following Canvas scroll without Win32 repaint churn.',
+            'tutorial gate':'self._tutorial_step_ready=True',
+          }
+          for name,needle in checks.items():
+              if needle not in src:raise SystemExit('Missing '+name)
+          if '("bloxhub","BLOX HUB")' in src:raise SystemExit('Blox Hub still in nav')
+          if 'RedrawWindow(' in src:raise SystemExit('Win32 repaint returned')
+          if 'ctk.CTkScrollableFrame(' in src:raise SystemExit('Legacy CTk scroll returned')
+          if 'discord.com/api/webhooks/' in src or 'discordapp.com/api/webhooks/' in src:raise SystemExit('Webhook embedded')
+          print('v3.19.4 structural validation OK')
+          '@ | Set-Content validate_final.py -Encoding UTF8
+          python validate_final.py
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Build updater
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name "ZKUpdater" --distpath "updater_dist" --workpath "updater_build" --specpath "updater_spec" "ZKUpdater.py"
+          if (-not (Test-Path "updater_dist/ZKUpdater.exe")) { throw 'Updater build failed.' }
+
+      - name: Build ZKStrap v3.19.4 ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed `
+            --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" `
+            --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" `
+            --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" `
+            --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" `
+            --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" `
+            --hidden-import "pycaw.api.endpointvolume" `
+            --hidden-import "comtypes" `
+            --hidden-import "comtypes.client" `
+            --collect-all "pycaw" `
+            --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" `
+            --add-data "zkstrap_icon.ico;." `
+            --add-data "zkstrap_icon.png;." `
+            --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap build failed.' }
+          Copy-Item "updater_dist/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Package
+        id: pkg
+        shell: pwsh
+        run: |
+          $dist = Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.19.4-beta-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size=(Get-Item $name).Length
+          "name=$name" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Publish v3.19.4 Beta
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag='v3.19.4-beta'
+          gh release view $tag --repo '${{ github.repository }}' *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag '${{ steps.pkg.outputs.name }}' --repo '${{ github.repository }}' --prerelease --title 'ZKStrap v3.19.4 Beta — Final UX Polish' --notes 'Smooth native scroll; lightweight Updates history; persistent five-language onboarding; cursor/font previews; direct Blox tools; guided tutorial. Stable remains unchanged.'
+          } else {
+            gh release upload $tag '${{ steps.pkg.outputs.name }}' --clobber --repo '${{ github.repository }}'
+          }
+
+      - name: Update Beta manifest
+        shell: pwsh
+        run: |
+          $m=[ordered]@{
+            channel='beta';version='3.19.4';published_at=(Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ');mandatory=$false;min_updater_version='1.0.0';
+            package_url='https://github.com/${{ github.repository }}/releases/download/v3.19.4-beta/ZKStrap-v3.19.4-beta-win64.zip';sha256='${{ steps.pkg.outputs.sha256 }}';size_bytes=[int64]'${{ steps.pkg.outputs.size }}';
+            notes=@('Updates usa histórico nativo leve para reduzir rastros visuais.','Scroll suave em Canvas nativo sem repaint Win32.','Preview real de cursor e fonte.','Primeiro acesso oferece Português, English, Español, 中文 e Français e salva a escolha.','Blox Hub removido; Combo Planner, Build Roulette, Creator Mode e ZK Assist ficam separados.','Tutorial exige testar/destacar cada etapa antes de avançar; sair não marca como concluído.','Stable continua na 3.18.8 até aprovação desta Beta.')
+          }
+          $m|ConvertTo-Json -Depth 5|Set-Content channels/beta.json -Encoding UTF8
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/beta.json
+          git commit -m 'Point Beta channel to ZKStrap v3.19.4'
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### ZKStrap v3.19.4 Beta published'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'SHA-256: ${{ steps.pkg.outputs.sha256 }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Size: ${{ steps.pkg.outputs.size }} bytes'
