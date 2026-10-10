@@ -1,20 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.19.2",
-  "published_at": "2026-10-10T22:53:50Z",
+  "version": "3.19.3",
+  "published_at": "2026-10-10T23:13:06Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.2-beta/ZKStrap-v3.19.2-beta-win64.zip",
-  "sha256": "afb13a22b17b87b1f5c34ee1db96e81fcbaf82d990598f3a8f48a01d2d9c752c",
-  "size_bytes": 110332792,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.3-beta/ZKStrap-v3.19.3-beta-win64.zip",
+  "sha256": "ebb75808525b8435de94468faca43ee19b4f99aa387153a50e920a9cf25495dd",
+  "size_bytes": 110334870,
   "notes": [
-    "A página Atualizações usa um único histórico nativo e leve em vez de dezenas de cards CTk em movimento.",
-    "Cursor mostra a imagem real do pack selecionado antes de aplicar.",
-    "Fontes TTF/OTF ganham preview renderizado antes de aplicar no Roblox.",
-    "Primeira abertura começa com escolha entre Português, English, Español, 中文 e Français, com bandeiras.",
-    "Tutorial ganha missões, botão de destaque e saída em dois cliques.",
-    "Sidebar foi reorganizada por função e Blox Hub saiu da navegação.",
-    "Mantém o boot lazy e o scroll suave da 3.19.1.",
-    "Stable continua na 3.18.8 até esta Beta ser aprovada."
+    "Corrige os rastros e duplicações de bordas/texto causados pelo repaint Win32 durante o scroll.",
+    "Scroll passa a agrupar eventos da rodinha e mover o Canvas sem animação intermediária agressiva.",
+    "Seletor de idioma agora usa bandeiras rasterizadas reais em vez de emoji BR/US/ES.",
+    "Tela de idioma foi redesenhada e aparece uma vez novamente para quem testou a 3.19.2.",
+    "Mantém Updates nativo, previews de cursor/fonte e sidebar reorganizada da 3.19.2.",
+    "Stable continua na 3.18.8 até a Beta ser aprovada."
   ]
 }
