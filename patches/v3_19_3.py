@@ -32,12 +32,6 @@ if n != 1:
 
 # ---------------------------------------------------------------------------
 # SCROLL STABILITY
-# v3.19.1 used RedrawWindow(RDW_ERASE | RDW_ALLCHILDREN) every animation frame.
-# On Windows + CTk child canvases this can create the exact duplicated outlines
-# and stale text seen while scrolling. Remove all per-frame Win32 invalidation
-# and stop animating a Canvas window through many intermediate positions.
-# Wheel bursts are coalesced and the native Canvas moves once to the latest
-# target, then Tk gets one normal idle repaint after input settles.
 # ---------------------------------------------------------------------------
 safe_repaint = r'''    def _zk_repaint_viewport(self, final=False):
         """Let Tk own painting; only flush idle drawing after scrolling settles."""
@@ -53,6 +47,20 @@ regex_rep(
     r'    def _zk_repaint_viewport\(self, final=False\):\n.*?(?=    def _zk_canvas_resized\(self, event=None\):\n)',
     safe_repaint,
     'safe viewport repaint'
+)
+
+safe_full_repaint = r'''    def _force_windows_repaint(self):
+        """Compatibility hook: use Tk idle painting, never Win32 ERASE/ALLCHILDREN."""
+        try:
+            self.update_idletasks()
+        except Exception:
+            pass
+
+'''
+regex_rep(
+    r'    def _force_windows_repaint\(self\):\n.*?(?=    def _queue_scroll_step\(self, scrollable, step\):\n)',
+    safe_full_repaint,
+    'remove whole-window Win32 repaint'
 )
 
 stable_queue = r'''    def _queue_scroll_step(self, scrollable, step):
@@ -75,12 +83,9 @@ stable_queue = r'''    def _queue_scroll_step(self, scrollable, step):
                 setattr(scrollable,"_zk_scroll_state",state)
 
             now=time.monotonic()
-            # Re-anchor after a short pause so scrollbar/keyboard movements win.
             if now-float(state.get("last_input",0.0) or 0.0)>.16:
                 state["target"]=first
 
-            # Keep each notch controlled. Fast wheel input extends the same target
-            # instead of spawning dozens of intermediate Canvas positions.
             direction=1.0 if float(step)>0 else -1.0
             magnitude=max(1.0,min(3.0,abs(float(step))))
             px=62.0*magnitude*direction
@@ -102,8 +107,6 @@ stable_queue = r'''    def _queue_scroll_step(self, scrollable, step):
                 except Exception:
                     pass
 
-            # Limit visual moves to roughly one per display frame and collapse
-            # repeated wheel events into the latest target.
             if state.get("job") is None:
                 try:state["job"]=self.after(12,apply_target)
                 except Exception:apply_target()
@@ -132,9 +135,6 @@ regex_rep(
 
 # ---------------------------------------------------------------------------
 # FIRST-RUN LANGUAGE PICKER
-# Emoji flags render as BR/US/ES regional-indicator letters on some Windows
-# font stacks. Draw small real raster flags with Pillow instead, and tighten the
-# layout so the picker feels like a real onboarding screen rather than a form.
 # ---------------------------------------------------------------------------
 language_block = r'''    def _language_choices(self):
         return [
@@ -196,7 +196,6 @@ language_block = r'''    def _language_choices(self):
             else:
                 d.rectangle((0,0,w,h),fill="#303038")
 
-            # Subtle edge so white flag areas stay visible on light/dark themes.
             d.rectangle((0,0,w-1,h-1),outline="#6D6D78",width=scale)
             self._language_flag_images=getattr(self,"_language_flag_images",{})
             img=ctk.CTkImage(light_image=im,dark_image=im,size=size)
@@ -206,8 +205,6 @@ language_block = r'''    def _language_choices(self):
             return None
 
     def _maybe_show_first_run_language(self):
-        # Revision 2 intentionally re-shows once for people who tested the old
-        # emoji picker, then never appears again after a selection is saved.
         try:picker_rev=int(self.config_data.get("language_picker_revision",0) or 0)
         except Exception:picker_rev=0
         if bool(getattr(self,"language_selected",False)) and picker_rev>=2:
@@ -309,7 +306,6 @@ for emoji_flag in ('🇧🇷','🇺🇸','🇪🇸','🇨🇳','🇫🇷'):
     if emoji_flag in s:
         raise SystemExit('v3.19.3 patch: emoji language flag still present: '+emoji_flag)
 
-# Syntax + critical class methods.
 tree=ast.parse(s)
 app=next((n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp'),None)
 if app is None:raise SystemExit('v3.19.3 patch: ModernConfigApp missing')
