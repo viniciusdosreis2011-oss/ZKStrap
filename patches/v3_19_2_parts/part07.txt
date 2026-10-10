@@ -1,0 +1,54 @@
+        try:self._tutorial_skip.configure(text=self._L("CLIQUE DE NOVO","CLICK AGAIN","CLIC OTRA VEZ","再次点击","CLIQUEZ ENCORE"),text_color="#FF8A8A",border_color="#FF6B6B")
+        except Exception:pass
+        def reset():
+            if time.monotonic()>=float(getattr(self,"_tutorial_skip_armed_until",0.0) or 0.0):
+                try:self._tutorial_skip.configure(text=self._L("SAIR","EXIT","SALIR","退出","QUITTER"),text_color=TEMAS[self.tema_atual].get("muted","gray"),border_color=TEMAS[self.tema_atual]["card_active"])
+                except Exception:pass
+        try:self.after(3100,reset)
+        except Exception:pass
+
+'''
+anchor='    def _tutorial_move(self, delta):\n'
+if anchor not in s:raise SystemExit('v3.19.2 patch: tutorial move anchor missing')
+s=s.replace(anchor,tutorial_interact+anchor,1)
+
+# First-run username panel skip also becomes deliberate: skipping means tutorial can
+# be replayed, but it no longer marks first-run onboarding as completed instantly.
+rep('''        def skip():
+            if primeiro_acesso:
+                self.tutorial_completed=True; self.salvar_config_app()
+            try: panel.destroy()
+''','''        def skip():
+            try: panel.destroy()
+''','onboarding skip no auto-complete',1)
+
+# ---------------------------------------------------------------------------
+# VALIDATION
+# ---------------------------------------------------------------------------
+for marker in (
+    'APP_VERSION = "3.19.2"',
+    'def _maybe_show_first_run_language(self)',
+    'def _refresh_cursor_preview(self)',
+    'def _refresh_font_preview(self)',
+    'self.update_changelog_text=update_text',
+    '"combo","COMBO PLANNER"',
+    'def _tutorial_skip_click(self)',
+):
+    if marker not in s:
+        raise SystemExit('v3.19.2 patch: required marker missing: '+marker)
+if '("bloxhub","BLOX HUB")' in s:
+    raise SystemExit('v3.19.2 patch: old Blox Hub nav entry still present')
+if 'discord.com/api/webhooks/' in s:
+    raise SystemExit('v3.19.2 patch: webhook URL embedded in client')
+
+# Syntax + critical class methods.
+tree=ast.parse(s)
+app=next((n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp'),None)
+if app is None:raise SystemExit('v3.19.2 patch: ModernConfigApp missing')
+methods={n.name for n in app.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+required={'_maybe_show_first_run_language','_refresh_cursor_preview','_refresh_font_preview','_tutorial_skip_click','_tutorial_explore_current','_ensure_page_built','_queue_scroll_step'}
+missing=sorted(required-methods)
+if missing:raise SystemExit('v3.19.2 patch: missing methods: '+', '.join(missing))
+
+path.write_text(s,encoding='utf-8')
+print('Applied ZKStrap v3.19.2 UX/navigation/update-render patch')
