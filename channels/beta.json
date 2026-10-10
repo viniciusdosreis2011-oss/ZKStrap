@@ -1,18 +1,20 @@
 {
   "channel": "beta",
-  "version": "3.19.1",
-  "published_at": "2026-10-10T22:09:16Z",
+  "version": "3.19.2",
+  "published_at": "2026-10-10T22:53:50Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.1-beta/ZKStrap-v3.19.1-beta-win64.zip",
-  "sha256": "153f342e275714c3728ac53bbedd5e95c069501dfe208308063dc7130d191c18",
-  "size_bytes": 110316636,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.2-beta/ZKStrap-v3.19.2-beta-win64.zip",
+  "sha256": "afb13a22b17b87b1f5c34ee1db96e81fcbaf82d990598f3a8f48a01d2d9c752c",
+  "size_bytes": 110332792,
   "notes": [
-    "Mantém o scroll suave da 3.19.0 e força repaint apenas no viewport ativo para limpar rastros visuais do CustomTkinter.",
-    "Remove flush de layout a cada giro da rodinha.",
-    "Boot lazy: abre apenas shell + Home; as outras páginas são montadas somente na primeira vez que forem abertas.",
-    "Remove a varredura global de fontes do caminho crítico de inicialização.",
-    "Adiciona medições de tempo no boot e reduz atrasos artificiais da splash.",
+    "A página Atualizações usa um único histórico nativo e leve em vez de dezenas de cards CTk em movimento.",
+    "Cursor mostra a imagem real do pack selecionado antes de aplicar.",
+    "Fontes TTF/OTF ganham preview renderizado antes de aplicar no Roblox.",
+    "Primeira abertura começa com escolha entre Português, English, Español, 中文 e Français, com bandeiras.",
+    "Tutorial ganha missões, botão de destaque e saída em dois cliques.",
+    "Sidebar foi reorganizada por função e Blox Hub saiu da navegação.",
+    "Mantém o boot lazy e o scroll suave da 3.19.1.",
     "Stable continua na 3.18.8 até esta Beta ser aprovada."
   ]
 }
