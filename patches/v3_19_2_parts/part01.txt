@@ -15,7 +15,7 @@ def rep(old, new, label, count=1):
 
 def regex_rep(pattern, replacement, label, flags=re.S):
     global s
-    ns, n = re.subn(pattern, replacement, s, count=1, flags=flags)
+    ns, n = re.subn(pattern, lambda _m: replacement, s, count=1, flags=flags)
     if n != 1:
         raise SystemExit(f'v3.19.2 patch: regex pattern not found/ambiguous: {label} ({n})')
     s = ns
