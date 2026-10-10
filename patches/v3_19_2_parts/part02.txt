@@ -1,0 +1,85 @@
+        t=TEMAS[self.tema_atual]
+        panel=ctk.CTkFrame(host,width=660,height=500,fg_color=t.get("panel",t["card"]),corner_radius=22,border_width=2,border_color=t["accent"])
+        panel.place(relx=.5,rely=.5,anchor="center"); panel.pack_propagate(False); panel.lift(); self._language_panel=panel
+        ctk.CTkLabel(panel,text="ZKSTRAP  //  LANGUAGE",height=28,corner_radius=8,fg_color=t["card_active"],text_color=t["accent"],font=ctk.CTkFont(family="Consolas",size=9,weight="bold")).pack(anchor="w",padx=26,pady=(24,9))
+        ctk.CTkLabel(panel,text="Escolha seu idioma  •  Choose your language",text_color=t["text"],font=ctk.CTkFont(family="Segoe UI",size=22,weight="bold")).pack(anchor="w",padx=26,pady=(2,3))
+        ctk.CTkLabel(panel,text="Você pode trocar depois nas configurações.  •  You can change it later in settings.",text_color=t.get("muted","gray"),font=ctk.CTkFont(size=10)).pack(anchor="w",padx=26,pady=(0,17))
+        grid=ctk.CTkFrame(panel,fg_color="transparent"); grid.pack(fill="both",expand=True,padx=24,pady=(0,16))
+        grid.grid_columnconfigure((0,1),weight=1)
+        def choose(code):
+            self.idioma=code; self.language_selected=True
+            self.config_data["language"]=code; self.config_data["language_selected"]=True
+            try:self.salvar_config_app()
+            except Exception:pass
+            try:panel.destroy()
+            except Exception:pass
+            self._language_panel=None
+            # First-run only: rebuild the lightweight shell so labels immediately
+            # match the selected locale before audio/tutorial onboarding starts.
+            try:self.after(35,self.reconstruir_interface)
+            except Exception:pass
+            try:self.after(420,self._maybe_show_sound_consent)
+            except Exception:pass
+            try:self.after(760,self._maybe_show_first_run_tutorial)
+            except Exception:pass
+        for i,(code,flag,name,sub) in enumerate(self._language_choices()):
+            card=ctk.CTkButton(grid,text=f"{flag}   {name}\n     {sub}",anchor="w",height=72,corner_radius=14,fg_color=t["card"],hover_color=t["card_active"],border_width=1,border_color=self._mix_hex(t.get("border",t["accent"]),t["accent"],.42),text_color=t["text"],font=ctk.CTkFont(family="Segoe UI",size=12,weight="bold"),command=lambda c=code:choose(c))
+            if i==4:
+                card.grid(row=2,column=0,columnspan=2,sticky="ew",padx=5,pady=5)
+            else:
+                card.grid(row=i//2,column=i%2,sticky="ew",padx=5,pady=5)
+        ctk.CTkLabel(panel,text="5 LANGUAGES  //  LOCAL PREFERENCE",text_color=t["accent"],font=ctk.CTkFont(family="Consolas",size=7,weight="bold")).pack(pady=(0,18))
+
+'''
+anchor = '    def _tutorial_username(self):\n'
+if anchor not in s:
+    raise SystemExit('v3.19.2 patch: tutorial helper anchor missing')
+s = s.replace(anchor, ux_helpers + anchor, 1)
+
+# Language picker must win first-run ordering; audio/tutorial wait for it.
+rep('        self.after(650, self._maybe_show_sound_consent)\n', '        self.after(180, self._maybe_show_first_run_language)\n        self.after(650, self._maybe_show_sound_consent)\n', 'first-run language schedule', 1)
+rep(
+'''    def _maybe_show_first_run_tutorial(self):
+        if bool(getattr(self,"_sound_prompt_open",False)):
+''',
+'''    def _maybe_show_first_run_tutorial(self):
+        if not bool(getattr(self,"language_selected",False)):
+            self.after(300,self._maybe_show_first_run_tutorial)
+            return
+        if bool(getattr(self,"_sound_prompt_open",False)):
+''',
+'first-run tutorial language gate',1)
+
+# Gate audio consent too. Match the method header and add a harmless early wait.
+if '    def _maybe_show_sound_consent(self):\n' not in s:
+    raise SystemExit('v3.19.2 patch: sound consent method missing')
+s=s.replace('    def _maybe_show_sound_consent(self):\n', '    def _maybe_show_sound_consent(self):\n        if not bool(getattr(self,"language_selected",False)):\n            try:self.after(300,self._maybe_show_sound_consent)\n            except Exception:pass\n            return\n',1)
+
+# ---------------------------------------------------------------------------
+# SIDEBAR — remove Blox Hub and expose the actual tools directly.
+# ---------------------------------------------------------------------------
+new_nav = r'''        nav=[
+            ("home",self._L("INÍCIO","HOME","INICIO","主页","ACCUEIL")),
+            ("fps",self._L("FPS & GRÁFICOS","FPS & GRAPHICS","FPS & GRÁFICOS","FPS 与画质","FPS & GRAPHISMES")),
+            ("ping",self._L("PING & LATÊNCIA","PING & LATENCY","PING & LATENCIA","PING 与网络","PING & LATENCE")),
+            ("cursor","CURSOR"),
+            ("fonts",self._L("FONTES","FONTS","FUENTES","字体","POLICES")),
+            ("theme",self._L("PERSONALIZAR","CUSTOMIZE","PERSONALIZAR","个性化","PERSONNALISER")),
+            ("audio",self._L("ÁUDIO","AUDIO","AUDIO","音频","AUDIO")),
+            ("spotify","SPOTIFY"),
+            ("setups","SETUPS"),
+            ("combo","COMBO PLANNER"),
+            ("roulette","BUILD ROULETTE"),
+            ("creator",self._L("CREATOR MODE","CREATOR MODE","MODO CREADOR","创作者模式","MODE CRÉATEUR")),
+            ("maintenance",self._L("DESEMPENHO","PERFORMANCE","RENDIMIENTO","性能","PERFORMANCES")),
+            ("recovery",self._L("RECUPERAÇÃO","RECOVERY","RECUPERACIÓN","恢复","RÉCUPÉRATION")),
+            ("updates",self._L("ATUALIZAÇÕES","UPDATES","ACTUALIZACIONES","更新","MISES À JOUR")),
+            ("feedback",self._L("SUGESTÕES & BUGS","FEEDBACK & BUGS","SUGERENCIAS & BUGS","建议与错误","SUGGESTIONS & BUGS")),
+            ("support",self._L("APOIAR","SUPPORT","APOYAR","支持","SOUTENIR")),
+            ("about",self._L("SOBRE","ABOUT","ACERCA DE","关于","À PROPOS")),
+        ]
+        self._nav_label_map=dict(nav)
+        section_breaks={
+            0:self._L("GERAL","GENERAL","GENERAL","常用","GÉNÉRAL"),
+            3:self._L("PERSONALIZAR","CUSTOMIZE","PERSONALIZAR","个性化","PERSONNALISER"),
+            8:"BLOX FRUITS",
