@@ -68,5 +68,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add tmp/ZKStrap_v3_19_1_final.py
           git commit -m 'Materialize v3.19.1 final source for review'
+          git reset --hard HEAD
+          git clean -fd
           git pull --rebase origin main
           git push origin main
