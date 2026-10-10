@@ -1,0 +1,85 @@
+            12:self._L("FERRAMENTAS","TOOLS","HERRAMIENTAS","工具","OUTILS"),
+            14:self._L("SISTEMA","SYSTEM","SISTEMA","系统","SYSTÈME"),
+        }'''
+regex_rep(
+    r'        nav=\[.*?\]\n        self\._nav_label_map=dict\(nav\); section_breaks=\{.*?\}',
+    new_nav,
+    'sidebar nav regroup'
+)
+
+# Blox Hub stays out of navigation and is no longer materialized by lazy routing.
+s = re.sub(r'\s*"bloxhub"\s*:\s*self\._lazy_build_page_bloxhub\s*,?', '', s)
+rep(
+'        self.current_page_key = str(self.config_data.get("current_page", "home") or "home")\n',
+'        self.current_page_key = str(self.config_data.get("current_page", "home") or "home")\n        if self.current_page_key == "bloxhub": self.current_page_key = "home"\n',
+'bloxhub current page migration',1)
+
+# Remove Blox Hub wording from current About text without rewriting changelog history.
+s=s.replace('Combo Planner, Blox Hub, Creator Mode, áudio, temas, diagnóstico, recuperação', 'Combo Planner, Build Roulette, Creator Mode, áudio, temas, diagnóstico, recuperação')
+s=s.replace('Combo Planner, Blox Hub, Creator Mode, audio, themes, diagnostics, recovery', 'Combo Planner, Build Roulette, Creator Mode, audio, themes, diagnostics, recovery')
+s=s.replace('novos recursos do Blox Hub', 'novos recursos para Blox Fruits')
+s=s.replace('new Blox Hub features', 'new Blox Fruits tools')
+
+# ---------------------------------------------------------------------------
+# UPDATES — render the long changelog as ONE native Text surface.
+# This removes dozens of moving rounded CTk child canvases from the hottest page.
+# ---------------------------------------------------------------------------
+updates_native = r'''        changelog=self._section_card(body, self._L("HISTÓRICO DE VERSÕES","VERSION HISTORY","HISTORIAL DE VERSIONES","版本历史","HISTORIQUE DES VERSIONS"), self._L("Rolagem nativa e leve: o histórico não cria dezenas de cards durante o movimento.","Light native scrolling: the history no longer moves dozens of individual cards.","Desplazamiento nativo y ligero para evitar rastros visuales.","使用原生轻量滚动，避免大量卡片重绘。","Défilement natif léger pour éviter les traces visuelles."))
+        log_shell=ctk.CTkFrame(changelog,fg_color=t["card_active"],corner_radius=12,border_width=1,border_color=self._mix_hex(t.get("border",t["accent"]),t["accent"],.28))
+        log_shell.pack(fill="both",expand=True,padx=10,pady=(6,12))
+        log_shell.grid_rowconfigure(0,weight=1); log_shell.grid_columnconfigure(0,weight=1)
+        update_text=tk.Text(log_shell,height=27,wrap="word",relief="flat",bd=0,highlightthickness=0,bg=t["card_active"],fg=t["text"],insertbackground=t["accent"],selectbackground=self._mix_hex(t["card_active"],t["accent"],.42),font=("Segoe UI",10),padx=16,pady=14,cursor="arrow",takefocus=0)
+        update_scroll=ctk.CTkScrollbar(log_shell,orientation="vertical",command=update_text.yview,fg_color="transparent",button_color=t["accent"],button_hover_color=t["hover"],width=12)
+        update_text.configure(yscrollcommand=update_scroll.set)
+        update_text.grid(row=0,column=0,sticky="nsew"); update_scroll.grid(row=0,column=1,sticky="ns",padx=(4,5),pady=6)
+        update_text.tag_configure("ver",foreground=t["accent"],font=("Segoe UI",11,"bold"),spacing1=9,spacing3=3)
+        update_text.tag_configure("item",foreground=t.get("muted",t["text"]),font=("Segoe UI",9),lmargin1=18,lmargin2=30,spacing1=2,spacing3=1)
+        update_text.tag_configure("sep",foreground=self._mix_hex(t["card_active"],t["accent"],.28))
+        def _version_key(row):
+            return tuple(int(n) for n in re.findall(r"\d+",row[0]))
+        for ver,title,items in sorted(CHANGELOG,key=_version_key,reverse=True):
+            update_text.insert("end",f"{ver}  •  {title}\n","ver")
+            for item in items:update_text.insert("end",f"  ✓  {item}\n","item")
+            update_text.insert("end","────────────────────────────────────────────────────────\n","sep")
+        update_text.configure(state="disabled")
+        self.update_changelog_text=update_text
+        def _updates_wheel(event):
+            delta=int(getattr(event,"delta",0) or 0)
+            if delta:
+                update_text.yview_scroll(-1 if delta>0 else 1,"units")
+            return "break"
+        update_text.bind("<MouseWheel>",_updates_wheel,add=False)
+        update_text.bind("<Button-4>",lambda e:(update_text.yview_scroll(-1,"units"),"break")[-1],add=False)
+        update_text.bind("<Button-5>",lambda e:(update_text.yview_scroll(1,"units"),"break")[-1],add=False)
+'''
+regex_rep(
+    r'        def _version_key\(row\):\n.*?ctk\.CTkLabel\(card,text=txt,.*?\)\.pack\(fill="x",padx=16,pady=\(4,14\)\)\n',
+    updates_native,
+    'native update changelog'
+)
+
+# ---------------------------------------------------------------------------
+# CURSOR + FONT LIVE PREVIEWS
+# ---------------------------------------------------------------------------
+preview_helpers = r'''    def _cursor_preview_source(self):
+        pack=str(getattr(self,"cursor_pack","Roblox Padrão") or "Roblox Padrão")
+        if pack!="Roblox Padrão":
+            base=os.path.join(self.get_cursor_packs_dir(),pack)
+            p=self._cursor_source_file(base,far=False)
+            if p and os.path.isfile(p):return p
+            p=os.path.join(base,"ArrowCursor.png")
+            if os.path.isfile(p):return p
+        root=str(getattr(self,"pasta_roblox_salva","") or "")
+        if root:
+            p=os.path.join(root,"content","textures","Cursors","KeyboardMouse","ArrowCursor.png")
+            if os.path.isfile(p):return p
+        return ""
+
+    def _refresh_cursor_preview(self):
+        lab=getattr(self,"cursor_preview_label",None)
+        if lab is None:return
+        try:
+            from PIL import Image, ImageDraw
+            src=self._cursor_preview_source()
+            if not src:
+                lab.configure(image=None,text=self._L("Sem imagem disponível","No preview available","Sin vista previa","暂无预览","Aucun aperçu")); return
