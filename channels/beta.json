@@ -1,18 +1,17 @@
 {
   "channel": "beta",
-  "version": "3.19.9",
-  "published_at": "2026-10-11T21:16:56Z",
+  "version": "3.20.0",
+  "published_at": "2026-10-11T21:44:49Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.9-beta/ZKStrap-v3.19.9-beta-win64.zip",
-  "sha256": "a659badc1a34a6589faa8d3ede8bb30fafeb278854bddd44029edd20c37b4c1b",
-  "size_bytes": 110399946,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.0-beta/ZKStrap-v3.20.0-beta-win64.zip",
+  "sha256": "240d0d4ed870db2d87673e6987ded69175365544b82db2c4014771aa44dabd8c",
+  "size_bytes": 110398132,
   "notes": [
-    "Corrige tela branca/congelamento ao usar CRIAR SNAPSHOT no ZK Owner Lab.",
-    "Snapshot manual agora compacta o perfil em uma thread de trabalho e mantém a interface responsiva.",
-    "Botão mostra estado CRIANDO SNAPSHOT e bloqueia cliques duplicados.",
-    "Snapshots automáticos de segurança antes de reset/restauração continuam bloqueantes por segurança.",
-    "Mantém idiomas completos e onboarding da v3.19.8.",
-    "Stable continua inalterada."
+    "Owner Lab agora tem SIMULAR PRIMEIRA EXECUÇÃO.",
+    "Cria snapshot em background e abre um perfil isolado 100% zerado.",
+    "O perfil principal permanece intacto e volta com VOLTAR AO MEU PERFIL.",
+    "Cada simulação mostra idioma/onboarding/tutorial como um usuário novo.",
+    "Mantém correções da v3.19.9 e internacionalização completa."
   ]
 }
