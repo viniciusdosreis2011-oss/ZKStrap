@@ -1,18 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.20.6",
-  "published_at": "2026-10-11T23:30:38Z",
+  "version": "3.20.7",
+  "published_at": "2026-10-11T23:47:45Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.6-beta/ZKStrap-v3.20.6-beta-win64.zip",
-  "sha256": "1f3d12cb16636e3e8612a947179c4e8bda48a22379e6ba09e263f44b80cf9c5a",
-  "size_bytes": 110430312,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.7-beta/ZKStrap-v3.20.7-beta-win64.zip",
+  "sha256": "7bf3269237f789e74fc506318370e757b9d64d368f7d2502c4c14fcd0349fac3",
+  "size_bytes": 110430199,
   "notes": [
-    "Corrige tela de Vincular Perfil repetindo após vincular o username.",
-    "Conclusão do Roblox agora usa estado em runtime + config + perfil/nick vinculado.",
-    "Após vincular, entra direto no tutorial novo sem voltar ao guard do Roblox.",
-    "Mantém roteador único Idioma -> Roblox -> Tutorial -> Setup.",
-    "Mantém blur real, ANI Lab e demais correções da 3.20.5.",
+    "Corrige tutorial capturando o próprio tutorial dentro da prévia.",
+    "Prévia agora esconde o overlay, renderiza a aba, espera o repaint do Windows e só então captura.",
+    "Cliques rápidos em Próximo/Voltar descartam capturas antigas.",
+    "Prévia foca mais no conteúdo real da aba e menos na sidebar/chrome do app.",
+    "Mantém correção do Roblox Link da 3.20.6.",
     "Stable continua inalterada."
   ]
 }
