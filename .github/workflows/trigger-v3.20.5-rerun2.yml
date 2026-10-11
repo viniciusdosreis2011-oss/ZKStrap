@@ -1,0 +1,20 @@
+name: Trigger ZKStrap v3.20.5 Final Rerun
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/trigger-v3.20.5-rerun2.yml'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch v3.20.5 release workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run release-v3.20.5-beta.yml --repo '${{ github.repository }}' --ref main
