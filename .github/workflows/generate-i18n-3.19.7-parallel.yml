@@ -1,0 +1,142 @@
+name: Generate ZKStrap v3.19.7 parallel language pack
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/generate-i18n-3.19.7-parallel.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  PYTHONUTF8: '1'
+
+jobs:
+  translate:
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [pt, en, es, zh, fr]
+    runs-on: windows-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode previous patch payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+
+      - name: Rebuild v3.19.6 source
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py
+          python patches/v3_19_6.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+
+      - name: Install requests
+        shell: pwsh
+        run: python -m pip install --disable-pip-version-check requests
+
+      - name: Generate ${{ matrix.lang }} target
+        shell: pwsh
+        env:
+          ZK_I18N_TARGET: ${{ matrix.lang }}
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python tools/generate_i18n_target_3197.py
+          if (-not (Test-Path "tmp/i18n_targets/${{ matrix.lang }}.json")) { throw 'Target pack missing.' }
+
+      - name: Upload ${{ matrix.lang }} target
+        uses: actions/upload-artifact@v4
+        with:
+          name: i18n-${{ matrix.lang }}
+          path: tmp/i18n_targets/${{ matrix.lang }}.json
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    needs: translate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download target artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: i18n-*
+          path: downloaded
+
+      - name: Arrange target files
+        shell: bash
+        run: |
+          mkdir -p tmp/i18n_targets
+          for lang in pt en es zh fr; do
+            cp "downloaded/i18n-$lang/$lang.json" "tmp/i18n_targets/$lang.json"
+          done
+
+      - name: Merge and validate final pack
+        shell: bash
+        run: |
+          python tools/merge_i18n_targets_3197.py
+          python - <<'PY'
+          import json
+          p=json.load(open('i18n/ui_3197_final.json',encoding='utf-8'))
+          assert len(p['rows'])>=300, len(p['rows'])
+          by_fr={r['fr']:r for r in p['rows']}
+          assert 'TABLEAU // ÉTAT EN DIRECT' in by_fr
+          assert any(r.get('fr')=='✓  APPLIQUER LES RÉGLAGES' for r in p['rows'])
+          print('final i18n rows',len(p['rows']),p.get('stats'))
+          PY
+
+      - name: Commit final pack
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add i18n/ui_3197_final.json
+          git commit -m 'Generate parallel five-language UI pack for v3.19.7'
+          git pull --rebase origin main
+          git push origin HEAD:main
