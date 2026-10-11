@@ -1,17 +1,17 @@
 {
   "channel": "beta",
-  "version": "3.19.7",
-  "published_at": "2026-10-11T04:56:27Z",
+  "version": "3.19.8",
+  "published_at": "2026-10-11T20:58:48Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.7-beta/ZKStrap-v3.19.7-beta-win64.zip",
-  "sha256": "ef1f5a1beb940e5889038d8bc244c6f6786d78468224d290681158953204adc0",
-  "size_bytes": 110398585,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.8-beta/ZKStrap-v3.19.8-beta-win64.zip",
+  "sha256": "0bc2c080e1dc97bf74dd9f8e2205cb459376ed54b63b942e904fd0e6c4ce9d4a",
+  "size_bytes": 110398057,
   "notes": [
-    "Internacionalização aplicada à interface inteira, não só sidebar.",
-    "Home, status dinâmicos e páginas lazy recebem tradução em runtime.",
-    "Pacote offline com 503 entradas para PT/EN/ES/ZH/FR.",
-    "Mantém layout, splash, tutorial e scroll seguro da v3.19.6.",
+    "A tela de seleção de idioma aparece novamente uma vez para quem já confirmou a revisão anterior.",
+    "Não precisa apagar config nem LocalAppData.",
+    "Depois de escolher o idioma, a revisão 4 é salva e o onboarding volta a aparecer somente quando necessário.",
+    "Mantém a internacionalização completa da v3.19.7.",
     "Stable continua inalterada."
   ]
 }
