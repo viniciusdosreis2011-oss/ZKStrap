@@ -1,19 +1,19 @@
 {
   "channel": "beta",
-  "version": "3.19.4",
-  "published_at": "2026-10-10T23:24:28Z",
+  "version": "3.19.5",
+  "published_at": "2026-10-11T02:11:48Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.4-beta/ZKStrap-v3.19.4-beta-win64.zip",
-  "sha256": "265e9c17384c39cecc8bc14bb0af6ee5c9c469ccb67fa5f85172f762c2d57208",
-  "size_bytes": 110334459,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.5-beta/ZKStrap-v3.19.5-beta-win64.zip",
+  "sha256": "ef1d41f98a838bdf44b7735dee83d687a05aac23dfabc11ba7450df8ebe863ed",
+  "size_bytes": 110338990,
   "notes": [
-    "Updates usa histórico nativo leve para reduzir rastros visuais.",
-    "Scroll suave em Canvas nativo sem repaint Win32.",
-    "Preview real de cursor e fonte.",
-    "Primeiro acesso oferece Português, English, Español, 中文 e Français e salva a escolha.",
-    "Blox Hub removido; Combo Planner, Build Roulette, Creator Mode e ZK Assist ficam separados.",
-    "Tutorial exige testar/destacar cada etapa antes de avançar; sair não marca como concluído.",
-    "Stable continua na 3.18.8 até aprovação desta Beta."
+    "Trocar idioma não reduz mais o tamanho dos textos da interface.",
+    "Splash permanece visível por cerca de 3 segundos.",
+    "Seletor de idioma foi redesenhado como onboarding completo com bandeiras reais.",
+    "Tutorial não usa mais missões, Highlight obrigatório ou retângulos sobre a interface.",
+    "Guia agora explica todas as 19 abas com navegação simples Voltar/Sair/Próximo.",
+    "Mantém scroll Canvas seguro, previews de cursor/fonte e Updates leve.",
+    "Stable continua na 3.18.8 até esta Beta ser aprovada."
   ]
 }
