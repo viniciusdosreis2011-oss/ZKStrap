@@ -1,0 +1,354 @@
+ZKStrap legacy bilingual pairs: 351
+Format: method | line | condition | PT | EN
+
+_render_profile_button | 5279 | self.idioma == 'pt' | VINCULAR ROBLOX | LINK ROBLOX
+abrir_vincular_perfil | 5305 | pt | VINCULAR PERFIL ROBLOX | LINK ROBLOX PROFILE
+abrir_vincular_perfil | 5306 | pt | Digite seu username do Roblox. Isso é só uma vinculação visual: o app nunca pede senha. | Enter your Roblox username. This is only a visual profile link: the app never asks for a password.
+go | 5317 | pt | Username inválido. | Invalid username.
+go | 5322 | pt | Buscando perfil... | Searching profile...
+abrir_vincular_perfil | 5324 | pt | BUSCAR PERFIL | FIND PROFILE
+abrir_vincular_perfil | 5326 | pt | DESVINCULAR PERFIL | UNLINK PROFILE
+_buscar_perfil_roblox_thread | 5350 | pt | Consultando username... | Looking up username...
+_buscar_perfil_roblox_thread | 5375 | pt | Tentando busca alternativa... | Trying alternate search...
+_buscar_perfil_roblox_thread | 5420 | pt | Perfil encontrado. Carregando avatar... | Profile found. Loading avatar...
+_mostrar_confirmacao_perfil | 5482 | pt | TEU PERFIL É ESSE? | IS THIS YOUR PROFILE?
+_mostrar_confirmacao_perfil | 5494 | pt | NÃO | NO
+_mostrar_confirmacao_perfil | 5495 | pt | SIM, É MEU PERFIL | YES, THAT'S ME
+_refresh_home_profile_card | 5538 | self.idioma == 'pt' | Nenhum perfil vinculado. | No linked profile.
+_show_sound_consent | 5698 | self.idioma == 'pt' | Feedback de clique, sons dos temas e música ambiente. Tudo é local e opcional. Este card não bloqueia o resto do app. | Click feedback, theme sounds and ambient music. Everything is local and optional. This card never blocks the rest of the app.
+_tutorial_username | 5975 | self.idioma == 'pt' | jogador | player
+_abrir_onboarding_username | 6086 | pt | ZK  //  PRIMEIRO ACESSO | ZK  //  FIRST RUN
+_abrir_onboarding_username | 6089 | pt | Antes de começar | Before we start
+_abrir_onboarding_username | 6091 | pt | Qual é o seu username do Roblox? É só o nick do jogo — nunca pedimos nome real, senha ou e-mail. Ele serve para personalizar o guia e preencher a busca de perfil; fica salvo apenas neste PC. | What's your Roblox username? Only your in-game nickname — we never ask for your real name, password or email. It personalizes the guide and pre-fills profile linking, and stays only on this PC.
+_abrir_onboarding_username | 6097 | pt | ex: zak_blox | e.g. zak_blox
+start_guide | 6106 | pt | Use um username válido do Roblox (3–20 caracteres). | Use a valid Roblox username (3–20 characters).
+skip | 6119 | pt | TUTORIAL PULADO | TUTORIAL SKIPPED
+skip | 6120 | pt | Você pode abrir novamente pelo botão ? TUTORIAL. | Open it again anytime with ? TUTORIAL.
+_abrir_onboarding_username | 6121 | pt | COMEÇAR TUTORIAL | START TUTORIAL
+_abrir_onboarding_username | 6123 | pt | PULAR POR ENQUANTO | SKIP FOR NOW
+_abrir_tutorial_passos | 6135 | pt | ZK // GUIA INTERATIVO | ZK // INTERACTIVE GUIDE
+_abrir_tutorial_passos | 6144 | pt | ← | ←
+_abrir_tutorial_passos | 6147 | pt | PRÓXIMO  → | NEXT  →
+_tutorial_close | 6238 | self.idioma == 'pt' | TUTORIAL CONCLUÍDO | TUTORIAL COMPLETE
+_tutorial_close | 6239 | self.idioma == 'pt' | Você pode rever o guia quando quiser em ? TUTORIAL. | Replay it anytime from ? TUTORIAL.
+_search_catalog | 6318 | pt | Céu Cinza | Gray Sky
+_search_catalog | 6319 | pt | Alvo de FPS | FPS Target
+_search_catalog | 6323 | pt | Ping & Latência | Ping & Latency
+toggle_advanced_mode | 6501 | self.idioma == 'pt' | MODO AVANÇADO | ADVANCED MODE
+criar_interface | 6705 | self.idioma == 'pt' | ⌕   Buscar página, opção ou ferramenta…                                  CTRL+K | ⌕   Search page, option or tool…                                  CTRL+K
+criar_interface | 6715 | self.idioma == 'pt' | APLICAR | APPLY
+criar_interface | 6716 | self.idioma == 'pt' | Modo compacto | Compact mode
+criar_interface | 6717 | self.idioma == 'pt' | Sons do ZKStrap | ZKStrap audio
+_lazy_build_page_home | 7151 | pt | Painel central para ver o estado do cliente e aplicar tudo sem procurar botões escondidos. | Central dashboard to see client state and apply everything without hunting for hidden buttons.
+_lazy_build_page_home | 7153 | pt | DASHBOARD // STATUS AO VIVO | DASHBOARD // LIVE STATUS
+_lazy_build_page_home | 7153 | pt | Resumo rápido do Roblox, módulos, assets e necessidade de reinício. | Quick summary of Roblox, modules, assets and restart state.
+_lazy_build_page_home | 7156 | pt | CLIENTE | CLIENT
+_lazy_build_page_home | 7156 | pt | OTIMIZAÇÕES | OPTIMIZATIONS
+_lazy_build_page_home | 7156 | pt | REINÍCIO | RESTART
+_lazy_build_page_home | 7167 | pt | CENTRAL RÁPIDA | QUICK CENTER
+_lazy_build_page_home | 7167 | pt | Aplique as opções atuais ou ative o modo FPS seguro em um clique. Nenhum app é fechado automaticamente. | Apply current options or enable safe FPS mode in one click. No apps are closed automatically.
+_lazy_build_page_home | 7169 | pt | ⚡ OTIMIZAR ROBLOX | ⚡ OPTIMIZE ROBLOX
+_lazy_build_page_home | 7170 | pt | ✓  APLICAR CONFIGURAÇÕES | ✓  APPLY SETTINGS
+_lazy_build_page_home | 7172 | pt | ≋  COMPARAR CONFIGURAÇÕES | ≋  COMPARE SETTINGS
+_lazy_build_page_home | 7173 | pt | ▣  MODO COMPACTO | ▣  COMPACT MODE
+_lazy_build_page_home | 7175 | pt | BENCHMARK DO SISTEMA | SYSTEM BENCHMARK
+_lazy_build_page_home | 7175 | pt | Mede CPU, RAM, processos e memória do Roblox. Não inventa FPS: é um retrato do sistema antes/depois. | Measures CPU, RAM, processes and Roblox memory. It does not invent FPS: it is a before/after system snapshot.
+_lazy_build_page_home | 7176 | pt | Nenhuma medição ainda. | No measurement yet.
+_lazy_build_page_home | 7179 | pt | MEDIR AGORA | MEASURE NOW
+_lazy_build_page_home | 7180 | pt | ABRIR RECUPERAÇÃO | OPEN RECOVERY
+_lazy_build_page_home | 7182 | pt | Localização da version-* atual e sincronização automática após updates. | Current version-* location and automatic synchronization after updates.
+_lazy_build_page_home | 7183 | pt | Roblox ainda não localizado | Roblox not located yet
+_lazy_build_page_home | 7187 | pt | ABRIR CLIENTSETTINGS | OPEN CLIENTSETTINGS
+_lazy_build_page_home | 7188 | pt | WATCHDOG 5s — manter configurações após update | 5s WATCHDOG — keep settings after updates
+_lazy_build_page_home | 7192 | pt | PERFIL ROBLOX | ROBLOX PROFILE
+_lazy_build_page_home | 7192 | pt | Vínculo visual público: não é login e nunca pede senha. | Public visual link: not a login and never asks for a password.
+_lazy_build_page_home | 7195 | pt | VINCULAR / TROCAR | LINK / CHANGE
+_lazy_build_page_home | 7196 | pt | DESVINCULAR | UNLINK
+_lazy_build_page_fps | 7207 | pt | FPS & GRÁFICOS | FPS & GRAPHICS
+_lazy_build_page_fps | 7207 | pt | Central de desempenho: os principais ajustes ficam juntos e são aplicados com um clique. | Performance center: the main tweaks live together and apply with one click.
+_lazy_build_page_fps | 7208 | pt | DESEMPENHO PRINCIPAL | CORE PERFORMANCE
+_lazy_build_page_fps | 7208 | pt | O modo FPS reúne os ajustes gráficos permitidos do executor. Céu cinza fica separado para você escolher o visual normal ou cinza. | FPS mode combines the executor graphics tweaks. Gray sky stays separate so you can choose normal or gray visuals.
+_lazy_build_page_fps | 7209 | pt | MODO FPS / GRÁFICOS NO MÍNIMO | FPS MODE / MINIMUM GRAPHICS
+_lazy_build_page_fps | 7210 | pt | CÉU CINZA | GRAY SKY
+_lazy_build_page_fps | 7211 | pt | DESBLOQUEAR / ELEVAR FPS | UNLOCK / RAISE FPS
+_lazy_build_page_fps | 7213 | pt | ALVO DE FPS | FPS TARGET
+_lazy_build_page_fps | 7213 | pt | Escolha o alvo usado pelo desbloqueio e pela micro-otimização. Algumas chaves podem ser ignoradas pelo cliente dependendo da versão. | Choose the target used by FPS unlock and micro-optimization. Some keys may be ignored depending on client version.
+_lazy_build_page_fps | 7230 | pt | OTIMIZAÇÕES AVANÇADAS | ADVANCED OPTIMIZATIONS
+_lazy_build_page_fps | 7230 | pt | Telemetria, micro-otimizações e ajustes experimentais ficam recolhidos para não poluir a página. | Telemetry, micro-optimizations and experimental tweaks stay collapsed to keep this page clean.
+_lazy_build_page_fps | 7231 | pt | MICRO-OTIMIZAÇÃO CPU / FPS (EXPERIMENTAL) | CPU / FPS MICRO-OPTIMIZATION (EXPERIMENTAL)
+_lazy_build_page_fps | 7232 | pt | REDUZIR / DESATIVAR TELEMETRIA (EXPERIMENTAL) | REDUCE / DISABLE TELEMETRY (EXPERIMENTAL)
+_lazy_build_page_fps | 7236 | pt | BLOX FRUITS // DRACO V4 | BLOX FRUITS // DRACO V4
+_lazy_build_page_fps | 7237 | pt | Ajuste experimental visual/de desempenho. Não precisa mais de uma aba própria. | Experimental visual/performance tweak. It no longer needs a separate page.
+_lazy_build_page_fps | 7238 | pt | REDUZIR AURA DRACO V4 (EXPERIMENTAL) | REDUCE DRACO V4 AURA (EXPERIMENTAL)
+_lazy_build_page_fps | 7244 | pt | PRONTO PARA APLICAR | READY TO APPLY
+_lazy_build_page_ping | 7257 | pt | PING & LATÊNCIA | PING & LATENCY
+_lazy_build_page_ping | 7257 | pt | Reduza gargalos locais e descubra onde a latência está acontecendo. Distância/rota até o servidor continuam dependendo da internet e do servidor do Roblox. | Reduce local bottlenecks and diagnose latency. Physical route/server distance still depends on your ISP and Roblox server.
+_lazy_build_page_ping | 7258 | pt | PAINEL DE LATÊNCIA | LATENCY PANEL
+_lazy_build_page_ping | 7258 | pt | Mede conexão TCP até pontos de referência e mostra jitter. Não é o ping exato dentro da partida, mas ajuda a separar problema local de rota/servidor. | Measures TCP connection time to reference endpoints and jitter. It is not exact in-game ping, but helps separate local issues from route/server issues.
+_lazy_build_page_ping | 7261 | pt | TESTAR ROTA ROBLOX | TEST ROBLOX ROUTE
+_lazy_build_page_ping | 7262 | pt | OTIMIZAÇÃO SEGURA | SAFE NETWORK CLEANUP
+_lazy_build_page_ping | 7263 | pt | REDUZIR GARGALO LOCAL | REDUCE LOCAL BOTTLENECKS
+_lazy_build_page_ping | 7263 | pt | O que realmente pode ajudar quando o problema está no seu PC: evitar downloads/overlays competindo com o Roblox e manter a pilha de rede do Windows em estado normal. | What can actually help when the issue is local: avoid downloads/overlays competing with Roblox and keep Windows networking in a normal state.
+_lazy_build_page_ping | 7265 | pt | PREPARAR SESSÃO ROBLOX | PREPARE ROBLOX SESSION
+_lazy_build_page_ping | 7266 | pt | APPS PESADOS / REDE | HEAVY / NETWORK APPS
+_lazy_build_page_ping | 7268 | pt | VER TCP AUTO-TUNING | CHECK TCP AUTO-TUNING
+_lazy_build_page_ping | 7269 | pt | ABRIR REDE DO WINDOWS | OPEN WINDOWS NETWORK
+_lazy_build_page_ping | 7270 | pt | DNS LAB // ROTA LOCAL | DNS LAB // LOCAL ROUTE
+_lazy_build_page_ping | 7270 | pt | Teste resolvers antes de trocar. DNS pode melhorar a resolução de nomes, mas não encurta a distância física até o servidor da partida. | Benchmark resolvers before switching. DNS can improve name resolution but cannot shorten the physical route to the match server.
+_lazy_build_page_ping | 7271 | pt | Clique em TESTAR DNS para medir Cloudflare, Google e Quad9 por RTT real e aplicar o melhor resultado com um clique. | Click TEST DNS to measure Cloudflare, Google and Quad9 by real RTT and apply the best result with one click.
+_lazy_build_page_ping | 7273 | pt | TESTAR DNS | TEST DNS
+_lazy_build_page_ping | 7274 | pt | APLICAR MELHOR TESTE | APPLY BEST TEST
+_lazy_build_page_ping | 7275 | pt | AUTOMÁTICO / DHCP | AUTOMATIC / DHCP
+_lazy_build_page_ping | 7279 | pt | REPARAR PILHA TCP/IP — AVANÇADO | REPAIR TCP/IP STACK — ADVANCED
+_lazy_build_page_ping | 7281 | pt | FASTFLAGS DE PING — LEGADO | PING FASTFLAGS — LEGACY
+_lazy_build_page_ping | 7281 | pt | Flags antigas de rede podem ser ignoradas pelo Roblox atual e não substituem uma rota melhor. Deixei o módulo separado para não vender 'ping mágico'. | Old network flags may be ignored by current Roblox and cannot replace a better route. The legacy module stays separate so it is not presented as magic ping.
+_lazy_build_page_ping | 7282 | pt | PACK DE REDE LEGADO (EXPERIMENTAL) | LEGACY NETWORK PACK (EXPERIMENTAL)
+_lazy_build_page_resolution | 7292 | pt | Controle separado para tamanho da área do cliente Roblox. | Separate control for Roblox client-area size.
+_lazy_build_page_resolution | 7293 | pt | O Roblox removeu/bloqueou a FastFlag usada para forçar resolução interna. Por isso esta opção usa o método disponível sem injeção: ajusta a área/janela do cliente Roblox, sem mudar a resolução do Windows. | Roblox removed/blocked the FastFlag used to force internal render resolution. This option therefore uses the available non-injection method: resizing the Roblox client area/window without changing Windows resolution.
+_lazy_build_page_resolution | 7295 | pt | Personalizada | Custom
+_lazy_build_page_resolution | 7300 | pt | APLICAR NO ROBLOX | APPLY TO ROBLOX
+_lazy_build_page_cursor | 7310 | pt | Substitui os assets reais ArrowCursor.png e ArrowFarCursor.png; não usa overlay. | Replaces the real ArrowCursor.png and ArrowFarCursor.png assets; no overlay.
+_lazy_build_page_cursor | 7311 | pt | CURSOR PERSONALIZADO | CUSTOM CURSOR
+_lazy_build_page_cursor | 7311 | pt | Fundo branco conectado às bordas pode ser removido automaticamente antes da normalização. | White background connected to image edges can be removed automatically before normalization.
+_lazy_build_page_cursor | 7326 | pt | REMOVER FUNDO BRANCO AUTOMATICAMENTE | AUTO REMOVE WHITE BACKGROUND
+_lazy_build_page_cursor | 7334 | pt | APLICAR CURSOR | APPLY CURSOR
+_lazy_build_page_cursor | 7335 | pt | RESTAURAR ORIGINAL | RESTORE ORIGINAL
+_lazy_build_page_fonts | 7346 | pt | FONTES DO ROBLOX | ROBLOX FONTS
+_lazy_build_page_fonts | 7346 | pt | Aplica uma fonte TTF/OTF nos arquivos de texto locais do cliente e preserva os originais em backup. | Applies a TTF/OTF font to local client text font files and preserves originals in backup.
+_lazy_build_page_fonts | 7347 | pt | FONTE PERSONALIZADA | CUSTOM FONT
+_lazy_build_page_fonts | 7347 | pt | Arquivos de emoji são preservados para evitar quadrados/símbolos quebrados. Bloxstrap, quando detectado, também recebe a modificação para sobreviver a updates. | Emoji files are preserved to avoid broken symbols. When Bloxstrap is detected, the modification is mirrored there to survive updates.
+_lazy_build_page_fonts | 7349 | pt | Nenhuma fonte selecionada | No font selected
+_lazy_build_page_fonts | 7354 | pt | ESCOLHER .TTF / .OTF | CHOOSE .TTF / .OTF
+_lazy_build_page_fonts | 7355 | pt | APLICAR NO JOGO | APPLY IN GAME
+_lazy_build_page_fonts | 7356 | pt | RESTAURAR FONTES ORIGINAIS | RESTORE ORIGINAL FONTS
+_lazy_build_page_combo | 7367 | pt | Salve builds e sequências de combo para consultar depois — sem macro e sem automatizar o jogo. | Save builds and combo sequences for later — no macros or gameplay automation.
+_lazy_build_page_combo | 7368 | pt | SEU ARQUIVO DE COMBOS | YOUR COMBO LIBRARY
+_lazy_build_page_combo | 7368 | pt | Escolha o estilo de luta e a fruta, complete os outros slots como texto livre e escreva a sequência inteira. Os cards ficam salvos localmente no seu PC. | Choose your fighting style and fruit, complete the other slots as free-form text, and write the full sequence. Cards are saved locally on your PC.
+_lazy_build_page_combo | 7371 | pt | ＋ NOVO COMBO | ＋ NEW COMBO
+_lazy_build_page_combo | 7372 | pt | FONTES / CRÉDITOS | SOURCES / CREDITS
+_lazy_build_page_combo | 7373 | pt | Fruits e Fighting Styles usam primeiro o pack local integrado ao ZKStrap; quando existe imagem local, nenhuma wiki/API é necessária para a thumbnail. | Fruits and Fighting Styles use the bundled local pack first; when a local image exists, no wiki/API is needed for the thumbnail.
+_lazy_build_page_combo | 7378 | pt | COMBOS SALVOS | SAVED COMBOS
+_lazy_build_page_combo | 7378 | pt | Sem limite prático: adicione, edite, duplique ou exclua suas builds. | No practical limit: add, edit, duplicate or delete your builds.
+_lazy_build_page_bloxhub | 7397 | pt | Ferramentas para jogar, treinar e criar conteúdo de Blox Fruits. | Tools to play, practice and create Blox Fruits content.
+_lazy_build_page_bloxhub | 7398 | pt | A central reúne as ferramentas de Blox Fruits sem duplicar toda a navegação na barra lateral. | This hub gathers Blox Fruits tools without duplicating the entire sidebar navigation.
+_lazy_build_page_bloxhub | 7407 | pt | ÚLTIMA ROLETA | LAST ROLL
+_lazy_build_page_bloxhub | 7407 | pt | Nenhuma ainda | None yet
+_lazy_build_page_bloxhub | 7408 | pt | DESAFIOS ATIVOS | ACTIVE CHALLENGES
+_lazy_build_page_bloxhub | 7409 | pt | DESAFIOS CONCLUÍDOS | COMPLETED CHALLENGES
+_lazy_build_page_roulette | 7425 | pt | Fighting Style + Fruit + Sword + Gun. Tudo local, visual e pronto para alimentar os desafios do Creator Mode. | Fighting Style + Fruit + Sword + Gun. Local catalogs with Creator Mode integration.
+_lazy_build_page_roulette | 7426 | pt | A build inteira é decidida primeiro e revelada em sequência. Nenhum slot foi removido: Style → Fruit → Sword → Gun. | The whole build is decided first and then revealed: Style → Fruit → Sword → Gun.
+_lazy_build_page_roulette | 7450 | pt | 🎲  SORTEAR BUILD | 🎲  ROLL BUILD
+_lazy_build_page_roulette | 7451 | pt | INVENTÁRIO | INVENTORY
+_lazy_build_page_roulette | 7452 | pt | FAVORITAR | FAVORITE
+_lazy_build_page_roulette | 7454 | pt | SALVAR NO COMBO PLANNER | SAVE TO COMBO PLANNER
+_lazy_build_page_roulette | 7455 | pt | USAR NOS DESAFIOS | USE IN CHALLENGES
+_lazy_build_page_roulette | 7456 | pt | HISTÓRICO DA ROLETA | ROULETTE HISTORY
+_lazy_build_page_creator | 7467 | pt | Desafios de PvP com progresso manual, raridade SECRET e histórico persistente. | PvP challenges with manual progress, rare SECRET drops and persistent history.
+_lazy_build_page_creator | 7468 | pt | Os desafios funcionam com qualquer build, mas ficam mais dinâmicos quando você usa uma build aleatória da Build Roulette. Gere 1, 2, 3, 4 ou 5 desafios e acompanhe tudo manualmente. | Challenges work with any build, but random Roulette builds make them more dynamic.
+_lazy_build_page_creator | 7477 | pt | Escolha dificuldade e quantidade. Trocas são limitadas a 2 por desafio. Winstreak/killstreak só contam contra players de 5M+; 2.5M não conta. | Choose difficulty and quantity. Each challenge can be rerolled only twice.
+_lazy_build_page_creator | 7481 | pt | GERAR DESAFIOS | GENERATE CHALLENGES
+_lazy_build_page_creator | 7484 | pt | HISTÓRICO DE DESAFIOS | CHALLENGE HISTORY
+_lazy_build_page_creator | 7484 | pt | Concluídos ficam salvos aqui. Desafios ativos não são salvos e desaparecem ao fechar o ZKStrap. | Completed challenges stay here; active challenges disappear when ZKStrap closes.
+_lazy_build_page_setups | 7496 | pt | Salve até 5 combinações locais e aplique com snapshot automático. | Save up to 5 local combinations and apply them with an automatic snapshot.
+_lazy_build_page_setups | 7497 | pt | SETUPS PRONTOS | BUILT-IN SETUPS
+_lazy_build_page_setups | 7506 | pt | MEUS SETUPS | MY SETUPS
+_lazy_build_page_setups | 7506 | pt | Monte sua configuração no app e clique em SALVAR COMO SETUP. Ao editar, o topo deixa claro qual setup está recebendo as alterações. | Configure the app and click SAVE AS SETUP. Edit mode clearly shows which setup is receiving changes.
+_lazy_build_page_setups | 7507 | pt | ＋ SALVAR COMO SETUP | ＋ SAVE AS SETUP
+_lazy_build_page_spotify | 7521 | pt | SPOTIFY / MÍDIA | SPOTIFY / MEDIA
+_lazy_build_page_spotify | 7522 | pt | Now Playing do Windows — sem login, Client ID, OAuth, API ou Premium. | Windows Now Playing — no login, Client ID, OAuth, API or Premium.
+_lazy_build_page_spotify | 7531 | pt | Procura a sessão do Spotify no Windows. Spotify Desktop é identificado diretamente. No navegador, o ZKStrap aceita a sessão quando o Windows marca como MÚSICA, quando há metadata musical completa (título + artista + álbum) ou quando a janela confirma Spotify; sessões de VÍDEO continuam bloqueadas. | Targets Spotify specifically. Browser MUSIC sessions are preferred and VIDEO sessions are rejected so YouTube is never controlled by mistake.
+_lazy_build_page_spotify | 7540 | pt | Nenhuma música detectada | No media detected
+_lazy_build_page_spotify | 7541 | pt | Abra o Spotify e dê play em uma música. | Open Spotify and start a track.
+_lazy_build_page_spotify | 7548 | pt | Status: procurando sessão de mídia… | Status: looking for media session…
+_lazy_build_page_spotify | 7550 | pt | Controles enviados DIRETAMENTE à sessão do Spotify detectada pelo Windows. YouTube e outros players são ignorados; não existe fallback de playback por tecla global. | Controls target the Spotify session directly. YouTube and other players are ignored; playback never falls back to global media keys.
+_lazy_build_page_spotify | 7552 | pt | ⏮  ANTERIOR | ⏮  PREVIOUS
+_lazy_build_page_spotify | 7552 | pt | PRÓXIMA  ⏭ | NEXT  ⏭
+_lazy_build_page_spotify | 7555 | pt | ABRIR APP | OPEN APP
+_lazy_build_page_spotify | 7556 | pt | ABRIR WEB | OPEN WEB
+_lazy_build_page_spotify | 7560 | pt | NAVEGAR // SPOTIFY WEB | BROWSE // SPOTIFY WEB
+_lazy_build_page_spotify | 7560 | pt | Pesquise pelo ZKStrap e abra o resultado direto no Spotify. A navegação completa continua no player oficial, porque esta versão não usa a API da sua conta. | Search from ZKStrap and open the result directly in Spotify. Full browsing stays in the official player because this version does not use your account API.
+_lazy_build_page_spotify | 7562 | pt | Música, artista ou álbum… | Song, artist or album…
+_lazy_build_page_spotify | 7563 | pt | PESQUISAR | SEARCH
+_lazy_build_page_spotify | 7567 | pt | VOLUME DO SPOTIFY | SPOTIFY VOLUME
+_lazy_build_page_spotify | 7568 | pt | Controla somente a sessão de áudio do Spotify Desktop. Nunca altera o volume geral do Windows nem o áudio do YouTube. No Spotify Web, o controle só é liberado se o Windows expuser uma sessão de áudio identificável como Spotify. | Controls only the Spotify Desktop audio session. It never changes Windows master volume or YouTube audio. On Spotify Web, volume is enabled only when Windows exposes an audio session identifiable as Spotify.
+_lazy_build_page_spotify | 7573 | pt | SPOTIFY • verificando volume… | SPOTIFY • checking volume…
+_lazy_build_page_spotify | 7582 | pt | PERMITIR VOLUME NO SPOTIFY WEB (pode afetar outras abas do navegador) | ALLOW SPOTIFY WEB VOLUME (may affect other browser tabs)
+_lazy_build_page_spotify | 7589 | pt | COMPATIBILIDADE | COMPATIBILITY
+_lazy_build_page_spotify | 7591 | pt | • Spotify Desktop: metadata e capa vêm da sessão de mídia do Windows.\n• Spotify Web: funciona quando Chrome/Edge publica a aba no controle multimídia do Windows; a janela ativa com Spotify também serve como confirmação.\n• Playback mira a sessão selecionada do Spotify; sessões de vídeo continuam rejeitadas.\n• Volume exclusivo é garantido no Spotify Desktop. No Web, o switch opcional controla o processo do navegador e pode afetar outras abas.\n• Sem Premium • sem conta Developer • sem Client ID • sem callback. | • Spotify Desktop: metadata and artwork come from the Windows media session.\n• Spotify Web: works when Chrome/Edge exposes the tab to Windows media controls.\n• If another player becomes the active session, ZKStrap may show it; pause it and refresh.\n• No Premium • no Developer account • no Client ID • no callback.
+_lazy_build_page_ai | 7616 | pt | Diga o que você quer fazer ou escolha uma categoria. O assistente lê o estado atual do app e leva você direto ao lugar certo. | Tell ZK Assist what you want to do or choose a category.
+_lazy_build_page_ai | 7620 | pt | ✦  ASSISTENTE DO ZKSTRAP | ✦  ZKSTRAP ASSISTANT
+_lazy_build_page_ai | 7621 | pt | Sem menus gigantes: pesquise uma função, rode um diagnóstico rápido ou escolha uma das áreas abaixo. Tudo funciona localmente, sem IA generativa. | Search a function, run a quick diagnostic or choose an area below. Everything works locally.
+_lazy_build_page_ai | 7625 | pt | Ex.: cursor não aplica, melhorar FPS, trocar tema, achar Roblox... | Example: cursor not applying, improve FPS, change theme...
+_lazy_build_page_ai | 7627 | pt | BUSCAR AJUDA | SEARCH HELP
+_lazy_build_page_ai | 7635 | pt | O QUE VOCÊ QUER RESOLVER? | WHAT DO YOU WANT TO SOLVE?
+_lazy_build_page_ai | 7635 | pt | Escolha uma área. Depois o assistente mostra só as opções que fazem sentido. | Choose an area and only relevant actions will be shown.
+_lazy_build_page_ai | 7638 | pt | RESPOSTA / PRÓXIMO PASSO | ANSWER / NEXT STEP
+_lazy_build_page_ai | 7638 | pt | Você pode voltar às categorias a qualquer momento. Os botões abaixo levam direto à configuração certa. | Buttons take you directly to the correct setting.
+_lazy_build_page_theme | 7653 | pt | PERSONALIZAR ZKSTRAP | CUSTOMIZE ZKSTRAP
+_lazy_build_page_theme | 7653 | pt | Temas especiais usam banner próprio no topo; o restante do app permanece limpo, alinhado e consistente. | Special themes use their own top banner while the rest of the app stays clean, aligned and consistent.
+_lazy_build_page_theme | 7654 | pt | GALERIA DE TEMAS | THEME GALLERY
+_lazy_build_page_theme | 7654 | pt | Temas Core mantêm a identidade do ZKStrap. Nos especiais, a arte do jogo fica concentrada no banner superior e os cards continuam organizados. | Core themes keep ZKStrap's identity. Special themes keep game artwork inside the top banner while cards stay organized.
+_lazy_build_page_theme | 7659 | pt | Temas Especiais | Special Themes
+_lazy_build_page_theme | 7660 | pt | Temas Secretos | Secret Themes
+add_special_theme_gallery | 7680 | pt | Arte confinada dentro do banner e dos cards. Nada atravessa header, sidebar ou texto. | Artwork stays inside banners and cards. Nothing crosses headers, sidebar or text.
+add_secret_theme_gallery | 7705 | pt | Cada identidade é desbloqueada de uma forma diferente. Cards bloqueados escondem a condição real, mas revelam uma pista quando você passa o mouse por qualquer parte deles. | Every identity unlocks differently. Locked cards hide the real condition, but reveal a hint when you hover anywhere over the card.
+_lazy_build_page_theme | 7955 | pt | CORES DO TEMA | THEME COLORS
+_lazy_build_page_theme | 7955 | pt | Personalize uma área ou restaure o tema para voltar à identidade original. | Customize one area or restore the theme to return to its original identity.
+_lazy_build_page_theme | 7957 | pt | Fundo do app | App background
+_lazy_build_page_theme | 7957 | pt | Barra lateral | Sidebar
+_lazy_build_page_theme | 7957 | pt | Painel principal | Main panel
+_lazy_build_page_theme | 7957 | pt | Dentro das caixas | Card interior
+_lazy_build_page_theme | 7957 | pt | Caixa ativa | Active card
+_lazy_build_page_theme | 7957 | pt | Caixa do ícone | Icon box
+_lazy_build_page_theme | 7957 | pt | Cor de destaque | Accent
+_lazy_build_page_theme | 7957 | pt | Hover principal | Main hover
+_lazy_build_page_theme | 7957 | pt | Texto | Text
+_lazy_build_page_theme | 7957 | pt | Bordas | Borders
+_lazy_build_page_theme | 7962 | pt | RESTAURAR TEMA | RESTORE THEME
+_lazy_build_page_audio | 7973 | pt | ÁUDIO // SOUND STUDIO | AUDIO // SOUND STUDIO
+_lazy_build_page_audio | 7973 | pt | Escolha a identidade sonora do ZKStrap. Música e efeitos podem ser controlados separadamente. | Choose ZKStrap's sound identity. Music and effects can be controlled separately.
+_lazy_build_page_audio | 7974 | pt | 10 packs locais, 2 trilhas melódicas por pack e efeitos diferentes para navegação, scroll, sliders, tema, Combo Planner, avisos e carregamento. | 10 local packs, 2 melodic background tracks per pack and distinct effects for navigation, scroll, sliders, themes, Combo Planner, alerts and loading.
+_lazy_build_page_audio | 7979 | pt | MÚSICA DE FUNDO | BACKGROUND MUSIC
+_lazy_build_page_audio | 7980 | pt | EFEITOS / SFX | EFFECTS / SFX
+_lazy_build_page_audio | 7984 | pt | VOLUME DA MÚSICA | MUSIC VOLUME
+_lazy_build_page_audio | 7989 | pt | VOLUME DOS EFEITOS | SFX VOLUME
+_lazy_build_page_audio | 7994 | pt | PACKS DE SOM | SOUND PACKS
+_lazy_build_page_audio | 7994 | pt | Cada pack usa composição, ritmo e harmonia próprios. Use TESTAR para ouvir a assinatura antes de trocar. | Each pack uses its own composition, rhythm and harmony. Use TEST to hear its signature before switching.
+_lazy_build_page_audio | 8005 | pt | ▶ TESTAR | ▶ TEST
+_lazy_build_page_audio | 8006 | pt | USAR PACK | USE PACK
+_lazy_build_page_audio | 8007 | pt | EVENTOS SONOROS | SOUND EVENTS
+_lazy_build_page_audio | 8007 | pt | O ZKStrap usa variações para não repetir o mesmo clique. | ZKStrap uses variants so the same click is not repeated constantly.
+_lazy_build_page_maintenance | 8020 | pt | CENTRAL DE DESEMPENHO | PERFORMANCE CENTER
+_lazy_build_page_maintenance | 8020 | pt | Prepare o Windows e a sessão do Roblox sem misturar boost com limpeza ou restauração. | Prepare Windows and the Roblox session without mixing performance tools with cleanup or rollback.
+_lazy_build_page_maintenance | 8022 | pt | PAINEL DE PERFORMANCE | PERFORMANCE DASHBOARD
+_lazy_build_page_maintenance | 8022 | pt | Diagnóstico rápido antes de mudar qualquer coisa. CPU/RAM altos podem indicar concorrência real por recursos. | Run a quick diagnostic before changing anything. High CPU/RAM can reveal real resource contention.
+_lazy_build_page_maintenance | 8024 | pt | Clique em ANALISAR para ler CPU, RAM, Roblox e captura em segundo plano. | Click ANALYZE to read CPU, RAM, Roblox and background capture.
+_lazy_build_page_maintenance | 8026 | pt | ANALISAR | ANALYZE
+_lazy_build_page_maintenance | 8028 | pt | WINDOWS PARA JOGOS | WINDOWS FOR GAMING
+_lazy_build_page_maintenance | 8028 | pt | Use recursos nativos do Windows para reduzir gravação em segundo plano e escolher a GPU do Roblox. Nada aqui desativa segurança. | Use native Windows features to reduce background recording and choose the Roblox GPU. Nothing here disables security.
+_lazy_build_page_maintenance | 8030 | pt | MODO DE JOGO | GAME MODE
+_lazy_build_page_maintenance | 8031 | pt | GPU DO ROBLOX | ROBLOX GPU
+_lazy_build_page_maintenance | 8032 | pt | ENERGIA | POWER
+_lazy_build_page_maintenance | 8033 | pt | DESATIVAR CAPTURA/GRAVAÇÃO EM SEGUNDO PLANO | DISABLE BACKGROUND CAPTURE/RECORDING
+_lazy_build_page_maintenance | 8037 | pt | FOCO NO ROBLOX | ROBLOX FOCUS
+_lazy_build_page_maintenance | 8037 | pt | Ações temporárias para dar mais espaço à sessão do jogo. Prioridade volta ao normal quando o Roblox fecha; encerrar apps sempre pede confirmação. | Temporary actions to give the game session more room. Priority resets when Roblox closes; closing apps always asks first.
+_lazy_build_page_maintenance | 8039 | pt | PRIORIDADE ACIMA DO NORMAL | ABOVE-NORMAL PRIORITY
+_lazy_build_page_maintenance | 8040 | pt | FECHAR OVERLAYS | CLOSE OVERLAYS
+_lazy_build_page_maintenance | 8044 | pt | PREPARAR SESSÃO | PREPARE SESSION
+_lazy_build_page_maintenance | 8046 | pt | ENERGIA & INICIALIZAÇÃO | POWER & STARTUP
+_lazy_build_page_maintenance | 8046 | pt | Plano Alto Desempenho pode ajudar a evitar economia agressiva de CPU em alguns PCs. Em notebooks, ele também pode aumentar consumo e temperatura. | High Performance can reduce aggressive CPU power saving on some PCs. On laptops it can also increase power draw and temperature.
+_lazy_build_page_maintenance | 8048 | pt | ATIVAR ALTO DESEMPENHO | ENABLE HIGH PERFORMANCE
+_lazy_build_page_maintenance | 8049 | pt | APPS DE INICIALIZAÇÃO | STARTUP APPS
+_lazy_build_page_maintenance | 8050 | pt | Dica: desative manualmente da inicialização só programas que você reconhece e não precisa abrindo com o Windows. | Tip: disable only startup apps you recognize and do not need launching with Windows.
+_lazy_build_page_recovery | 8060 | pt | RECUPERAÇÃO & LIMPEZA | RECOVERY & CLEANUP
+_lazy_build_page_recovery | 8060 | pt | Backups, arquivos temporários e retorno ao original ficam separados das ferramentas de desempenho. | Backups, temporary files and rollback are kept separate from performance tools.
+_lazy_build_page_recovery | 8062 | pt | LIMPEZA SEGURA | SAFE CLEANUP
+_lazy_build_page_recovery | 8062 | pt | Remove logs e downloads temporários do Roblox. Isso libera organização/espaço, mas não é tratado como aumento mágico de FPS. | Removes Roblox logs and temporary downloads. This helps cleanup/storage, not magic FPS.
+_lazy_build_page_recovery | 8065 | pt | ABRIR PASTA LOCAL DO ROBLOX | OPEN ROBLOX LOCAL FOLDER
+_lazy_build_page_recovery | 8067 | pt | RESTAURAR ALTERAÇÕES | RESTORE CHANGES
+_lazy_build_page_recovery | 8067 | pt | Volte cada área ao original sem misturar essa ação com os botões de boost. O reset completo remove as configurações gerenciadas pelo ZKStrap. | Restore each area without mixing rollback with boost controls. Full reset removes settings managed by ZKStrap.
+_lazy_build_page_recovery | 8069 | pt | CURSOR ORIGINAL | ORIGINAL CURSOR
+_lazy_build_page_recovery | 8070 | pt | FONTES ORIGINAIS | ORIGINAL FONTS
+_lazy_build_page_recovery | 8071 | pt | PLANO EQUILIBRADO | BALANCED POWER
+_lazy_build_page_recovery | 8074 | pt | ROLLBACK COMPLETO — CURSOR + FONTES + CONFIG | FULL ROLLBACK — CURSOR + FONTS + CONFIG
+_lazy_build_page_updates | 8088 | pt | ATUALIZAÇÕES // UPDATE CENTER | UPDATES // UPDATE CENTER
+_lazy_build_page_updates | 8088 | pt | Atualize sem baixar um novo ZIP pelo Discord a cada versão. | Update without downloading a new Discord ZIP for every version.
+_lazy_build_page_updates | 8089 | pt | Canal oficial: GitHub • download verificado por SHA-256 • backup antes de instalar. | Official GitHub channel • SHA-256 verified downloads • backup before install.
+_lazy_build_page_updates | 8091 | pt | ● PRONTO PARA VERIFICAR | ● READY TO CHECK
+_lazy_build_page_updates | 8098 | pt | REDE: verificando… | NETWORK: checking…
+_lazy_build_page_updates | 8103 | pt | VERIFICAR ATUALIZAÇÕES | CHECK FOR UPDATES
+_lazy_build_page_updates | 8104 | pt | ATUALIZAR AGORA | UPDATE NOW
+_lazy_build_page_updates | 8107 | pt | VERIFICAR AUTOMATICAMENTE AO ABRIR | CHECK AUTOMATICALLY ON STARTUP
+_lazy_build_page_updates | 8109 | pt | RESTAURAR VERSÃO ANTERIOR | RESTORE PREVIOUS VERSION
+_lazy_build_page_feedback | 8146 | pt | SUGESTÕES & BUGS | FEEDBACK & BUGS
+_lazy_build_page_feedback | 8146 | pt | Uma central de feedback mais clara para separar ideia nova de problema real. | A clearer feedback center to separate new ideas from actual bugs.
+_lazy_build_page_feedback | 8147 | pt | AJUDE A EVOLUIR O ZKSTRAP | HELP IMPROVE ZKSTRAP
+_lazy_build_page_feedback | 8147 | pt | Descreva o que você gostaria de ver ou explique exatamente o que aconteceu. Quanto mais claro, mais fácil reproduzir. | Describe what you'd like to see or exactly what happened. Clear reports are easier to reproduce.
+_lazy_build_page_feedback | 8149 | pt | ✦  SUGESTÃO | ✦  SUGGESTION
+_lazy_build_page_feedback | 8149 | pt | Sugestão | Suggestion
+_lazy_build_page_feedback | 8151 | pt | ⚠  REPORTAR BUG | ⚠  REPORT BUG
+_lazy_build_page_feedback | 8151 | pt | Reportar Bug | Report Bug
+_lazy_build_page_feedback | 8156 | pt | DETALHES | DETAILS
+_lazy_build_page_feedback | 8156 | pt | Evite só escrever 'não funciona'. Em bugs, diga a função usada e o que você esperava acontecer. | Avoid only writing 'it doesn't work'. For bugs, mention the feature used and expected behavior.
+_lazy_build_page_feedback | 8157 | pt | Título curto — ex.: Cursor não aplica após update | Short title — e.g. Cursor not applied after update
+_lazy_build_page_feedback | 8163 | pt | 0 caracteres | 0 characters
+_lazy_build_page_feedback | 8166 | pt | Ao reportar um bug, o diagnóstico técnico do app é anexado automaticamente. | When reporting a bug, app diagnostics are attached automatically.
+_lazy_build_page_feedback | 8167 | pt | ENVIAR FEEDBACK | SEND FEEDBACK
+_lazy_build_page_feedback | 8170 | pt | ANTES DE REPORTAR UM BUG | BEFORE REPORTING A BUG
+_lazy_build_page_feedback | 8170 | pt | ✓ reinicie o Roblox  •  ✓ confira a version-* detectada  •  ✓ veja o log inferior  •  ✓ diga qual tema/Windows está usando | ✓ restart Roblox  •  ✓ check detected version-*  •  ✓ inspect the bottom log  •  ✓ mention your theme/Windows version
+_lazy_build_page_feedback | 8171 | pt | MODO DE ENVIO: endpoint seguro quando configurado; caso contrário, copia para a área de transferência. | SEND MODE: secure endpoint when configured; otherwise copies to clipboard.
+_lazy_build_page_support | 8184 | pt | APOIAR // ZKSTRAP | SUPPORT // ZKSTRAP
+_lazy_build_page_support | 8185 | pt | O apoio financeiro será ativado em breve. O ZKStrap continua gratuito. | Financial support is coming soon. ZKStrap remains free.
+_lazy_build_page_support | 8189 | pt | 💚 FORTALEÇA O PROJETO | 💚 SUPPORT THE PROJECT
+_lazy_build_page_support | 8190 | pt | A estrutura já está pronta, mas o recebimento ainda não foi ativado. Quando chegar, apoiar continuará sendo totalmente opcional. | The structure is ready, but payments are not enabled yet. Supporting will remain completely optional when it launches.
+_lazy_build_page_support | 8195 | pt | STATUS: EM BREVE  •  nenhuma forma de pagamento está ativa nesta versão. | STATUS: COMING SOON  •  no payment method is active in this version.
+_lazy_build_page_support | 8207 | pt | APOIO FINANCEIRO — EM BREVE | FINANCIAL SUPPORT — COMING SOON
+_lazy_build_page_support | 8221 | pt | ABRIR PÁGINA | OPEN PAGE
+_lazy_build_page_support | 8233 | pt | PRIVACIDADE | PRIVACY
+_lazy_build_page_support | 8234 | pt | O botão apenas abre o site oficial de apoio do ZKStrap no navegador. | The button only opens the official ZKStrap support site in your browser.
+_lazy_build_page_support | 8239 | pt | ✓ nenhum dado bancário fica salvo no ZKStrap\n✓ o app não lê pagamentos\n✓ o app não pede login do banco\n✓ antes de pagar, confira os dados mostrados pelo próprio provedor | ✓ no banking data is stored in ZKStrap\n✓ the app does not read payments\n✓ the app never asks for bank login\n✓ before paying, verify the details shown by the payment provider
+_lazy_build_page_about | 8257 | pt | SOBRE // ABOUT 2.0 | ABOUT // 2.0
+_lazy_build_page_about | 8257 | pt | De uma ferramenta de flags para uma central completa do jogador. | From a flags utility to a complete player hub.
+_lazy_build_page_about | 8261 | pt | Central de otimização, personalização e ferramentas para Roblox, com foco especial na experiência de quem joga Blox Fruits. | Optimization, customization and Roblox tools, with special focus on Blox Fruits players.
+_lazy_build_page_about | 8262 | pt | O ZKStrap nasceu porque o zkvez usava FastFlags em um PC fraco e viu como pequenos ajustes podiam ajudar. A ideia evoluiu para um launcher separado do Roblox: ele organiza ajustes locais, desempenho, personalização e ferramentas úteis sem pedir senha do Roblox.\n\nHoje o objetivo é ser algo que o jogador tenha motivo para abrir de novo: Combo Planner, Build Roulette, Creator Mode, áudio, temas, diagnóstico, recuperação e outras ferramentas em evolução. | ZKStrap started because zkvez used FastFlags on a weak PC and saw how small adjustments could help. It evolved into a launcher separate from Roblox: local settings, performance, customization and useful tools without asking for a Roblox password.\n\nThe goal now is to be something players actually want to reopen: Combo Planner, Build Roulette, Creator Mode, audio, themes, diagnostics, recovery and more.
+_lazy_build_page_about | 8264 | pt | LINHA DO TEMPO | TIMELINE
+_lazy_build_page_about | 8267 | pt | PRIVACIDADE & CONTROLE | PRIVACY & CONTROL
+_lazy_build_page_about | 8267 | pt | Configurações ficam locais. O app não pede senha do Roblox. Integrações externas usam autorização oficial quando disponível. | Settings stay local. The app does not ask for a Roblox password. External integrations use official authorization when available.
+_lazy_build_page_about | 8268 | pt | Spotify/Mídia usa somente controles locais do Windows: sem login, Client ID, OAuth, API ou senha. | Spotify/Media uses local Windows media controls only: no login, Client ID, OAuth, API or password.
+_lazy_build_page_about | 8269 | pt | FUTURO DO ZKSTRAP | ZKSTRAP FUTURE
+_lazy_build_page_about | 8269 | pt | PvP Coach mais avançado, análise de sessão, Creator tools, integrações oficiais e novos recursos para Blox Fruits — sem prometer funções antes de estarem prontas. | More advanced PvP Coach, session analysis, creator tools, official integrations and new Blox Fruits tools — without promising features before they are ready.
+_lazy_build_page_about | 8270 | pt | FEITO PELO ZKVEZ | MADE BY ZKVEZ
+_lazy_build_page_about | 8271 | pt | Criado por zkvez, criador de conteúdo de Blox Fruits. Muitas ideias do app vêm do uso real, de vídeos e das sugestões dos inscritos.\n\nDe uma ferramenta de flags para uma central completa do jogador. | Created by zkvez, a Blox Fruits content creator. Many features come from real use, videos and subscriber suggestions.\n\nFrom a flags utility to a complete player hub.
+_lazy_build_page_about | 8274 | pt | LINKS & SUPORTE | LINKS & SUPPORT
+_lazy_build_page_about | 8274 | pt | Atalhos oficiais do projeto e suporte. | Official project and support shortcuts.
+_lazy_build_page_about | 8281 | pt | !  REPORTAR BUG | !  REPORT BUG
+_lazy_build_page_about | 8282 | pt | ↻  VERIFICAR ATUALIZAÇÃO | ↻  CHECK UPDATE
+combo_abrir_fontes | 9143 | pt | O catálogo textual usa a página oficial do Blox Fruits e guias públicos da comunidade. Miniaturas são carregadas sob demanda e armazenadas apenas em cache local. Os nomes e imagens pertencem aos respectivos criadores/detentores. | The text catalog uses the official Blox Fruits page and public community guides. Thumbnails are loaded on demand and stored only in local cache. Names and images belong to their respective creators/owners.
+combo_abrir_fontes | 9147 | pt | FECHAR | CLOSE
+combo_refresh_library | 9157 | pt | Nenhum combo salvo ainda. Clique em ＋ NOVO COMBO. | No saved combos yet. Click ＋ NEW COMBO.
+combo_refresh_library | 9166 | pt | EDITAR | EDIT
+combo_refresh_library | 9170 | pt | ESTILO | STYLE
+combo_refresh_library | 9170 | pt | FRUTA | FRUIT
+combo_refresh_library | 9178 | pt | Sem sequência escrita. | No sequence written.
+combo_excluir | 9193 | self.idioma == 'pt' | Excluir este combo? | Delete this combo?
+_combo_open_editor | 9201 | pt | EDITAR COMBO | EDIT COMBO
+choose_grid | 9213 | pt | Pesquisar... | Search...
+combo_text | 9229 | pt | FINALIZAR BUILD | FINISH BUILD
+combo_text | 9230 | pt | Nome da build — ex.: Gravity Main | Build name — e.g. Gravity Main
+combo_text | 9231 | pt | SEQUÊNCIA DO COMBO | COMBO SEQUENCE
+render_step | 9244 | pt | SALVAR BUILD | SAVE BUILD
+nxt | 9250 | pt | Escolha uma opção antes de continuar. | Choose an option before continuing.
+nxt | 9252 | pt | Minha build | My build
+_combo_open_editor | 9261 | pt | ← VOLTAR | ← BACK
+roulette_inventory_dialog | 9340 | pt | INVENTÁRIO DA ROLETA | ROULETTE INVENTORY
+roulette_inventory_dialog | 9342 | pt | Isso só filtra o sorteio. Desative o que você não quer que apareça. Em Fruits, isso também serve para não gastar uma fruta difícil de conseguir ou a única unidade que você tem. | This only filters the roll. Disable anything you do not want to appear. For Fruits, this also avoids spending a rare or single copy you want to keep.
+render_category | 9373 | pt | TODOS | ALL
+render_category | 9374 | pt | NENHUM | NONE
+roulette_inventory_dialog | 9424 | pt | CANCELAR | CANCEL
+roulette_inventory_dialog | 9425 | pt | SALVAR FILTROS | SAVE FILTERS
+roulette_refresh_history | 9530 | pt | Nenhuma build sorteada ainda. | No rolls yet.
+_spotify_audio_volume_worker | 10729 | web_detected and (not bool(getattr(self, 'spotify_web_volume_optin', False))) | web_optin_required | no_isolated_audio_session
+_zkdialog_go | 11261 | states.get('micro_opt') | ativa | desativada
+finish | 11564 | self.idioma == 'pt' | REDE: ONLINE  •  serviços online disponíveis | NETWORK: ONLINE  •  online services available
+finish | 11566 | self.idioma == 'pt' | MODO OFFLINE  •  ferramentas locais continuam funcionando | OFFLINE MODE  •  local tools keep working
+enviar_sugestao | 11593 | self.idioma == 'pt' | ENVIANDO… | SENDING…
+finish | 11613 | self.idioma == 'pt' | FEEDBACK ENVIADO | FEEDBACK SENT
+finish | 11613 | self.idioma == 'pt' | Relatório recebido pela central de suporte. | Report received by the support service.
+executar_benchmark | 11669 | pt | Medindo... | Measuring...
+mostrar_comparador_config | 11699 | pt | pt | en
+mostrar_comparador_config | 11702 | pt | CONFIGURAÇÃO ATUAL  →  CONFIGURAÇÃO A APLICAR | CURRENT CONFIG  →  CONFIG TO APPLY
+mostrar_comparador_config | 11707 | pt | [MÓDULOS] | [MODULES]
+mostrar_comparador_config | 11709 | pt | [FLAGS GERENCIADAS] | [MANAGED FLAGS]
+mostrar_comparador_config | 11712 | pt | APLICAR AGORA | APPLY NOW
+otimizar_um_clique | 11740 | pt | Ativar o Modo FPS / gráficos no mínimo e aplicar?\n\nO ZKStrap não fechará seus programas e não ativará automaticamente opções experimentais. | Enable FPS Mode / minimum graphics and apply?\n\nZKStrap will not close your programs or automatically enable experimental options.
+mostrar_resultado_aplicacao | 11757 | pt | CONFIGURAÇÕES APLICADAS | SETTINGS APPLIED
+mostrar_resultado_aplicacao | 11764 | pt | FALHA AO APLICAR | APPLY FAILED
+mostrar_resultado_aplicacao | 11765 | pt | Veja o System Log para os detalhes. | Check System Log for details.
+rollback_completo | 11995 | pt | Restaurar ClientSettings, cursor e fontes originais e desligar todos os módulos do ZKStrap? | Restore original ClientSettings, cursor and fonts and disable all ZKStrap modules?
+rollback_completo | 12023 | pt | Rollback concluído. ClientSettings do ZKStrap removido e assets restaurados quando havia backup. | Rollback complete. ZKStrap ClientSettings removed and assets restored when backups existed.
+ativar_plano_alto_desempenho | 12465 | pt | Ativar o plano Alto Desempenho do Windows?\n\nEle pode reduzir economia agressiva de CPU, mas em notebooks pode aumentar consumo e temperatura. | Enable Windows High Performance power plan?\n\nIt can reduce aggressive CPU power saving, but may increase power use and temperature on laptops.
+ativar_plano_alto_desempenho | 12470 | pt | Alto Desempenho | High Performance
+restaurar_plano_equilibrado | 12473 | self.idioma == 'pt' | Equilibrado | Balanced
+preparar_sessao_roblox | 12487 | pt | Abra o Roblox primeiro para preparar a sessão. | Open Roblox first to prepare the session.
+preparar_sessao_roblox | 12490 | pt | Quer verificar overlays/gravadores conhecidos e escolher se fecha?\n\nNada será encerrado sem uma segunda confirmação. | Check known overlays/recorders and choose whether to close them?\n\nNothing will be closed without another confirmation.
+atualizar_estilos_cards | 13296 | self.idioma == 'pt' | APLICAR CONFIGURAÇÕES | APPLY SETTINGS
