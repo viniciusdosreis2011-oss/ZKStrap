@@ -1,18 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.20.5",
-  "published_at": "2026-10-11T23:20:47Z",
+  "version": "3.20.6",
+  "published_at": "2026-10-11T23:30:38Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.5-beta/ZKStrap-v3.20.5-beta-win64.zip",
-  "sha256": "0510e046a64385ca6d6073a8ac173936528160411dc5f9a9e91da652a3d8f3d0",
-  "size_bytes": 110427905,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.6-beta/ZKStrap-v3.20.6-beta-win64.zip",
+  "sha256": "1f3d12cb16636e3e8612a947179c4e8bda48a22379e6ba09e263f44b80cf9c5a",
+  "size_bytes": 110430312,
   "notes": [
-    "Corrige loop Nick -> Idioma -> Nick -> Idioma.",
-    "First-run agora tem um único roteador: Idioma -> Roblox -> Tutorial novo -> Setup.",
-    "Tutorial antigo GUI INTERATIVO/DESTACAR não é mais usado.",
-    "Corrige blur escondido por camada opaca.",
-    "Mantém ANI Lab e o redesign da 3.20.4.",
+    "Corrige tela de Vincular Perfil repetindo após vincular o username.",
+    "Conclusão do Roblox agora usa estado em runtime + config + perfil/nick vinculado.",
+    "Após vincular, entra direto no tutorial novo sem voltar ao guard do Roblox.",
+    "Mantém roteador único Idioma -> Roblox -> Tutorial -> Setup.",
+    "Mantém blur real, ANI Lab e demais correções da 3.20.5.",
     "Stable continua inalterada."
   ]
 }
