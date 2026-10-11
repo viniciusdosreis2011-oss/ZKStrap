@@ -18,15 +18,6 @@ def line_offsets(text):
     return lines,pos
 
 
-def char_abs(text,node,end=False):
-    lines,pos=line_offsets(text)
-    ln=node.end_lineno if end else node.lineno
-    col=node.end_col_offset if end else node.col_offset
-    raw=lines[ln-1]
-    prefix=raw.encode('utf-8')[:col].decode('utf-8','ignore')
-    return pos[ln-1]+len(prefix)
-
-
 def app_class(text):
     tree=ast.parse(text)
     cls=next((n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp'),None)
@@ -41,8 +32,9 @@ def replace_app_method(name,new_block):
     node=next((n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name==name),None)
     if node is None:
         raise SystemExit(f'v3.19.9: method missing: {name}')
-    start=char_abs(s,node,False)
-    end=char_abs(s,node,True)
+    _,pos=line_offsets(s)
+    start=pos[node.lineno-1]
+    end=pos[node.end_lineno]
     s=s[:start]+new_block.rstrip()+"\n\n"+s[end:]
 
 
