@@ -1,0 +1,160 @@
+ZKStrap i18n audit: 157 hard-coded UI text candidates
+Format: method | source | line | text
+
+<configure> | configure.text | 3751 | Rede: --
+<configure> | configure.text | 3777 | Testando rota…
+<configure> | configure.text | 3899 | Testando DNS por RTT real…
+<configure> | configure.text | 6739 | FECHAR LOG
+<configure> | configure.text | 6741 | ABRIR LOG
+<configure> | configure.text | 7802 | DICA SECRETA  //  SIGNAL FOUND
+<configure> | configure.text | 10597 | SPOTIFY // SESSÃO ALVO
+<configure> | configure.text | 10599 | Spotify não detectado
+<configure> | configure.text | 10601 | Use Spotify Desktop para controle 100% exclusivo. No navegador, sessões ambíguas são bloqueadas.
+<configure> | configure.text | 10605 | 0:00
+<configure> | configure.text | 10803 | SPOTIFY WEB DETECTADO • ative o controle Web abaixo
+<configure> | configure.text | 10806 | VOLUME EXCLUSIVO • abra o Spotify Desktop
+<configure> | configure.text | 10809 | VOLUME EXCLUSIVO • indisponível
+<configure> | configure.text | 11082 | MODO // ASSISTENTE LOCAL
+<configure> | configure.text | 11083 | Estado real do app • atalhos diretos • sem conversa livre
+<configure> | configure.text | 11878 | Nenhum download necessário.
+_creator_secret_reveal | CTkLabel.text | 9976 | ??? // SECRET DISCOVERED
+_creator_secret_reveal | CTkLabel.text | 9978 | Isso não aparece sempre. Concluir pode esconder algo além do histórico.
+_creator_secret_reveal | CTkButton.text | 9983 | ACEITAR DESAFIO
+_creator_show_session_complete | CTkLabel.text | 10003 | SESSION COMPLETE
+_creator_show_session_complete | CTkButton.text | 10016 | CONTINUAR
+_lazy_build_page_about | _section_card.arg1 | 8261 | ZKSTRAP
+_lazy_build_page_about | CTkButton.text | 8276 | YOUTUBE
+_lazy_build_page_about | CTkButton.text | 8277 | GITHUB
+_lazy_build_page_about | CTkButton.text | 8279 | DISCORD
+_lazy_build_page_ai | CTkLabel.text | 7629 | DIAGNÓSTICO RÁPIDO
+_lazy_build_page_ai | CTkLabel.text | 7630 | Roblox • pasta • flags • watchdog • tema
+_lazy_build_page_ai | CTkButton.text | 7631 | ANALISAR AGORA
+_lazy_build_page_ai | CTkLabel.text | 7632 | MODO // ASSISTENTE LOCAL
+_lazy_build_page_ai | CTkLabel.text | 7633 | Lê sua configuração atual • não altera nada sem você clicar
+_lazy_build_page_ai | CTkLabel.text | 7642 | 🔒  PvP Coach / IA livre ainda está em desenvolvimento. Esta aba é o Assistente do app e já funciona completa.
+_lazy_build_page_audio | _section_card.arg1 | 7974 | ZK AUDIO ENGINE
+_lazy_build_page_audio | CTkLabel.text | 7993 | 100% = volume original • até 150% = boost dos barulhos da interface
+_lazy_build_page_bloxhub | _section_card.arg1 | 7398 | BLOX HUB // CENTRAL
+_lazy_build_page_combo | CTkLabel.text | 7385 | Planner carregado em modo seguro. Seus combos continuam salvos.
+_lazy_build_page_creator | _section_card.arg1 | 7468 | COMO USAR
+_lazy_build_page_creator | CTkButton.text | 7470 | IR PARA BUILD ROULETTE
+_lazy_build_page_creator | CTkLabel.text | 7471 | SECRET pode aparecer raramente em qualquer geração. Cada secreto tem identidade própria e pode esconder uma recompensa.
+_lazy_build_page_cursor | CTkButton.text | 7332 | IMPORTAR PNG
+_lazy_build_page_cursor | CTkButton.text | 7333 | IMPORTAR PACK
+_lazy_build_page_home | _section_card.arg1 | 7182 | CLIENTE ROBLOX
+_lazy_build_page_ping | CTkLabel.text | 7259 | Pronto para testar.
+_lazy_build_page_resolution | _section_card.arg1 | 7293 | 1080p / 720p / 480p
+_lazy_build_page_roulette | _section_card.arg1 | 7426 | RANDOM BUILD ENGINE
+_lazy_build_page_roulette | CTkLabel.text | 7430 | BUILD ROULETTE // 4-SLOT
+_lazy_build_page_roulette | CTkLabel.text | 7431 | Ícones locais • histórico • favoritos • inventário por categoria
+_lazy_build_page_roulette | CTkLabel.text | 7433 | MODO
+_lazy_build_page_roulette | CTkLabel.text | 7447 | SORTEIE UMA BUILD COMPLETA
+_lazy_build_page_roulette | CTkLabel.text | 7448 | Os desafios do Creator Mode ficam mais interessantes usando o resultado daqui, mas continuam funcionando com qualquer build.
+_lazy_build_page_setups | CTkButton.text | 7499 | FPS MÁXIMO
+_lazy_build_page_setups | CTkButton.text | 7500 | PC FRACO
+_lazy_build_page_setups | CTkButton.text | 7503 | SALVAR ALTERAÇÕES
+_lazy_build_page_setups | CTkButton.text | 7505 | PARAR DE EDITAR
+_lazy_build_page_spotify | CTkLabel.text | 7539 | SESSÃO DE MÍDIA
+_lazy_build_page_spotify | CTkLabel.text | 7545 | 0:00
+_lazy_build_page_spotify | CTkButton.text | 7557 | ATUALIZAR
+_lazy_build_page_spotify | CTkButton.text | 7558 | MINI-PLAYER
+_lazy_build_page_theme | CTkLabel.text | 7849 | A galeria será carregada quando esta página for aberta.
+_lazy_build_page_theme | CTkLabel.text | 7851 | Os mundos especiais serão carregados sob demanda.
+_lazy_build_page_theme | CTkLabel.text | 7853 | Recompensas secretas serão carregadas junto da galeria.
+_lazy_build_page_theme | CTkButton.text | 7963 | COR DE DESTAQUE RÁPIDA
+_lazy_build_page_updates | CTkButton.text | 8105 | GITHUB
+_maybe_show_first_run_language | CTkLabel.text | 5928 | ZK
+_maybe_show_first_run_language | CTkLabel.text | 5929 | FIRST SETUP
+_maybe_show_first_run_language | CTkLabel.text | 5930 | ZKSTRAP
+_maybe_show_first_run_language | CTkLabel.text | 5931 | Configure a linguagem da interface antes de entrar no app.
+_maybe_show_first_run_language | CTkLabel.text | 5935 | LOCAL PREFERENCE
+_maybe_show_first_run_language | CTkLabel.text | 5938 | 01 / 01   •   LANGUAGE
+_maybe_show_first_run_language | CTkLabel.text | 5942 | Escolha seu idioma
+_maybe_show_first_run_language | CTkLabel.text | 5943 | Choose your interface language
+_maybe_show_first_run_language | CTkLabel.text | 5969 | Você pode alterar depois em Personalizar.
+_maybe_show_first_run_language | CTkLabel.text | 5970 | 5 LANGUAGES  //  READY
+_mostrar_confirmacao_perfil | CTkLabel.text | 5490 | RBX
+_owner_open_panel | CTkLabel.text | 3292 | ZK OWNER LAB  //  PRIVATE
+_owner_open_panel | CTkLabel.text | 3293 | Console local de testes. Não aparece na navegação normal e não é necessária para usuários comuns.
+_owner_open_panel | CTkLabel.text | 3299 | OVERRIDES DE DESENVOLVEDOR
+_owner_open_panel | CTkLabel.text | 3300 | Esses switches servem para TESTAR. Não contam como unlock real nem alteram o histórico do usuário.
+_owner_open_panel | CTkLabel.text | 3304 | Liberar todos os SECRET THEMES para teste
+_owner_open_panel | CTkLabel.text | 3307 | Forçar desafios SECRET ao gerar
+_owner_open_panel | CTkButton.text | 3310 | SECRET REVEAL
+_owner_open_panel | CTkButton.text | 3311 | SESSION COMPLETE
+_owner_open_panel | CTkButton.text | 3312 | TEMAS
+_owner_open_panel | CTkButton.text | 3313 | CREATOR
+_owner_open_panel | CTkLabel.text | 3315 | FRESH USER LAB
+_owner_open_panel | CTkLabel.text | 3316 | O perfil de teste fica em uma pasta separada. Seu perfil real permanece intacto e volta com um clique.
+_owner_open_panel | CTkLabel.text | 3324 | PROGRESSION LAB
+_owner_open_panel | CTkLabel.text | 3325 | Edite contadores para testar unlocks reais. Recomendado usar isso dentro do Fresh User Test.
+_owner_open_panel | CTkButton.text | 3334 | APLICAR CONTADORES
+_owner_open_panel | CTkButton.text | 3335 | ZERAR REWARDS / HISTÓRICO
+_owner_open_panel | CTkLabel.text | 3336 | Dica: 5 desafios = Party • 20 rolls = Jackpot • 60s música = Frequency. Architect depende de 5 builds salvas.
+_owner_open_panel | CTkLabel.text | 3339 | BACKUP / RESTORE
+_owner_open_panel | CTkButton.text | 3342 | CRIAR SNAPSHOT
+_owner_open_panel | CTkButton.text | 3343 | RESTAURAR ÚLTIMO
+_owner_open_panel | CTkButton.text | 3344 | ESCOLHER SNAPSHOT
+_owner_open_panel | CTkButton.text | 3346 | ABRIR BACKUPS
+_owner_open_panel | CTkButton.text | 3347 | ABRIR DADOS PRINCIPAIS
+_owner_open_panel | CTkButton.text | 3348 | ABRIR VAULT OWNER
+_owner_open_panel | CTkLabel.text | 3349 | Segurança: a chave OWNER fica fora do pacote público. A senha nunca é salva em texto puro; apenas hash+salt local.
+_page_shell | CTkLabel.text | 6993 | LOCAL CLIENT  //  CONTROL DECK
+_section_card | CTkLabel.text | 7042 | ZKSTRAP
+_show_sound_consent | CTkLabel.text | 5690 | ZK AUDIO  //  LOCAL
+_spotify_brand_header | CTkLabel.text | 10234 | SPOTIFY // ZK DECK
+_spotify_brand_header | CTkLabel.text | 10235 | Now Playing • playback • volume • busca
+_spotify_section_card | CTkLabel.text | 10221 | SPOTIFY  //  LOCAL
+_spotify_show_mini | CTkLabel.text | 10914 | Spotify
+_spotify_show_mini | CTkLabel.text | 10915 | Now Playing do Windows
+_startup_splash_create | CTkLabel.text | 1915 | SIGNATURE CORE
+_startup_splash_create | CTkLabel.text | 1916 | Performance  •  Visual  •  Assets
+_startup_splash_create | CTkLabel.text | 1918 | ZKSTRAP CORE ENGINE
+_startup_splash_create | CTkLabel.text | 1924 | ZKSTRAP
+_startup_splash_create | CTkLabel.text | 1925 | ROBLOX CLIENT CONFIGURATOR  •  LOCAL MODE
+_startup_splash_create | CTkLabel.text | 1927 | PREPARANDO SEU AMBIENTE
+_startup_splash_create | CTkLabel.text | 1928 | Inicializando o ZKStrap em paralelo — esta tela nunca bloqueia o app.
+_startup_splash_create | CTkLabel.text | 1946 | Inicializando núcleo…
+_startup_splash_create | CTkLabel.text | 1947 | 00%
+_startup_splash_create | CTkLabel.text | 1948 | configuração local
+_zkdialog_set_options | CTkLabel.text | 10997 | PRÓXIMA DECISÃO
+abrir_busca_universal | CTkLabel.text | 6370 | ⌕  BUSCA UNIVERSAL
+abrir_busca_universal | CTkLabel.text | 6371 | CTRL + K   •   ESC
+abrir_modo_compacto | CTkLabel.text | 12035 | ZKSTRAP // COMPACT
+abrir_modo_compacto | CTkButton.text | 12048 | ⚡ APLICAR CONFIGURAÇÕES
+abrir_modo_compacto | CTkButton.text | 12049 | ABRIR CLIENTSETTINGS
+abrir_modo_compacto | CTkButton.text | 12050 | VOLTAR AO ZKSTRAP
+add_secret_theme_gallery | CTkLabel.text | 7703 | SECRET VAULT  //  HIDDEN IDENTITIES
+add_secret_theme_gallery | CTkLabel.text | 7704 | HOVER LOCKED CARDS
+add_secret_theme_gallery | CTkLabel.text | 7772 | IDENTIDADE DESCOBERTA
+add_secret_theme_gallery | CTkLabel.text | 7777 | PISTA OCULTA  //  PASSE O MOUSE NO CARD
+add_secret_theme_gallery | CTkLabel.text | 7779 | A condição continua escondida. Explore o ZKStrap e passe o mouse aqui quando quiser uma pista.
+add_special_theme_gallery | CTkLabel.text | 7679 | SPECIAL THEMES  //  GAME PACKS
+add_special_theme_gallery | CTkLabel.text | 7692 | HOVER  //  LIVE
+add_theme_grid | CTkLabel.text | 7674 | HOVER  //  LIVE
+combo_abrir_fontes | CTkLabel.text | 9142 | FONTES & CRÉDITOS
+combo_refresh_library | CTkButton.text | 9167 | DUP
+creator_refresh_challenges | CTkLabel.text | 9900 | Nenhum desafio ativo.
+creator_refresh_challenges | CTkLabel.text | 9901 | Escolha dificuldade + quantidade e clique em GERAR DESAFIOS.
+creator_refresh_challenges | CTkButton.text | 9933 | −1
+creator_refresh_challenges | CTkButton.text | 9938 | + ADICIONAR BOUNTY
+creator_refresh_challenges | CTkButton.text | 9940 | +1 VITÓRIA 5M+
+creator_refresh_challenges | CTkButton.text | 9941 | PERDI — RESET
+creator_refresh_challenges | CTkButton.text | 9943 | MARCAR CONCLUÍDO
+creator_refresh_challenges | CTkButton.text | 9947 | MORRI — RESET
+creator_refresh_challenges | CTkButton.text | 9948 | RESET
+creator_refresh_history | CTkLabel.text | 9959 | Nenhum desafio concluído ainda.
+criar_interface | CTkLabel.text | 6694 | ZK
+criar_interface | CTkLabel.text | 6697 | CORE
+criar_interface | CTkLabel.text | 6701 | ZKSTRAP
+criar_interface | CTkLabel.text | 6702 | //  LOCAL
+criar_interface | CTkLabel.text | 6711 | REDE --
+criar_interface | CTkButton.text | 6714 | PERFIL
+criar_interface | CTkLabel.text | 6734 | LOCAL CORE READY
+criar_interface | CTkButton.text | 6742 | ABRIR LOG
+criar_interface | CTkLabel.text | 6802 | LOCAL CORE
+criar_interface | CTkLabel.text | 6803 | ● READY
+criar_interface | CTkButton.text | 6804 | ?   TUTORIAL
+refresh_setups_page | CTkLabel.text | 10168 | Nenhum setup salvo ainda.
+refresh_setups_page | CTkButton.text | 10173 | SALVAR ALTERAÇÕES
+render_category | CTkLabel.text | 9377 | SELEÇÃO EM MASSA POR RARIDADE
