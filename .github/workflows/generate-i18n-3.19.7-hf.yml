@@ -1,0 +1,59 @@
+name: Generate ZKStrap v3.19.7 offline language pack
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/generate-i18n-3.19.7-hf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PYTHONUTF8: '1'
+      HF_HUB_DISABLE_XET: '1'
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install CPU translation stack
+        run: |
+          python -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check transformers sentencepiece sacremoses langdetect
+
+      - name: Generate complete five-language pack offline
+        run: |
+          python tools/generate_i18n_hf_3197.py
+          test -f i18n/ui_3197_final.json
+
+      - name: Validate language pack
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('i18n/ui_3197_final.json',encoding='utf-8'))
+          rows=p['rows']
+          assert len(rows)>=450, len(rows)
+          for key in ('pt','en','es','zh','fr'):
+              assert all(isinstance(r.get(key),str) and r.get(key)!='' for r in rows), key
+          assert any(r['fr']=='TABLEAU // ÉTAT EN DIRECT' for r in rows)
+          assert any(r['fr']=='✓  APPLIQUER LES RÉGLAGES' for r in rows)
+          assert any(r['es']=='PANEL // ESTADO EN VIVO' for r in rows)
+          assert any(r['zh']=='仪表盘 // 实时状态' for r in rows)
+          print('Validated',len(rows),'offline UI translation rows',p.get('stats'))
+          PY
+
+      - name: Commit final language pack
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add i18n/ui_3197_final.json
+          git commit -m 'Generate offline five-language UI pack for v3.19.7'
+          git pull --rebase origin main
+          git push origin HEAD:main
