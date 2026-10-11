@@ -65,6 +65,10 @@ jobs:
           python patches/v3_19_6.py
           python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
 
+      - name: Install requests
+        shell: pwsh
+        run: python -m pip install --disable-pip-version-check requests
+
       - name: Generate bounded five-language pack
         shell: pwsh
         env:
