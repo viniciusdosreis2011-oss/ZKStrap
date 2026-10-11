@@ -1,0 +1,214 @@
+name: Release ZKStrap v3.19.5 Beta
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-v3.19.5-beta.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode previous patch payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64 = (Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz", [Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+
+      - name: Validate patch scripts
+        shell: pwsh
+        run: |
+          python -m py_compile patches/v3_18_5.py patches/v3_18_6.py patches/v3_18_7.py patches/v3_18_8.py patches/v3_18_9.py patches/v3_19_0.py patches/v3_19_1.py patches/v3_19_2.py patches/v3_19_3.py patches/v3_19_4_fixed.py patches/v3_19_5.py
+
+      - name: Rebuild and validate v3.19.5
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR = $env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          @'
+          import ast,os,pathlib
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          src=p.read_text(encoding='utf-8')
+          tree=ast.parse(src)
+          app=next((n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp'),None)
+          if app is None: raise SystemExit('ModernConfigApp missing')
+          methods={n.name for n in app.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          required={'aplicar_idioma','aplicar_fonte_widgets','_maybe_show_first_run_language','_language_flag_image','_tutorial_steps','abrir_tutorial','_tutorial_render_step','_tutorial_move','_tutorial_skip_click','_tutorial_place_spotlight','_queue_scroll_step'}
+          missing=sorted(required-methods)
+          if missing: raise SystemExit('Missing methods: '+', '.join(missing))
+          checks={
+            'version':'APP_VERSION = "3.19.5"',
+            'long splash':'min_visible=3.05',
+            'picker revision':'language_picker_revision"]=3',
+            'premium language':'FIRST SETUP',
+            'real flags':'def _language_flag_image',
+            'font size preservation':'instead of forcing every one of them to (family, 11).',
+            'clean guide':'ZK // GUIA RÁPIDO',
+            'all tabs ping':'("ping",L("PING & LATÊNCIA"',
+            'all tabs about':'("about",L("SOBRE"',
+            'no spotlight':'tutorial no longer draws highlight rectangles',
+            'native updates':'update_changelog_text',
+          }
+          for name,needle in checks.items():
+              if needle not in src: raise SystemExit('Missing '+name)
+          forbidden={
+            'forced size 11':'child.configure(font=(self.fonte_ui,11))',
+            'mission renderer':'self._tutorial_mission.configure(text=mission)',
+            'tutorial next gate':'self._tutorial_next.configure(state="disabled"',
+            'try first gate':'TESTE PRIMEIRO ↑',
+            'win32 repaint':'RedrawWindow(',
+            'legacy scroll':'ctk.CTkScrollableFrame(',
+          }
+          for name,needle in forbidden.items():
+              if needle in src: raise SystemExit('Forbidden surface returned: '+name)
+          print('v3.19.5 structural validation OK')
+          '@ | Set-Content validate_3195.py -Encoding UTF8
+          python validate_3195.py
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Build updater
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name "ZKUpdater" --distpath "updater_dist" --workpath "updater_build" --specpath "updater_spec" "ZKUpdater.py"
+          if (-not (Test-Path "updater_dist/ZKUpdater.exe")) { throw 'Updater build failed.' }
+
+      - name: Build ZKStrap v3.19.5 ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed `
+            --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" `
+            --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" `
+            --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" `
+            --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" `
+            --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" `
+            --hidden-import "pycaw.api.endpointvolume" `
+            --hidden-import "comtypes" `
+            --hidden-import "comtypes.client" `
+            --collect-all "pycaw" `
+            --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" `
+            --add-data "zkstrap_icon.ico;." `
+            --add-data "zkstrap_icon.png;." `
+            --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap build failed.' }
+          Copy-Item "updater_dist/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Package
+        id: pkg
+        shell: pwsh
+        run: |
+          $dist = Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.19.5-beta-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size=(Get-Item $name).Length
+          "name=$name" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+          "size=$size" >> $env:GITHUB_OUTPUT
+
+      - name: Publish v3.19.5 Beta
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag='v3.19.5-beta'
+          gh release view $tag --repo '${{ github.repository }}' *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag '${{ steps.pkg.outputs.name }}' --repo '${{ github.repository }}' --prerelease --title 'ZKStrap v3.19.5 Beta — Readable UI & Clean Onboarding' --notes @'
+          ## v3.19.5 Beta
+          - Changing language no longer shrinks interface text: UI typography keeps each widget's original size.
+          - Splash stays visible for roughly three seconds and gives the 100% state time to be seen.
+          - Language onboarding is redesigned as a full first-run ZKStrap screen with real flag previews.
+          - Tutorial missions, forced Highlight actions and spotlight rectangles are removed.
+          - Tutorial becomes a clean 19-step guide covering every sidebar destination with Back / Exit / Next navigation.
+          - Keeps the safe Canvas scrolling, cursor/font previews and lightweight Updates page from the previous Beta builds.
+          - Stable remains unchanged while this Beta is tested.
+          '@
+          } else {
+            gh release upload $tag '${{ steps.pkg.outputs.name }}' --clobber --repo '${{ github.repository }}'
+          }
+
+      - name: Update Beta manifest
+        shell: pwsh
+        run: |
+          $m=[ordered]@{
+            channel='beta';version='3.19.5';published_at=(Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ');mandatory=$false;min_updater_version='1.0.0';
+            package_url='https://github.com/${{ github.repository }}/releases/download/v3.19.5-beta/ZKStrap-v3.19.5-beta-win64.zip';sha256='${{ steps.pkg.outputs.sha256 }}';size_bytes=[int64]'${{ steps.pkg.outputs.size }}';
+            notes=@('Trocar idioma não reduz mais o tamanho dos textos da interface.','Splash permanece visível por cerca de 3 segundos.','Seletor de idioma foi redesenhado como onboarding completo com bandeiras reais.','Tutorial não usa mais missões, Highlight obrigatório ou retângulos sobre a interface.','Guia agora explica todas as 19 abas com navegação simples Voltar/Sair/Próximo.','Mantém scroll Canvas seguro, previews de cursor/fonte e Updates leve.','Stable continua na 3.18.8 até esta Beta ser aprovada.')
+          }
+          $m|ConvertTo-Json -Depth 5|Set-Content channels/beta.json -Encoding UTF8
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/beta.json
+          git commit -m 'Point Beta channel to ZKStrap v3.19.5'
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### ZKStrap v3.19.5 Beta published'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'SHA-256: ${{ steps.pkg.outputs.sha256 }}'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Size: ${{ steps.pkg.outputs.size }} bytes'
