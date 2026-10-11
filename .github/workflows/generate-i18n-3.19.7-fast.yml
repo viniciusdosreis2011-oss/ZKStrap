@@ -87,3 +87,5 @@ jobs:
           git commit -m 'Generate fast five-language UI pack for v3.19.7'
           git pull --rebase origin main
           git push origin HEAD:main
+
+# regeneration 2: include legacy self.tr strings
