@@ -1,18 +1,17 @@
 {
   "channel": "beta",
-  "version": "3.19.6",
-  "published_at": "2026-10-11T02:45:21Z",
+  "version": "3.19.7",
+  "published_at": "2026-10-11T04:56:27Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.6-beta/ZKStrap-v3.19.6-beta-win64.zip",
-  "sha256": "8bac447d20be08955d90d98a0df9e10e81e9796f3e64c3e309040bd67396507f",
-  "size_bytes": 110339860,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.7-beta/ZKStrap-v3.19.7-beta-win64.zip",
+  "sha256": "ef1f5a1beb940e5889038d8bc244c6f6786d78468224d290681158953204adc0",
+  "size_bytes": 110398585,
   "notes": [
-    "Personalizar ganhou um bloco INTERFACE & IDIOMA bem visível.",
-    "Fonte e idioma não ficam mais como dois dropdowns anônimos.",
-    "Fonte da interface e Idioma agora possuem título e descrição próprios.",
-    "Mantido o visual de tipografia menor da v3.19.5.",
-    "Mantém splash de ~3 segundos, onboarding de idioma redesenhado e tutorial limpo de 19 etapas.",
-    "Stable continua na 3.18.8 até aprovação desta Beta."
+    "Internacionalização aplicada à interface inteira, não só sidebar.",
+    "Home, status dinâmicos e páginas lazy recebem tradução em runtime.",
+    "Pacote offline com 503 entradas para PT/EN/ES/ZH/FR.",
+    "Mantém layout, splash, tutorial e scroll seguro da v3.19.6.",
+    "Stable continua inalterada."
   ]
 }
