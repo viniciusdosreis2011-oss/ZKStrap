@@ -1,17 +1,16 @@
 {
   "channel": "beta",
-  "version": "3.20.0",
-  "published_at": "2026-10-11T21:44:49Z",
+  "version": "3.20.1",
+  "published_at": "2026-10-11T21:59:13Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.0-beta/ZKStrap-v3.20.0-beta-win64.zip",
-  "sha256": "240d0d4ed870db2d87673e6987ded69175365544b82db2c4014771aa44dabd8c",
-  "size_bytes": 110398132,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.1-beta/ZKStrap-v3.20.1-beta-win64.zip",
+  "sha256": "b44508e2af925610245e01fdf7562c9bc77c6b0a143738fe668ddae0d407a94f",
+  "size_bytes": 110400424,
   "notes": [
-    "Owner Lab agora tem SIMULAR PRIMEIRA EXECUÇÃO.",
-    "Cria snapshot em background e abre um perfil isolado 100% zerado.",
-    "O perfil principal permanece intacto e volta com VOLTAR AO MEU PERFIL.",
-    "Cada simulação mostra idioma/onboarding/tutorial como um usuário novo.",
-    "Mantém correções da v3.19.9 e internacionalização completa."
+    "First Run Lab agora inicia sem compactar o perfil principal inteiro.",
+    "A simulação zera somente TEST_PROFILE, ativa o modo de teste e reinicia.",
+    "Seu perfil principal continua intocado; snapshot manual permanece separado no Owner Lab.",
+    "Corrige o estado PREPARANDO PRIMEIRA EXECUÇÃO que podia ficar minutos parado na v3.20.0."
   ]
 }
