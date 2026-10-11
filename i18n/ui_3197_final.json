@@ -1,0 +1,3536 @@
+{
+  "version": "3.19.7",
+  "generated_from": "3.19.6",
+  "generator": "offline-marian",
+  "rows": [
+    {
+      "pt": "VINCULAR ROBLOX",
+      "en": "LINK ROBLOX",
+      "es": "ROBLOX LINK",
+      "zh": "连结罗布罗",
+      "fr": "LIENS ROBLOX"
+    },
+    {
+      "pt": "VINCULAR PERFIL ROBLOX",
+      "en": "LINK ROBLOX PROFILE",
+      "es": "PERFIL DE ROBLOX LINK",
+      "zh": "链接ROBLOX 概况",
+      "fr": "PROFIL LINK ROBLOX"
+    },
+    {
+      "pt": "Digite seu username do Roblox. Isso é só uma vinculação visual: o app nunca pede senha.",
+      "en": "Enter your Roblox username. This is only a visual profile link: the app never asks for a password.",
+      "es": "Introduzca su nombre de usuario de Roblox. Esto es sólo un enlace de perfil visual: la aplicación nunca pide una contraseña.",
+      "zh": "输入您的 Roblox 用户名。 这只是一个视觉配置链接: 应用程序从不要求密码 。",
+      "fr": "Saisissez votre nom d'utilisateur Roblox. Ce n'est qu'un lien de profil visuel : l'application ne demande jamais de mot de passe."
+    },
+    {
+      "pt": "Username inválido.",
+      "en": "Invalid username.",
+      "es": "Nombre de usuario inválido.",
+      "zh": "无效的用户名 。",
+      "fr": "Nom d'utilisateur invalide."
+    },
+    {
+      "pt": "Buscando perfil...",
+      "en": "Searching profile...",
+      "es": "Buscando perfil...",
+      "zh": "正在搜索配置...",
+      "fr": "Recherche de profil..."
+    },
+    {
+      "pt": "BUSCAR PERFIL",
+      "en": "FIND PROFILE",
+      "es": "ENCONTRAR PERFIL",
+      "zh": "查找资料",
+      "fr": "FINANCER LE PROFIL"
+    },
+    {
+      "pt": "DESVINCULAR PERFIL",
+      "en": "UNLINK PROFILE",
+      "es": "PERFIL DE UNLINK",
+      "zh": "UNLINK 概况",
+      "fr": "PROFIL NON LIEN"
+    },
+    {
+      "pt": "Consultando username...",
+      "en": "Looking up username...",
+      "es": "Buscando el nombre de usuario...",
+      "zh": "正在查找用户名...",
+      "fr": "Rechercher le nom d'utilisateur..."
+    },
+    {
+      "pt": "Tentando busca alternativa...",
+      "en": "Trying alternate search...",
+      "es": "Intentando una búsqueda alternativa...",
+      "zh": "尝试另类搜索...",
+      "fr": "Essayer une recherche alternative..."
+    },
+    {
+      "pt": "Perfil encontrado. Carregando avatar...",
+      "en": "Profile found. Loading avatar...",
+      "es": "Perfil encontrado. Cargando avatar...",
+      "zh": "找到配置文件。 正在装入 avatar...",
+      "fr": "Profil trouvé. Chargement de l'avatar..."
+    },
+    {
+      "pt": "TEU PERFIL É ESSE?",
+      "en": "IS THIS YOUR PROFILE?",
+      "es": "¿Éste es tu perfil?",
+      "zh": "这是你的资料吗?",
+      "fr": "C'est ton profil ?"
+    },
+    {
+      "pt": "NÃO",
+      "en": "NO",
+      "es": "NO",
+      "zh": "否",
+      "fr": "NON"
+    },
+    {
+      "pt": "SIM, É MEU PERFIL",
+      "en": "YES, THAT'S ME",
+      "es": "Sí, ese soy yo.",
+      "zh": "是的,这就是我",
+      "fr": "Oui, c'est moi."
+    },
+    {
+      "pt": "Nenhum perfil vinculado.",
+      "en": "No linked profile.",
+      "es": "No hay perfil vinculado.",
+      "zh": "没有连接配置 。",
+      "fr": "Pas de profil lié."
+    },
+    {
+      "pt": "Feedback de clique, sons dos temas e música ambiente. Tudo é local e opcional. Este card não bloqueia o resto do app.",
+      "en": "Click feedback, theme sounds and ambient music. Everything is local and optional. This card never blocks the rest of the app.",
+      "es": "Haz clic en feedback, sonidos temáticos y música ambiental. Todo es local y opcional. Esta tarjeta nunca bloquea el resto de la aplicación.",
+      "zh": "点击反馈、主题声音和周围音乐。 一切都是本地的和可选的。 此卡片永远无法阻挡应用程序的其余部分 。",
+      "fr": "Cliquez sur feedback, sons thématiques et musique ambiante. Tout est local et optionnel. Cette carte ne bloque jamais le reste de l'application."
+    },
+    {
+      "pt": "jogador",
+      "en": "player",
+      "es": "jugador",
+      "zh": "播放播放播放播放器",
+      "fr": "joueur"
+    },
+    {
+      "pt": "ZK  //  PRIMEIRO ACESSO",
+      "en": "ZK  //  FIRST RUN",
+      "es": "ZK // PRIMER RUN",
+      "zh": "ZK // 第一次运行",
+      "fr": "ZK // PREMIER RUN"
+    },
+    {
+      "pt": "Antes de começar",
+      "en": "Before we start",
+      "es": "Antes de empezar",
+      "zh": "在我们开始之前",
+      "fr": "Avant de commencer"
+    },
+    {
+      "pt": "Qual é o seu username do Roblox? É só o nick do jogo — nunca pedimos nome real, senha ou e-mail. Ele serve para personalizar o guia e preencher a busca de perfil; fica salvo apenas neste PC.",
+      "en": "What's your Roblox username? Only your in-game nickname — we never ask for your real name, password or email. It personalizes the guide and pre-fills profile linking, and stays only on this PC.",
+      "es": "¿Cuál es su nombre de usuario de Roblox? Sólo su apodo en el juego — nunca pedimos su nombre real, contraseña o correo electrónico. Personaliza la guía y pre-llena el perfil de enlace, y se queda sólo en este PC.",
+      "zh": "您的 Roblox 用户名是什么 ? 只有您的游戏中的昵称 - 我们从不要求您的真名、 密码或电子邮件。 它使指南和预填配置连接个性化, 并且只保留在这个 PC 上 。",
+      "fr": "Quel est votre nom d'utilisateur Roblox ? Seulement votre pseudo dans le jeu — nous ne demandons jamais votre vrai nom, mot de passe ou email. Il personnalise le guide et pré-remplit le lien de profil, et reste seulement sur ce PC."
+    },
+    {
+      "pt": "ex: zak_blox",
+      "en": "e.g. zak_blox",
+      "es": "Por ejemplo, zak_blox",
+      "zh": "例如 zak_blox",
+      "fr": "Par exemple, zak_blox"
+    },
+    {
+      "pt": "Use um username válido do Roblox (3–20 caracteres).",
+      "en": "Use a valid Roblox username (3–20 characters).",
+      "es": "Utilice un nombre de usuario válido de Roblox (3-20 caracteres).",
+      "zh": "使用有效的 Roblox 用户名( 3-20 个字符) 。",
+      "fr": "Utilisez un nom d'utilisateur Roblox valide (3-20 caractères)."
+    },
+    {
+      "pt": "TUTORIAL PULADO",
+      "en": "TUTORIAL SKIPPED",
+      "es": "TUTORIAL SKIPPED",
+      "zh": "理论基础",
+      "fr": "CULTURE TUTORIALE"
+    },
+    {
+      "pt": "Você pode abrir novamente pelo botão ? TUTORIAL.",
+      "en": "Open it again anytime with ? TUTORIAL.",
+      "es": "Ábrelo de nuevo en cualquier momento con ? TUTORIAL.",
+      "zh": "随时可以打开它 与翻译。",
+      "fr": "Ouvre-le à tout moment avec ? TUTORIAL."
+    },
+    {
+      "pt": "COMEÇAR TUTORIAL",
+      "en": "START TUTORIAL",
+      "es": "TUTORIAL DE INICIACIÓN",
+      "zh": "开始工程",
+      "fr": "ÉTAT TUTORIEL"
+    },
+    {
+      "pt": "PULAR POR ENQUANTO",
+      "en": "SKIP FOR NOW",
+      "es": "SKIP POR AHORA",
+      "zh": "现在的斯基普",
+      "fr": "POUVOIR MAINTENANT"
+    },
+    {
+      "pt": "ZK // GUIA INTERATIVO",
+      "en": "ZK // INTERACTIVE GUIDE",
+      "es": "ZK // GUÍA INTERACTIVA",
+      "zh": "ZK//交互式准则",
+      "fr": "ZK // GUIDE INTERACTIVE"
+    },
+    {
+      "pt": "←",
+      "en": "←",
+      "es": "←",
+      "zh": "←",
+      "fr": "←"
+    },
+    {
+      "pt": "PRÓXIMO  →",
+      "en": "NEXT  →",
+      "es": "SIGUIENTE →",
+      "zh": "下一届",
+      "fr": "Suivant →"
+    },
+    {
+      "pt": "TUTORIAL CONCLUÍDO",
+      "en": "TUTORIAL COMPLETE",
+      "es": "TUTORIAL COMPLETO",
+      "zh": "工程完成",
+      "fr": "COMPLET TUTORIAL"
+    },
+    {
+      "pt": "Você pode rever o guia quando quiser em ? TUTORIAL.",
+      "en": "Replay it anytime from ? TUTORIAL.",
+      "es": "Reprodúzcalo en cualquier momento desde ? TUTORIAL.",
+      "zh": "随时重播它 从图案。",
+      "fr": "Rejouez-le à tout moment de ? TUTORIAL."
+    },
+    {
+      "pt": "Céu Cinza",
+      "en": "Gray Sky",
+      "es": "Cielo gris",
+      "zh": "灰天天空",
+      "fr": "Ciel gris"
+    },
+    {
+      "pt": "Alvo de FPS",
+      "en": "FPS Target",
+      "es": "Objetivo FPS",
+      "zh": "FPS 目标",
+      "fr": "Cible FPS"
+    },
+    {
+      "pt": "Ping & Latência",
+      "en": "Ping & Latency",
+      "es": "Latencia y ping",
+      "zh": "Ping & 延缓",
+      "fr": "Ping & Latence"
+    },
+    {
+      "pt": "MODO AVANÇADO",
+      "en": "ADVANCED MODE",
+      "es": "MODO AVANCEADO",
+      "zh": "先进模式",
+      "fr": "MODE AVANCÉ"
+    },
+    {
+      "pt": "⌕   Buscar página, opção ou ferramenta…                                  CTRL+K",
+      "en": "⌕   Search page, option or tool…                                  CTRL+K",
+      "es": "⌕   Buscar página, opción o herramienta…                                  CTRL+K",
+      "zh": "⌕   搜索页面、选项或工具…                                  CTRL+K",
+      "fr": "⌕   Rechercher une page, une option ou un outil…                                  CTRL+K"
+    },
+    {
+      "pt": "APLICAR",
+      "en": "APPLY",
+      "es": "APLICAR",
+      "zh": "应用",
+      "fr": "APPLIQUER"
+    },
+    {
+      "pt": "Modo compacto",
+      "en": "Compact mode",
+      "es": "Modo compacto",
+      "zh": "紧凑模式",
+      "fr": "Mode compact"
+    },
+    {
+      "pt": "Sons do ZKStrap",
+      "en": "ZKStrap audio",
+      "es": "Audio de ZKStrap",
+      "zh": "ZKStrap 音频",
+      "fr": "Audio ZKStrap"
+    },
+    {
+      "pt": "Painel central para ver o estado do cliente e aplicar tudo sem procurar botões escondidos.",
+      "en": "Central dashboard to see client state and apply everything without hunting for hidden buttons.",
+      "es": "Panel central para ver el estado del cliente y aplicar todo sin buscar botones ocultos.",
+      "zh": "中央仪表板 查看客户状态 并应用一切 不猎取隐藏按钮。",
+      "fr": "Tableau de bord central pour voir l'état du client et appliquer tout sans chasser les boutons cachés."
+    },
+    {
+      "pt": "DASHBOARD // STATUS AO VIVO",
+      "en": "DASHBOARD // LIVE STATUS",
+      "es": "PANEL // ESTADO EN VIVO",
+      "zh": "仪表盘 // 实时状态",
+      "fr": "TABLEAU // ÉTAT EN DIRECT"
+    },
+    {
+      "pt": "Resumo rápido do Roblox, módulos, assets e necessidade de reinício.",
+      "en": "Quick summary of Roblox, modules, assets and restart state.",
+      "es": "Resumen rápido de Roblox, módulos, recursos y estado de reinicio.",
+      "zh": "Roblox、模块、资源和重启状态的快速摘要。",
+      "fr": "Résumé rapide de Roblox, des modules, des ressources et de l’état de redémarrage."
+    },
+    {
+      "pt": "CLIENTE",
+      "en": "CLIENT",
+      "es": "CLIENTE",
+      "zh": "客户端",
+      "fr": "CLIENT"
+    },
+    {
+      "pt": "OTIMIZAÇÕES",
+      "en": "OPTIMIZATIONS",
+      "es": "OPTIMIZACIONES",
+      "zh": "优化",
+      "fr": "OPTIMISATIONS"
+    },
+    {
+      "pt": "REINÍCIO",
+      "en": "RESTART",
+      "es": "REINICIO",
+      "zh": "重启",
+      "fr": "REDÉMARRAGE"
+    },
+    {
+      "pt": "CENTRAL RÁPIDA",
+      "en": "QUICK CENTER",
+      "es": "CENTRO RÁPIDO",
+      "zh": "快捷中心",
+      "fr": "CENTRE RAPIDE"
+    },
+    {
+      "pt": "Aplique as opções atuais ou ative o modo FPS seguro em um clique. Nenhum app é fechado automaticamente.",
+      "en": "Apply current options or enable safe FPS mode in one click. No apps are closed automatically.",
+      "es": "Aplica las opciones actuales o activa el modo FPS seguro con un clic. Ninguna aplicación se cierra automáticamente.",
+      "zh": "一键应用当前选项或启用安全 FPS 模式。不会自动关闭任何应用。",
+      "fr": "Appliquez les options actuelles ou activez le mode FPS sécurisé en un clic. Aucune application n’est fermée automatiquement."
+    },
+    {
+      "pt": "⚡ OTIMIZAR ROBLOX",
+      "en": "⚡ OPTIMIZE ROBLOX",
+      "es": "⚡ OPTIMIZAR ROBLOX",
+      "zh": "⚡ 优化 ROBLOX",
+      "fr": "⚡ OPTIMISER ROBLOX"
+    },
+    {
+      "pt": "✓  APLICAR CONFIGURAÇÕES",
+      "en": "✓  APPLY SETTINGS",
+      "es": "✓  APLICAR AJUSTES",
+      "zh": "✓  应用设置",
+      "fr": "✓  APPLIQUER LES RÉGLAGES"
+    },
+    {
+      "pt": "≋  COMPARAR CONFIGURAÇÕES",
+      "en": "≋  COMPARE SETTINGS",
+      "es": "≋  COMPARAR AJUSTES",
+      "zh": "≋  比较设置",
+      "fr": "≋  COMPARER LES RÉGLAGES"
+    },
+    {
+      "pt": "▣  MODO COMPACTO",
+      "en": "▣  COMPACT MODE",
+      "es": "▣  MODO COMPACTO",
+      "zh": "▣  紧凑模式",
+      "fr": "▣  MODE COMPACT"
+    },
+    {
+      "pt": "BENCHMARK DO SISTEMA",
+      "en": "SYSTEM BENCHMARK",
+      "es": "BENCHMARK DEL SISTEMA",
+      "zh": "系统基准测试",
+      "fr": "BENCHMARK SYSTÈME"
+    },
+    {
+      "pt": "Mede CPU, RAM, processos e memória do Roblox. Não inventa FPS: é um retrato do sistema antes/depois.",
+      "en": "Measures CPU, RAM, processes and Roblox memory. It does not invent FPS: it is a before/after system snapshot.",
+      "es": "Mide la memoria de CPU, RAM, procesos y Roblox. No inventa FPS: es una instantánea del sistema antes/después.",
+      "zh": "测量 CPU、 RAM、 进程和 Roblox 内存。 它不会发明 FPS: 它是一个系统前/ 后快照 。",
+      "fr": "Mesure CPU, RAM, processus et mémoire Roblox. Il n'invente pas FPS : c'est un instantané système avant/après."
+    },
+    {
+      "pt": "Nenhuma medição ainda.",
+      "en": "No measurement yet.",
+      "es": "Aún no hay medición.",
+      "zh": "暂无测量结果。",
+      "fr": "Aucune mesure pour le moment."
+    },
+    {
+      "pt": "MEDIR AGORA",
+      "en": "MEASURE NOW",
+      "es": "MEDIR AHORA",
+      "zh": "立即测量",
+      "fr": "MESURER MAINTENANT"
+    },
+    {
+      "pt": "ABRIR RECUPERAÇÃO",
+      "en": "OPEN RECOVERY",
+      "es": "ABRIR RECUPERACIÓN",
+      "zh": "打开恢复",
+      "fr": "OUVRIR LA RÉCUPÉRATION"
+    },
+    {
+      "pt": "Localização da version-* atual e sincronização automática após updates.",
+      "en": "Current version-* location and automatic synchronization after updates.",
+      "es": "Ubicación actual de versión* y sincronización automática después de las actualizaciones.",
+      "zh": "现有版本* 位置,更新后自动同步。",
+      "fr": "Version actuelle-* emplacement et synchronisation automatique après mises à jour."
+    },
+    {
+      "pt": "Roblox ainda não localizado",
+      "en": "Roblox not located yet",
+      "es": "Roblox no se encuentra todavía",
+      "zh": "Roblox 尚未找到",
+      "fr": "Roblox pas encore localisé"
+    },
+    {
+      "pt": "ABRIR CLIENTSETTINGS",
+      "en": "OPEN CLIENTSETTINGS",
+      "es": "CLIENTES ABIERTOS",
+      "zh": "开 开 开 开 幕 信 信 信 箱",
+      "fr": "OUVERTURE DES CLIENTS"
+    },
+    {
+      "pt": "WATCHDOG 5s — manter configurações após update",
+      "en": "5s WATCHDOG — keep settings after updates",
+      "es": "5s WATCHDOG — mantener la configuración después de las actualizaciones",
+      "zh": "5s WatchDOG——更新后保持设置",
+      "fr": "5s WATCHDOG — conservez les paramètres après les mises à jour"
+    },
+    {
+      "pt": "PERFIL ROBLOX",
+      "en": "ROBLOX PROFILE",
+      "es": "PERFIL ROBLOX",
+      "zh": "ROBLOX 资料",
+      "fr": "PROFIL ROBLOX"
+    },
+    {
+      "pt": "Vínculo visual público: não é login e nunca pede senha.",
+      "en": "Public visual link: not a login and never asks for a password.",
+      "es": "Enlace visual público: no es un login y nunca pide una contraseña.",
+      "zh": "公共视觉链接:不是登录,从不要求密码。",
+      "fr": "Lien visuel public : pas de connexion et ne demande jamais de mot de passe."
+    },
+    {
+      "pt": "VINCULAR / TROCAR",
+      "en": "LINK / CHANGE",
+      "es": "VINCULAR / CAMBIAR",
+      "zh": "关联 / 更换",
+      "fr": "LIER / MODIFIER"
+    },
+    {
+      "pt": "DESVINCULAR",
+      "en": "UNLINK",
+      "es": "DESVINCULAR",
+      "zh": "取消关联",
+      "fr": "DÉLIER"
+    },
+    {
+      "pt": "FPS & GRÁFICOS",
+      "en": "FPS & GRAPHICS",
+      "es": "FPS & GRAFICS",
+      "zh": "FPS & GrapHICS 系统",
+      "fr": "FPS & GRAPHIQUES"
+    },
+    {
+      "pt": "Central de desempenho: os principais ajustes ficam juntos e são aplicados com um clique.",
+      "en": "Performance center: the main tweaks live together and apply with one click.",
+      "es": "Centro de rendimiento: los ajustes principales viven juntos y se aplican con un solo clic.",
+      "zh": "性能中心:主节奏组合在一起,并用一击应用。",
+      "fr": "Centre de performance : les réglages principaux vivent ensemble et s'appliquent en un seul clic."
+    },
+    {
+      "pt": "DESEMPENHO PRINCIPAL",
+      "en": "CORE PERFORMANCE",
+      "es": "EJECUCIÓN BÁSICA",
+      "zh": "核心业绩",
+      "fr": "RENDEMENT DE BASE"
+    },
+    {
+      "pt": "O modo FPS reúne os ajustes gráficos permitidos do executor. Céu cinza fica separado para você escolher o visual normal ou cinza.",
+      "en": "FPS mode combines the executor graphics tweaks. Gray sky stays separate so you can choose normal or gray visuals.",
+      "es": "El modo FPS combina los ajustes gráficos del ejecutante. El cielo gris se mantiene separado para que pueda elegir imágenes normales o grises.",
+      "zh": "FPS 模式将执行程序图形的 tweaks 组合在一起。 灰色天空保持分开, 这样您就可以选择普通的或灰色的视觉 。",
+      "fr": "Le mode FPS combine les modifications graphiques de l'exécuteur. Le ciel gris reste séparé afin que vous puissiez choisir des visuels normaux ou gris."
+    },
+    {
+      "pt": "MODO FPS / GRÁFICOS NO MÍNIMO",
+      "en": "FPS MODE / MINIMUM GRAPHICS",
+      "es": "MODELO FPS / GRÁFICAS MÍNIMAS",
+      "zh": "FPS MODE / MIMIIMUM 巨集",
+      "fr": "MODÈLE FPS / GRAPHIQUE MINIMAL"
+    },
+    {
+      "pt": "CÉU CINZA",
+      "en": "GRAY SKY",
+      "es": "GRAY SKY",
+      "zh": "苍苍天空",
+      "fr": "GRAY SKY"
+    },
+    {
+      "pt": "DESBLOQUEAR / ELEVAR FPS",
+      "en": "UNLOCK / RAISE FPS",
+      "es": "Desbloquear / Raise FPS",
+      "zh": "UNCFC/AISE 封套",
+      "fr": "UNLOCK / FPS RAISE"
+    },
+    {
+      "pt": "ALVO DE FPS",
+      "en": "FPS TARGET",
+      "es": "TARGET FPS",
+      "zh": "目标目标",
+      "fr": "OBJECTIFS FPS"
+    },
+    {
+      "pt": "Escolha o alvo usado pelo desbloqueio e pela micro-otimização. Algumas chaves podem ser ignoradas pelo cliente dependendo da versão.",
+      "en": "Choose the target used by FPS unlock and micro-optimization. Some keys may be ignored depending on client version.",
+      "es": "Elija el objetivo utilizado por FPS desbloqueo y micro-optimización. Algunas teclas pueden ser ignoradas dependiendo de la versión del cliente.",
+      "zh": "选择 FPS 解锁和微优化使用的目标。 根据客户端版本, 某些密钥会被忽略 。",
+      "fr": "Choisissez la cible utilisée par FPS déverrouillage et micro-optimisation. Certaines clés peuvent être ignorées en fonction de la version client."
+    },
+    {
+      "pt": "OTIMIZAÇÕES AVANÇADAS",
+      "en": "ADVANCED OPTIMIZATIONS",
+      "es": "OPTIMIZACIÓN ADELANTADA",
+      "zh": "增加的",
+      "fr": "OPTIMISATIONS AVANCÉES"
+    },
+    {
+      "pt": "Telemetria, micro-otimizações e ajustes experimentais ficam recolhidos para não poluir a página.",
+      "en": "Telemetry, micro-optimizations and experimental tweaks stay collapsed to keep this page clean.",
+      "es": "La telemetría, las microoptimizaciones y los ajustes experimentales permanecen colapsados para mantener esta página limpia.",
+      "zh": "遥测、微优化 和实验的tweaks保持崩溃 保持这一页干净。",
+      "fr": "La télémétrie, les micro-optimisations et les modifications expérimentales restent effondrées pour garder cette page propre."
+    },
+    {
+      "pt": "MICRO-OTIMIZAÇÃO CPU / FPS (EXPERIMENTAL)",
+      "en": "CPU / FPS MICRO-OPTIMIZATION (EXPERIMENTAL)",
+      "es": "CPU / FPS MICROOPTIMIZACIÓN (EXPERIMENTAL)",
+      "zh": "CPU/FPS MIRO-OPTIZ(驱逐)",
+      "fr": "CPU / FPS MICRO-OPTIMISATION (EXPÉRIMENTAIRE)"
+    },
+    {
+      "pt": "REDUZIR / DESATIVAR TELEMETRIA (EXPERIMENTAL)",
+      "en": "REDUCE / DISABLE TELEMETRY (EXPERIMENTAL)",
+      "es": "REDUCCIÓN / TELEMETRÍA DE DISCAPACIDAD (EXPERIMENTAL)",
+      "zh": "回收/可爆炸性技术(电子)",
+      "fr": "RÉDUCTION / TÉLÉMETRIE HANDICAPABLE (EXPÉRIMENTALE)"
+    },
+    {
+      "pt": "BLOX FRUITS // DRACO V4",
+      "en": "BLOX FRUITS // DRACO V4",
+      "es": "FRUTOS DE BLOX // DRACO V4",
+      "zh": "BLOX FRUITS // DRACO V4",
+      "fr": "FRUITS BLOX // DRACO V4"
+    },
+    {
+      "pt": "Ajuste experimental visual/de desempenho. Não precisa mais de uma aba própria.",
+      "en": "Experimental visual/performance tweak. It no longer needs a separate page.",
+      "es": "Ajuste visual/performance experimental. Ya no necesita una página separada.",
+      "zh": "实验视觉/性能调整,不再需要单独的页面。",
+      "fr": "Tweak expérimental visuel / performance. Il n'a plus besoin d'une page séparée."
+    },
+    {
+      "pt": "REDUZIR AURA DRACO V4 (EXPERIMENTAL)",
+      "en": "REDUCE DRACO V4 AURA (EXPERIMENTAL)",
+      "es": "REDUCCIÓN DRACO V4 AURA (EXPERIMENTAL)",
+      "zh": "遣返DRACO V4 Aura(驱逐)",
+      "fr": "RÉDUCTION DRACO V4 AURA (EXPÉRIMENTAIRE)"
+    },
+    {
+      "pt": "PRONTO PARA APLICAR",
+      "en": "READY TO APPLY",
+      "es": "PREPARADO PARA APLICAR",
+      "zh": "准备适用",
+      "fr": "PRÊT À L'APPLIQUE"
+    },
+    {
+      "pt": "PING & LATÊNCIA",
+      "en": "PING & LATENCY",
+      "es": "PING Y LATENENCIA",
+      "zh": "挂和挂和挂",
+      "fr": "PING & LATENCE"
+    },
+    {
+      "pt": "Reduza gargalos locais e descubra onde a latência está acontecendo. Distância/rota até o servidor continuam dependendo da internet e do servidor do Roblox.",
+      "en": "Reduce local bottlenecks and diagnose latency. Physical route/server distance still depends on your ISP and Roblox server.",
+      "es": "Reduzca los cuellos de botella locales y diagnostique la latencia. Ruta física/distancia del servidor aún depende de su ISP y servidor Roblox.",
+      "zh": "减少本地瓶颈和诊断延迟。 物理路由/服务器距离仍然取决于您的 ISP 和 Roblox 服务器 。",
+      "fr": "Réduire les goulets d'étranglement locaux et diagnostiquer la latence. La distance route/serveur dépend toujours de votre serveur ISP et Roblox."
+    },
+    {
+      "pt": "PAINEL DE LATÊNCIA",
+      "en": "LATENCY PANEL",
+      "es": "PANEL DE LATENENCIA",
+      "zh": "专员小组",
+      "fr": "PANNEAU DE LATENCE"
+    },
+    {
+      "pt": "Mede conexão TCP até pontos de referência e mostra jitter. Não é o ping exato dentro da partida, mas ajuda a separar problema local de rota/servidor.",
+      "en": "Measures TCP connection time to reference endpoints and jitter. It is not exact in-game ping, but helps separate local issues from route/server issues.",
+      "es": "Mide el tiempo de conexión TCP a los puntos finales de referencia y el nerviosismo. No es un ping exacto en el juego, pero ayuda a separar los problemas locales de los problemas de ruta/servidor.",
+      "zh": "度量 TCP 连接时间, 以引用端点和音速。 它不是精确的游戏中 ping, 而是帮助将本地问题与路线/ 服务器问题区分开来 。",
+      "fr": "Mesure le temps de connexion TCP pour les paramètres de référence et le jitter. Il n'est pas exact ping dans le jeu, mais aide à séparer les problèmes locaux des problèmes route/serveur."
+    },
+    {
+      "pt": "TESTAR ROTA ROBLOX",
+      "en": "TEST ROBLOX ROUTE",
+      "es": "PRUEBA ROBLOX VÍA",
+      "zh": "测试ROBLOX轨道",
+      "fr": "VOIE ROBLOX D'ESSAI"
+    },
+    {
+      "pt": "OTIMIZAÇÃO SEGURA",
+      "en": "SAFE NETWORK CLEANUP",
+      "es": "LIMPIEZA DE LA RED SEGURA",
+      "zh": "安全网络清洁",
+      "fr": "CLEANUP DE RÉSEAU SAUF"
+    },
+    {
+      "pt": "REDUZIR GARGALO LOCAL",
+      "en": "REDUCE LOCAL BOTTLENECKS",
+      "es": "FRASCOS LOCALES DE REDUCCIÓN",
+      "zh": "回收液液态废物",
+      "fr": "RÉDUCTION DES BOTTLENES LOCALES"
+    },
+    {
+      "pt": "O que realmente pode ajudar quando o problema está no seu PC: evitar downloads/overlays competindo com o Roblox e manter a pilha de rede do Windows em estado normal.",
+      "en": "What can actually help when the issue is local: avoid downloads/overlays competing with Roblox and keep Windows networking in a normal state.",
+      "es": "Lo que realmente puede ayudar cuando el problema es local: evitar descargas / superposiciones que compiten con Roblox y mantener las redes de Windows en un estado normal.",
+      "zh": "当问题为本地时,什么能真正帮助:避免下载/转发与Roblox竞争,并保持Windows网络处于正常状态。",
+      "fr": "Ce qui peut réellement aider lorsque le problème est local: éviter les téléchargements/overlays en concurrence avec Roblox et garder le réseau Windows dans un état normal."
+    },
+    {
+      "pt": "PREPARAR SESSÃO ROBLOX",
+      "en": "PREPARE ROBLOX SESSION",
+      "es": "PREPARACIÓN DEL PERÍODO DE SESIONES",
+      "zh": "普雷·罗布勒会议",
+      "fr": "PRÉPARER LA SESSION ROBLOX"
+    },
+    {
+      "pt": "APPS PESADOS / REDE",
+      "en": "HEAVY / NETWORK APPS",
+      "es": "APLICACIONES DE RED / AMPLIACIÓN",
+      "zh": "高/网络应用",
+      "fr": "APPLICABLES LOURDS / RÉSEAUX"
+    },
+    {
+      "pt": "VER TCP AUTO-TUNING",
+      "en": "CHECK TCP AUTO-TUNING",
+      "es": "CONTROL DE AUTÓNOMOS TCP",
+      "zh": "切 切 切 TCP 助 试",
+      "fr": "CONTRÔLE DU TCP AUTO-TUNING"
+    },
+    {
+      "pt": "ABRIR REDE DO WINDOWS",
+      "en": "OPEN WINDOWS NETWORK",
+      "es": "RED DE VENTAS ABIERTAS",
+      "zh": "开放窗口网络",
+      "fr": "RÉSEAU OPÉRATIONNEL"
+    },
+    {
+      "pt": "DNS LAB // ROTA LOCAL",
+      "en": "DNS LAB // LOCAL ROUTE",
+      "es": "DNS LAB // VÍA LOCAL",
+      "zh": "低温低温辐射//低氯碳化合物",
+      "fr": "DNS LAB // VOIE LOCALE"
+    },
+    {
+      "pt": "Teste resolvers antes de trocar. DNS pode melhorar a resolução de nomes, mas não encurta a distância física até o servidor da partida.",
+      "en": "Benchmark resolvers before switching. DNS can improve name resolution but cannot shorten the physical route to the match server.",
+      "es": "Resolvedores de Benchmark antes de cambiar. DNS puede mejorar la resolución de nombres, pero no puede acortar la ruta física al servidor de coincidencias.",
+      "zh": "切换前的基准解答器。 DNS 可以改进名称分辨率, 但无法缩短匹配服务器的物理路径 。",
+      "fr": "Le DNS peut améliorer la résolution des noms mais ne peut raccourcir la route physique vers le serveur de correspondance."
+    },
+    {
+      "pt": "Clique em TESTAR DNS para medir Cloudflare, Google e Quad9 por RTT real e aplicar o melhor resultado com um clique.",
+      "en": "Click TEST DNS to measure Cloudflare, Google and Quad9 by real RTT and apply the best result with one click.",
+      "es": "Haga clic en TEST DNS para medir Cloudflare, Google y Quad9 por RTT real y aplicar el mejor resultado con un solo clic.",
+      "zh": "点击 TEST DNS 以真实的 RTT 测量云层、 Google 和 Quad9 , 并点击一击应用最佳结果 。",
+      "fr": "Cliquez sur TEST DNS pour mesurer Cloudflare, Google et Quad9 par RTT réel et appliquez le meilleur résultat en un clic."
+    },
+    {
+      "pt": "TESTAR DNS",
+      "en": "TEST DNS",
+      "es": "DNS de ensayo",
+      "zh": "STeST 测试数据",
+      "fr": "DNS D'ESSAI"
+    },
+    {
+      "pt": "APLICAR MELHOR TESTE",
+      "en": "APPLY BEST TEST",
+      "es": "APLICAR LA MEJOR PRUEBA",
+      "zh": "最佳试验试验",
+      "fr": "ESSAI APPLICABLE AU MEILLEUR ESSAI"
+    },
+    {
+      "pt": "AUTOMÁTICO / DHCP",
+      "en": "AUTOMATIC / DHCP",
+      "es": "AUTOMÁTICA / DHCP",
+      "zh": "AUTOMATIC/DHCP",
+      "fr": "AUTOMATIQUE / DHCP"
+    },
+    {
+      "pt": "REPARAR PILHA TCP/IP — AVANÇADO",
+      "en": "REPAIR TCP/IP STACK — ADVANCED",
+      "es": "REPAIR TCP/IP STACK — AVANCED",
+      "zh": "REPAIR TCP/IPSTACK - 进步",
+      "fr": "RÉPONSE TCP/IP STACK — AVANCEMENT"
+    },
+    {
+      "pt": "FASTFLAGS DE PING — LEGADO",
+      "en": "PING FASTFLAGS — LEGACY",
+      "es": "PING FASTFLAGS — LEGACIA",
+      "zh": "PIN PH FASTFLAG —— 立法",
+      "fr": "PING FASTLAGS — LÉGALITÉ"
+    },
+    {
+      "pt": "Flags antigas de rede podem ser ignoradas pelo Roblox atual e não substituem uma rota melhor. Deixei o módulo separado para não vender 'ping mágico'.",
+      "en": "Old network flags may be ignored by current Roblox and cannot replace a better route. The legacy module stays separate so it is not presented as magic ping.",
+      "es": "Las antiguas banderas de red pueden ser ignoradas por el actual Roblox y no pueden reemplazar una ruta mejor. El módulo legado permanece separado por lo que no se presenta como ping mágico.",
+      "zh": "旧的网络旗帜可能被当前 Roblox 忽略, 无法取代更好的路径 。 遗留模块会保持分离, 以便不显示为魔术 ping 。",
+      "fr": "Les anciens drapeaux réseau peuvent être ignorés par Roblox actuel et ne peuvent pas remplacer un meilleur itinéraire. Le module legs reste séparé donc il n'est pas présenté comme ping magique."
+    },
+    {
+      "pt": "PACK DE REDE LEGADO (EXPERIMENTAL)",
+      "en": "LEGACY NETWORK PACK (EXPERIMENTAL)",
+      "es": "ENVASE DE LA RED DE LEGACIÓN (EXPERIMENTAL)",
+      "zh": "神经网络包(电子包)",
+      "fr": "EMBALLAGE DU RÉSEAU LÉGACY (EXPÉRIMENTAL)"
+    },
+    {
+      "pt": "Controle separado para tamanho da área do cliente Roblox.",
+      "en": "Separate control for Roblox client-area size.",
+      "es": "Control separado para el tamaño del área cliente de Roblox.",
+      "zh": "Roblox客户端区域大小的单独控件 。",
+      "fr": "Contrôle séparé pour la taille de la zone client Roblox."
+    },
+    {
+      "pt": "O Roblox removeu/bloqueou a FastFlag usada para forçar resolução interna. Por isso esta opção usa o método disponível sem injeção: ajusta a área/janela do cliente Roblox, sem mudar a resolução do Windows.",
+      "en": "Roblox removed/blocked the FastFlag used to force internal render resolution. This option therefore uses the available non-injection method: resizing the Roblox client area/window without changing Windows resolution.",
+      "es": "Roblox eliminó/bloqueó el FastFlag utilizado para forzar la resolución de renderizado interno. Por lo tanto, esta opción utiliza el método de no inyección disponible: redimensionar el área/ventana cliente de Roblox sin cambiar la resolución de Windows.",
+      "zh": "Roblox 去除/ 封堵了用于强制内部解析的快列表。 因此, 此选项使用可用的非喷射方法: 在不改变 Window 解析度的情况下调整 Roblox 客户区/ 窗口的大小 。",
+      "fr": "Roblox a supprimé/bloquant le FastFlag utilisé pour forcer la résolution de rendu interne. Cette option utilise donc la méthode de non-injection disponible: redimensionner la zone/fenêtre client Roblox sans changer la résolution de Windows."
+    },
+    {
+      "pt": "Personalizada",
+      "en": "Custom",
+      "es": "Personalizado",
+      "zh": "自自自",
+      "fr": "Personnalisé"
+    },
+    {
+      "pt": "APLICAR NO ROBLOX",
+      "en": "APPLY TO ROBLOX",
+      "es": "APLICAR A ROBLOX",
+      "zh": "适用于ROBROX",
+      "fr": "APPLIQUEZ AU ROBLOX"
+    },
+    {
+      "pt": "Substitui os assets reais ArrowCursor.png e ArrowFarCursor.png; não usa overlay.",
+      "en": "Replaces the real ArrowCursor.png and ArrowFarCursor.png assets; no overlay.",
+      "es": "Reemplaza los activos reales de ArrowCursor.png y ArrowFarCursor.png; sin superposición.",
+      "zh": "替换真正的箭头库.png和箭箭头库.png资产;无重叠。",
+      "fr": "Remplace les actifs ArrowCursor.png et ArrowFarCursor.png réels; pas de recouvrement."
+    },
+    {
+      "pt": "CURSOR PERSONALIZADO",
+      "en": "CUSTOM CURSOR",
+      "es": "CURSOR ADUANERO",
+      "zh": "海关法院",
+      "fr": "COURS DOUANIER"
+    },
+    {
+      "pt": "Fundo branco conectado às bordas pode ser removido automaticamente antes da normalização.",
+      "en": "White background connected to image edges can be removed automatically before normalization.",
+      "es": "El fondo blanco conectado a los bordes de la imagen se puede eliminar automáticamente antes de la normalización.",
+      "zh": "连接到图像边缘的白色背景可以在正常化前自动删除 。",
+      "fr": "Le fond blanc connecté aux bords d'image peut être retiré automatiquement avant la normalisation."
+    },
+    {
+      "pt": "REMOVER FUNDO BRANCO AUTOMATICAMENTE",
+      "en": "AUTO REMOVE WHITE BACKGROUND",
+      "es": "AUTO REMOVER ANTECEDENTES BLANOS",
+      "zh": "续 续 改 原 白 语 文",
+      "fr": "AUTO RENFORCEMENT DU BLANCHE"
+    },
+    {
+      "pt": "APLICAR CURSOR",
+      "en": "APPLY CURSOR",
+      "es": "CURSOR DE APLICACIONES",
+      "zh": "有效计算器",
+      "fr": "APPLIQUEZ LE COURS"
+    },
+    {
+      "pt": "RESTAURAR ORIGINAL",
+      "en": "RESTORE ORIGINAL",
+      "es": "RESTORE ORIGINAL",
+      "zh": "恢复(4 000人)",
+      "fr": "RESTAURATION ORIGINAL"
+    },
+    {
+      "pt": "FONTES DO ROBLOX",
+      "en": "ROBLOX FONTS",
+      "es": "FONDOS DE ROBLOX",
+      "zh": "ROBLOX FONONTS ROBLOX 氟",
+      "fr": "FONTES ROBLOX"
+    },
+    {
+      "pt": "Aplica uma fonte TTF/OTF nos arquivos de texto locais do cliente e preserva os originais em backup.",
+      "en": "Applies a TTF/OTF font to local client text font files and preserves originals in backup.",
+      "es": "Aplica un tipo de letra TTF/OTF a los archivos de tipo de letra de texto del cliente local y conserva los originales en la copia de seguridad.",
+      "zh": "将 TTF/ OTF 字体应用到本地客户端文字字体文件,并将原件保存在备份中。",
+      "fr": "Applique une police TTF/OTF aux fichiers de polices de texte du client local et conserve les originaux en sauvegarde."
+    },
+    {
+      "pt": "FONTE PERSONALIZADA",
+      "en": "CUSTOM FONT",
+      "es": "FONT ADUANERO",
+      "zh": "海关基金",
+      "fr": "FONT DOUANIER"
+    },
+    {
+      "pt": "Arquivos de emoji são preservados para evitar quadrados/símbolos quebrados. Bloxstrap, quando detectado, também recebe a modificação para sobreviver a updates.",
+      "en": "Emoji files are preserved to avoid broken symbols. When Bloxstrap is detected, the modification is mirrored there to survive updates.",
+      "es": "Los archivos Emoji se conservan para evitar símbolos rotos. Cuando se detecta Bloxstrap, la modificación se refleja allí para sobrevivir a las actualizaciones.",
+      "zh": "Emoji 文件被保存以避免符号被折断。 当检测到布洛克斯陷阱时, 修改会反射到那里以生存更新 。",
+      "fr": "Les fichiers Emoji sont conservés pour éviter les symboles cassés. Lorsque Bloxstrap est détecté, la modification est reflétée là pour survivre mises à jour."
+    },
+    {
+      "pt": "Nenhuma fonte selecionada",
+      "en": "No font selected",
+      "es": "Ningún tipo de letra seleccionado",
+      "zh": "未选择字体",
+      "fr": "Aucune police sélectionnée"
+    },
+    {
+      "pt": "ESCOLHER .TTF / .OTF",
+      "en": "CHOOSE .TTF / .OTF",
+      "es": "Escoja .TTF / .OTF",
+      "zh": "切斯.TTF/.OTF",
+      "fr": "CHOISIR .TTF / .OTF"
+    },
+    {
+      "pt": "APLICAR NO JOGO",
+      "en": "APPLY IN GAME",
+      "es": "APLICAR EN EL JUEGO",
+      "zh": "应用在游戏中",
+      "fr": "S'APPLIQUER EN JEU"
+    },
+    {
+      "pt": "RESTAURAR FONTES ORIGINAIS",
+      "en": "RESTORE ORIGINAL FONTS",
+      "es": "FONDOS ORIGINALES DE RESTORE",
+      "zh": "反种种种",
+      "fr": "RÉTABLISSEMENTS ORIGINAL"
+    },
+    {
+      "pt": "Salve builds e sequências de combo para consultar depois — sem macro e sem automatizar o jogo.",
+      "en": "Save builds and combo sequences for later — no macros or gameplay automation.",
+      "es": "Guarde las secuencias de compilación y combo para después, sin macros ni automatización del juego.",
+      "zh": "保存构建和组合序列,以备以后使用——没有宏或游戏自动操作。",
+      "fr": "Enregistrer les compilations et les séquences combo pour plus tard — pas de macros ou d'automatisation de gameplay."
+    },
+    {
+      "pt": "SEU ARQUIVO DE COMBOS",
+      "en": "YOUR COMBO LIBRARY",
+      "es": "TU BIBLIOTECA COMBO",
+      "zh": "阁下的名誉",
+      "fr": "VOTRE BIBLIOTHEQUE COMBO"
+    },
+    {
+      "pt": "Escolha o estilo de luta e a fruta, complete os outros slots como texto livre e escreva a sequência inteira. Os cards ficam salvos localmente no seu PC.",
+      "en": "Choose your fighting style and fruit, complete the other slots as free-form text, and write the full sequence. Cards are saved locally on your PC.",
+      "es": "Elija su estilo de lucha y fruta, complete las otras ranuras como texto de forma libre, y escriba la secuencia completa. Las cartas se guardan localmente en su PC.",
+      "zh": "选择战斗风格和水果, 完成其他空格为自由格式文本, 并写入完整序列 。 名片将保存在本地 PC 上 。",
+      "fr": "Choisissez votre style de combat et de fruits, remplissez les autres fentes comme texte libre, et écrivez la séquence complète. Les cartes sont enregistrées localement sur votre PC."
+    },
+    {
+      "pt": "＋ NOVO COMBO",
+      "en": "＋ NEW COMBO",
+      "es": "+ COMBO NUEVO",
+      "zh": "+ 非洲发展新伙伴关系",
+      "fr": "+ NOUVEAU COMBO"
+    },
+    {
+      "pt": "FONTES / CRÉDITOS",
+      "en": "SOURCES / CREDITS",
+      "es": "FUENTES / CRÉDITOS",
+      "zh": "资源/资源",
+      "fr": "SOURCES / CREDITS"
+    },
+    {
+      "pt": "Fruits e Fighting Styles usam primeiro o pack local integrado ao ZKStrap; quando existe imagem local, nenhuma wiki/API é necessária para a thumbnail.",
+      "en": "Fruits and Fighting Styles use the bundled local pack first; when a local image exists, no wiki/API is needed for the thumbnail.",
+      "es": "Fruits and Fighting Styles utilizan primero el paquete local incluido; cuando existe una imagen local, no se necesita wiki/API para la miniatura.",
+      "zh": "水果和战斗风格首先使用捆绑的本地包;当存在本地图像时,缩略图不需要维基/API。",
+      "fr": "Fruits et styles de combat utilisent d'abord le paquet local groupé; lorsqu'une image locale existe, aucun wiki/API n'est nécessaire pour la vignette."
+    },
+    {
+      "pt": "COMBOS SALVOS",
+      "en": "SAVED COMBOS",
+      "es": "COMBOS SALVADOS",
+      "zh": "救 救 士 士 士 士",
+      "fr": "COMBOS SAVÉS"
+    },
+    {
+      "pt": "Sem limite prático: adicione, edite, duplique ou exclua suas builds.",
+      "en": "No practical limit: add, edit, duplicate or delete your builds.",
+      "es": "No hay límite práctico: añadir, editar, duplicar o eliminar sus builds.",
+      "zh": "无实际限制: 添加、 编辑、 复制或删除您的构建 。",
+      "fr": "Aucune limite pratique: ajoutez, modifiez, dupliquez ou supprimez vos builds."
+    },
+    {
+      "pt": "Ferramentas para jogar, treinar e criar conteúdo de Blox Fruits.",
+      "en": "Tools to play, practice and create Blox Fruits content.",
+      "es": "Herramientas para jugar, practicar y crear contenido de Blox Fruits.",
+      "zh": "玩耍、练习和创建布洛克斯水果内容的工具。",
+      "fr": "Outils pour jouer, pratiquer et créer du contenu Blox Fruits."
+    },
+    {
+      "pt": "A central reúne as ferramentas de Blox Fruits sem duplicar toda a navegação na barra lateral.",
+      "en": "This hub gathers Blox Fruits tools without duplicating the entire sidebar navigation.",
+      "es": "Este hub reúne las herramientas de Blox Fruits sin duplicar toda la navegación de la barra lateral.",
+      "zh": "这个中心收集布洛克斯水果工具,不重复整个侧边导航。",
+      "fr": "Ce moyeu rassemble les outils Blox Fruits sans dupliquer toute la navigation de la barre latérale."
+    },
+    {
+      "pt": "ÚLTIMA ROLETA",
+      "en": "LAST ROLL",
+      "es": "ÚLTIMO ROLL",
+      "zh": "最后一卷",
+      "fr": "DERNIER ROULEAU"
+    },
+    {
+      "pt": "Nenhuma ainda",
+      "en": "None yet",
+      "es": "Ninguna todavía",
+      "zh": "尚无",
+      "fr": "Aucune pour le moment"
+    },
+    {
+      "pt": "DESAFIOS ATIVOS",
+      "en": "ACTIVE CHALLENGES",
+      "es": "RETOS ACTIVOS",
+      "zh": "行动挑战",
+      "fr": "DÉFIS ACTIFS"
+    },
+    {
+      "pt": "DESAFIOS CONCLUÍDOS",
+      "en": "COMPLETED CHALLENGES",
+      "es": "RETOS CUMPLIDOS",
+      "zh": "完成的挑战",
+      "fr": "DÉFIS COMPLÉTÉS"
+    },
+    {
+      "pt": "Fighting Style + Fruit + Sword + Gun. Tudo local, visual e pronto para alimentar os desafios do Creator Mode.",
+      "en": "Fighting Style + Fruit + Sword + Gun. Local catalogs with Creator Mode integration.",
+      "es": "Estilo de lucha + Fruta + Espada + Pistola. Catálogos locales con integración de Modo Creador.",
+      "zh": "战斗风格 + 水果 + 剑 + 枪 与创造者模式融合的地方目录。",
+      "fr": "Style de combat + Fruit + Epée + Gun. Catalogues locaux avec intégration en mode Créateur."
+    },
+    {
+      "pt": "A build inteira é decidida primeiro e revelada em sequência. Nenhum slot foi removido: Style → Fruit → Sword → Gun.",
+      "en": "The whole build is decided first and then revealed: Style → Fruit → Sword → Gun.",
+      "es": "Toda la construcción se decide primero y luego se revela: Estilo → Fruta → Espada → Pistola.",
+      "zh": "整个建筑首先决定,然后公布:风格:水果;剑;枪。",
+      "fr": "L'ensemble de la construction est décidé d'abord et ensuite révélé: Style → Fruit → Épée → Gun."
+    },
+    {
+      "pt": "🎲  SORTEAR BUILD",
+      "en": "🎲  ROLL BUILD",
+      "es": "ROLL BUILD",
+      "zh": "🎲  ROLL BUILD",
+      "fr": "BÂTIMENT DE ROULEAUX"
+    },
+    {
+      "pt": "INVENTÁRIO",
+      "en": "INVENTORY",
+      "es": "INVENTARIO",
+      "zh": "清单",
+      "fr": "INVENTAIRE"
+    },
+    {
+      "pt": "FAVORITAR",
+      "en": "FAVORITE",
+      "es": "FAVORITE",
+      "zh": "首选",
+      "fr": "FAVORITE"
+    },
+    {
+      "pt": "SALVAR NO COMBO PLANNER",
+      "en": "SAVE TO COMBO PLANNER",
+      "es": "SALVAR AL PLANERO COMBO",
+      "zh": "投 投 投 计",
+      "fr": "ÉTABLISSEZ AU COMMISSAIRE DE PLANIFICATION"
+    },
+    {
+      "pt": "USAR NOS DESAFIOS",
+      "en": "USE IN CHALLENGES",
+      "es": "USO EN RETOS",
+      "zh": "挑战中的使用",
+      "fr": "UTILISATION DANS LES DÉFIS"
+    },
+    {
+      "pt": "HISTÓRICO DA ROLETA",
+      "en": "ROULETTE HISTORY",
+      "es": "HISTORIA DE ROULETTE",
+      "zh": "卢卢尔特历史",
+      "fr": "HISTOIRE ROULETTE"
+    },
+    {
+      "pt": "Desafios de PvP com progresso manual, raridade SECRET e histórico persistente.",
+      "en": "PvP challenges with manual progress, rare SECRET drops and persistent history.",
+      "es": "Desafíos de PvP con progreso manual, caídas raras de SECRET y historia persistente.",
+      "zh": "人手进步、秘书处少见的下降以及历史的持久存在,给个人工作带来挑战。",
+      "fr": "Défis PvP avec progrès manuel, rares chutes SECRET et historique persistant."
+    },
+    {
+      "pt": "Os desafios funcionam com qualquer build, mas ficam mais dinâmicos quando você usa uma build aleatória da Build Roulette. Gere 1, 2, 3, 4 ou 5 desafios e acompanhe tudo manualmente.",
+      "en": "Challenges work with any build, but random Roulette builds make them more dynamic.",
+      "es": "Los desafíos funcionan con cualquier construcción, pero las construcciones aleatorias de la ruleta los hacen más dinámicos.",
+      "zh": "任何建筑都有挑战作用,但随机的轮盘制造使它们更具活力。",
+      "fr": "Les défis fonctionnent avec n'importe quelle construction, mais les constructions aléatoires Roulette les rendent plus dynamiques."
+    },
+    {
+      "pt": "Escolha dificuldade e quantidade. Trocas são limitadas a 2 por desafio. Winstreak/killstreak só contam contra players de 5M+; 2.5M não conta.",
+      "en": "Choose difficulty and quantity. Each challenge can be rerolled only twice.",
+      "es": "Elija la dificultad y la cantidad. Cada desafío se puede volver a enrollar sólo dos veces.",
+      "zh": "选择难度和数量。 每个挑战只能两次重滚 。",
+      "fr": "Choisissez la difficulté et la quantité. Chaque défi ne peut être roulé que deux fois."
+    },
+    {
+      "pt": "GERAR DESAFIOS",
+      "en": "GENERATE CHALLENGES",
+      "es": "RETOS GENERADOS",
+      "zh": "应对全球挑战的新挑战",
+      "fr": "DÉFIS GÉNÉRAUX"
+    },
+    {
+      "pt": "HISTÓRICO DE DESAFIOS",
+      "en": "CHALLENGE HISTORY",
+      "es": "HISTORIA DEL DESAFÍO",
+      "zh": "挑战历史",
+      "fr": "L'HISTOIRE DES DÉFIS"
+    },
+    {
+      "pt": "Concluídos ficam salvos aqui. Desafios ativos não são salvos e desaparecem ao fechar o ZKStrap.",
+      "en": "Completed challenges stay here; active challenges disappear when ZKStrap closes.",
+      "es": "Los desafíos completados permanecen aquí; los desafíos activos desaparecen cuando ZKStrap se cierra.",
+      "zh": "已完成的挑战留在这里;当ZKSstrap关闭时,积极的挑战就会消失。",
+      "fr": "Les défis terminés restent ici; les défis actifs disparaissent lorsque ZKStrap ferme."
+    },
+    {
+      "pt": "Salve até 5 combinações locais e aplique com snapshot automático.",
+      "en": "Save up to 5 local combinations and apply them with an automatic snapshot.",
+      "es": "Ahorre hasta 5 combinaciones locales y aplíquelas con una instantánea automática.",
+      "zh": "保存最多5个本地组合,并用自动快照应用它们。",
+      "fr": "Économisez jusqu'à 5 combinaisons locales et appliquez-les avec un instantané automatique."
+    },
+    {
+      "pt": "SETUPS PRONTOS",
+      "en": "BUILT-IN SETUPS",
+      "es": "BUILT-IN SETUPS",
+      "zh": "BUULT - 在塞斯图斯",
+      "fr": "ÉTABLISSEMENTS INTÉRIEURS"
+    },
+    {
+      "pt": "MEUS SETUPS",
+      "en": "MY SETUPS",
+      "es": "MIS SETUPS",
+      "zh": "我的东西",
+      "fr": "MES ETATS"
+    },
+    {
+      "pt": "Monte sua configuração no app e clique em SALVAR COMO SETUP. Ao editar, o topo deixa claro qual setup está recebendo as alterações.",
+      "en": "Configure the app and click SAVE AS SETUP. Edit mode clearly shows which setup is receiving changes.",
+      "es": "Configure la aplicación y haga clic en SAVE AS SETUP. El modo Editar muestra claramente qué configuración está recibiendo cambios.",
+      "zh": "配置应用程序并单击 SAVE as SETUP。编辑模式清楚地显示哪个设置正在接受更改 。",
+      "fr": "Configurez l'application et cliquez sur Enregistrer sous SETUP. Le mode Édition indique clairement quelle configuration reçoit les modifications."
+    },
+    {
+      "pt": "＋ SALVAR COMO SETUP",
+      "en": "＋ SAVE AS SETUP",
+      "es": "+ SALVAR COMO ESTABLECER",
+      "zh": "+ 视同设计",
+      "fr": "+ ENREGISTREMENT"
+    },
+    {
+      "pt": "SPOTIFY / MÍDIA",
+      "en": "SPOTIFY / MEDIA",
+      "es": "SPOTIFY / MEDIA",
+      "zh": "萨尔瓦多/地中海",
+      "fr": "SPOTIFIE / MÉDIAS"
+    },
+    {
+      "pt": "Now Playing do Windows — sem login, Client ID, OAuth, API ou Premium.",
+      "en": "Windows Now Playing — no login, Client ID, OAuth, API or Premium.",
+      "es": "Windows Now Playing — no tiene login, Client ID, OAuth, API o Premium.",
+      "zh": "Windows 现在播放 - 没有登录、 客户身份、 OAUT、 API 或 Premium 。",
+      "fr": "Windows maintenant Lecture — pas de connexion, ID client, OAuth, API ou Premium."
+    },
+    {
+      "pt": "Procura a sessão do Spotify no Windows. Spotify Desktop é identificado diretamente. No navegador, o ZKStrap aceita a sessão quando o Windows marca como MÚSICA, quando há metadata musical completa (título + artista + álbum) ou quando a janela confirma Spotify; sessões de VÍDEO continuam bloqueadas.",
+      "en": "Targets Spotify specifically. Browser MUSIC sessions are preferred and VIDEO sessions are rejected so YouTube is never controlled by mistake.",
+      "es": "Se prefieren las sesiones de Browser MUSIC y se rechazan las sesiones de VIDEO para que YouTube nunca sea controlado por error.",
+      "zh": "特别突出的目标:首选浏览者MYSIC会议,拒绝 VIDEO会议,因此YouTube永远不会被错误控制。",
+      "fr": "Cibles Spotify spécifiquement. Navigateur Les sessions MUSIC sont préférées et les sessions VIDEO sont rejetées de sorte que YouTube n'est jamais contrôlé par erreur."
+    },
+    {
+      "pt": "Nenhuma música detectada",
+      "en": "No media detected",
+      "es": "No se han detectado medios de comunicación",
+      "zh": "未检测到媒体",
+      "fr": "Aucun média détecté"
+    },
+    {
+      "pt": "Abra o Spotify e dê play em uma música.",
+      "en": "Open Spotify and start a track.",
+      "es": "Abre Spotify y comienza una pista.",
+      "zh": "打开显示并启动音轨 。",
+      "fr": "Ouvrez Spotify et démarrez une piste."
+    },
+    {
+      "pt": "Status: procurando sessão de mídia…",
+      "en": "Status: looking for media session…",
+      "es": "Estado: buscando sesión de medios...",
+      "zh": "状态: 正在寻找媒体会话...",
+      "fr": "Statut : à la recherche d'une session média..."
+    },
+    {
+      "pt": "Controles enviados DIRETAMENTE à sessão do Spotify detectada pelo Windows. YouTube e outros players são ignorados; não existe fallback de playback por tecla global.",
+      "en": "Controls target the Spotify session directly. YouTube and other players are ignored; playback never falls back to global media keys.",
+      "es": "Los controles se dirigen directamente a la sesión de Spotify. YouTube y otros reproductores son ignorados; la reproducción nunca vuelve a caer en las claves de medios globales.",
+      "zh": "控制直接针对“ 点点” 会话。 YouTube 和其他玩家被忽略; 重播从不回到全球媒体键 。",
+      "fr": "Les contrôles ciblent directement la session Spotify. YouTube et d'autres lecteurs sont ignorés ; la lecture ne revient jamais aux touches médias globales."
+    },
+    {
+      "pt": "⏮  ANTERIOR",
+      "en": "⏮  PREVIOUS",
+      "es": "ANTERIORES",
+      "zh": "以前",
+      "fr": "PRÉCÉDENT"
+    },
+    {
+      "pt": "PRÓXIMA  ⏭",
+      "en": "NEXT  ⏭",
+      "es": "SIGUIENTE",
+      "zh": "下一步",
+      "fr": "PROCHAINE"
+    },
+    {
+      "pt": "ABRIR APP",
+      "en": "OPEN APP",
+      "es": "APÉNDICE ABIERTO",
+      "zh": "免费提供的",
+      "fr": "APPLIQUE OUVERTE"
+    },
+    {
+      "pt": "ABRIR WEB",
+      "en": "OPEN WEB",
+      "es": "WEB ABIERTO",
+      "zh": "开放 web",
+      "fr": "OUVERTURE DU WEB"
+    },
+    {
+      "pt": "NAVEGAR // SPOTIFY WEB",
+      "en": "BROWSE // SPOTIFY WEB",
+      "es": "BROWSE // SPOTIFY WEB",
+      "zh": "BROWSE // SPOTIF WEB / 原始能源",
+      "fr": "CROISSANCE // SPOTIFIE WEB"
+    },
+    {
+      "pt": "Pesquise pelo ZKStrap e abra o resultado direto no Spotify. A navegação completa continua no player oficial, porque esta versão não usa a API da sua conta.",
+      "en": "Search from ZKStrap and open the result directly in Spotify. Full browsing stays in the official player because this version does not use your account API.",
+      "es": "Busca desde ZKStrap y abre el resultado directamente en Spotify. La navegación completa permanece en el reproductor oficial porque esta versión no utiliza la API de tu cuenta.",
+      "zh": "从 ZKSstrap 中搜索, 然后直接在 Spotify 中打开结果。 全部浏览会留在官方玩家中, 因为此版本不使用您的账户 API 。",
+      "fr": "Rechercher depuis ZKStrap et ouvrir le résultat directement dans Spotify. Navigation complète reste dans le lecteur officiel parce que cette version n'utilise pas votre API de compte."
+    },
+    {
+      "pt": "Música, artista ou álbum…",
+      "en": "Song, artist or album…",
+      "es": "Canción, artista o álbum...",
+      "zh": "歌曲,艺术家或专辑...",
+      "fr": "Chanson, artiste ou album..."
+    },
+    {
+      "pt": "PESQUISAR",
+      "en": "SEARCH",
+      "es": "BUSCAR",
+      "zh": "搜索",
+      "fr": "RECHERCHE"
+    },
+    {
+      "pt": "VOLUME DO SPOTIFY",
+      "en": "SPOTIFY VOLUME",
+      "es": "VOLUMEN DE ESPOTIFÍA",
+      "zh": "SPOTIF 伏击",
+      "fr": "VOLUME SPOTIFIQUE"
+    },
+    {
+      "pt": "Controla somente a sessão de áudio do Spotify Desktop. Nunca altera o volume geral do Windows nem o áudio do YouTube. No Spotify Web, o controle só é liberado se o Windows expuser uma sessão de áudio identificável como Spotify.",
+      "en": "Controls only the Spotify Desktop audio session. It never changes Windows master volume or YouTube audio. On Spotify Web, volume is enabled only when Windows exposes an audio session identifiable as Spotify.",
+      "es": "Controla sólo la sesión de audio de Spotify Desktop. Nunca cambia el volumen maestro de Windows o el audio de YouTube. En Spotify Web, el volumen está habilitado sólo cuando Windows expone una sesión de audio identificable como Spotify.",
+      "zh": "仅控制 Spotify 桌面音频会话。 它从不改变 Windows 母体音量或YouTube 音频。 在 Spotify Web 上, 音量只有在 Windows 显示可识别为 Spotify 的音频会话时才启用 。",
+      "fr": "Contrôle uniquement la session audio Spotify Desktop. Elle ne change jamais le volume principal de Windows ou l'audio YouTube. Sur Spotify Web, le volume est activé seulement lorsque Windows expose une session audio identifiable comme Spotify."
+    },
+    {
+      "pt": "SPOTIFY • verificando volume…",
+      "en": "SPOTIFY • checking volume…",
+      "es": "SPOTIFY • comprobar el volumen...",
+      "zh": "检查体积...",
+      "fr": "SPOTIFIÉ • contrôle du volume..."
+    },
+    {
+      "pt": "PERMITIR VOLUME NO SPOTIFY WEB (pode afetar outras abas do navegador)",
+      "en": "ALLOW SPOTIFY WEB VOLUME (may affect other browser tabs)",
+      "es": "ALLOW SPOTIFY VOLUMEN WEB (puede afectar a otras pestañas del navegador)",
+      "zh": "ALOW 所有SPOTIFY WEB VOLUME (可能影响其它浏览器标签)",
+      "fr": "VOLUME WEB (peut affecter d'autres onglets du navigateur)"
+    },
+    {
+      "pt": "COMPATIBILIDADE",
+      "en": "COMPATIBILITY",
+      "es": "COMPATIBILIDAD",
+      "zh": "复度",
+      "fr": "COMPATIBILITÉ"
+    },
+    {
+      "pt": "• Spotify Desktop: metadata e capa vêm da sessão de mídia do Windows.\n• Spotify Web: funciona quando Chrome/Edge publica a aba no controle multimídia do Windows; a janela ativa com Spotify também serve como confirmação.\n• Playback mira a sessão selecionada do Spotify; sessões de vídeo continuam rejeitadas.\n• Volume exclusivo é garantido no Spotify Desktop. No Web, o switch opcional controla o processo do navegador e pode afetar outras abas.\n• Sem Premium • sem conta Developer • sem Client ID • sem callback.",
+      "en": "• Spotify Desktop: metadata and artwork come from the Windows media session.\n• Spotify Web: works when Chrome/Edge exposes the tab to Windows media controls.\n• If another player becomes the active session, ZKStrap may show it; pause it and refresh.\n• No Premium • no Developer account • no Client ID • no callback.",
+      "es": "• Spotify Desktop: metadatos y obras de arte provienen de la sesión multimedia de Windows. • Spotify Web: funciona cuando Chrome/Edge expone la pestaña a los controles multimedia de Windows. • Si otro reproductor se convierte en la sesión activa, ZKStrap puede mostrarla; pausarla y actualizarla. • No Premium • no cuenta de desarrollador • no Client ID • no callback.",
+      "zh": "• 聚焦桌面:元数据和艺术作品来自Windows媒体会话。",
+      "fr": "• Spotify Desktop: les métadonnées et les œuvres d'art proviennent de la session des médias de Windows. • Spotify Web: fonctionne lorsque Chrome/Edge expose l'onglet aux contrôles des médias de Windows. • Si un autre lecteur devient la session active, ZKStrap peut l'afficher; pausez-le et rafraîchir. • Pas de Premium • pas de compte développeur • pas d'ID client • pas de callback."
+    },
+    {
+      "pt": "Diga o que você quer fazer ou escolha uma categoria. O assistente lê o estado atual do app e leva você direto ao lugar certo.",
+      "en": "Tell ZK Assist what you want to do or choose a category.",
+      "es": "Dile a ZK Assist lo que quieres hacer o elige una categoría.",
+      "zh": "告诉 ZK 协助您想要做什么或选择一个分类 。",
+      "fr": "Dites à ZK Assistez ce que vous voulez faire ou choisissez une catégorie."
+    },
+    {
+      "pt": "✦  ASSISTENTE DO ZKSTRAP",
+      "en": "✦  ZKSTRAP ASSISTANT",
+      "es": "ZKSTRAP ASISTENTE",
+      "zh": "ZKSTRAP 侦探",
+      "fr": "AIDE AU ZKSTRAP"
+    },
+    {
+      "pt": "Sem menus gigantes: pesquise uma função, rode um diagnóstico rápido ou escolha uma das áreas abaixo. Tudo funciona localmente, sem IA generativa.",
+      "en": "Search a function, run a quick diagnostic or choose an area below. Everything works locally.",
+      "es": "Busque una función, realice un diagnóstico rápido o elija un área a continuación. Todo funciona localmente.",
+      "zh": "搜索函数,运行快速诊断或选择下面的区域。所有功能均在本地工作。",
+      "fr": "Recherchez une fonction, lancez un diagnostic rapide ou choisissez une zone ci-dessous. Tout fonctionne localement."
+    },
+    {
+      "pt": "Ex.: cursor não aplica, melhorar FPS, trocar tema, achar Roblox...",
+      "en": "Example: cursor not applying, improve FPS, change theme...",
+      "es": "Ejemplo: cursor no aplicar, mejorar FPS, cambiar el tema...",
+      "zh": "示例: 光标不适用, 改进 FPS, 更改主题...",
+      "fr": "Exemple: curseur ne pas appliquer, améliorer FPS, thème de changement..."
+    },
+    {
+      "pt": "BUSCAR AJUDA",
+      "en": "SEARCH HELP",
+      "es": "AYUDA DE BÚSQUEDA",
+      "zh": "搜索帮助",
+      "fr": "AIDE À LA RECHERCHE"
+    },
+    {
+      "pt": "O QUE VOCÊ QUER RESOLVER?",
+      "en": "WHAT DO YOU WANT TO SOLVE?",
+      "es": "¿Qué quieres resolver?",
+      "zh": "你想维持什么?",
+      "fr": "Qu'est-ce que tu veux faire?"
+    },
+    {
+      "pt": "Escolha uma área. Depois o assistente mostra só as opções que fazem sentido.",
+      "en": "Choose an area and only relevant actions will be shown.",
+      "es": "Elija un área y sólo se mostrarán las acciones relevantes.",
+      "zh": "选择一个区域, 仅显示相关的动作 。",
+      "fr": "Choisissez un domaine et seules les actions pertinentes seront affichées."
+    },
+    {
+      "pt": "RESPOSTA / PRÓXIMO PASSO",
+      "en": "ANSWER / NEXT STEP",
+      "es": "RESPUESTA / SIGUIENTE PASO",
+      "zh": "答复/下一步",
+      "fr": "RÉPONSE / PROCHAINE ÉTAPE"
+    },
+    {
+      "pt": "Você pode voltar às categorias a qualquer momento. Os botões abaixo levam direto à configuração certa.",
+      "en": "Buttons take you directly to the correct setting.",
+      "es": "Los botones te llevan directamente a la configuración correcta.",
+      "zh": "按键直接将您带到正确的位置 。",
+      "fr": "Les boutons vous emmènent directement au bon réglage."
+    },
+    {
+      "pt": "PERSONALIZAR ZKSTRAP",
+      "en": "CUSTOMIZE ZKSTRAP",
+      "es": "ADUANAR ZKSTRAP",
+      "zh": "库斯托米兹茨茨茨基",
+      "fr": "ZKSTRAP DOUANIER"
+    },
+    {
+      "pt": "Temas especiais usam banner próprio no topo; o restante do app permanece limpo, alinhado e consistente.",
+      "en": "Special themes use their own top banner while the rest of the app stays clean, aligned and consistent.",
+      "es": "Los temas especiales utilizan su propio banner superior mientras que el resto de la aplicación permanece limpio, alineado y consistente.",
+      "zh": "特别主题使用自己的头条旗帜,而其他应用程序则保持干净、一致和一致。",
+      "fr": "Les thèmes spéciaux utilisent leur propre bannière supérieure tandis que le reste de l'application reste propre, aligné et cohérent."
+    },
+    {
+      "pt": "GALERIA DE TEMAS",
+      "en": "THEME GALLERY",
+      "es": "GALLERÍA TEMÁTICA",
+      "zh": "主题巨星",
+      "fr": "THÈME GALERIE"
+    },
+    {
+      "pt": "Temas Core mantêm a identidade do ZKStrap. Nos especiais, a arte do jogo fica concentrada no banner superior e os cards continuam organizados.",
+      "en": "Core themes keep ZKStrap's identity. Special themes keep game artwork inside the top banner while cards stay organized.",
+      "es": "Temas básicos mantienen la identidad de ZKStrap. Temas especiales mantienen el arte del juego dentro del banner superior mientras las cartas permanecen organizadas.",
+      "zh": "核心主题保持 ZKStap 的身份。 特殊主题将游戏艺术作品保留在头条旗帜内, 而卡片则保持组织 。",
+      "fr": "Les thèmes de base gardent l'identité de ZKStrap. Les thèmes spéciaux gardent l'œuvre de jeu à l'intérieur de la bannière supérieure pendant que les cartes restent organisées."
+    },
+    {
+      "pt": "Temas Especiais",
+      "en": "Special Themes",
+      "es": "Temas especiales",
+      "zh": "特别主题",
+      "fr": "Thèmes spéciaux"
+    },
+    {
+      "pt": "Temas Secretos",
+      "en": "Secret Themes",
+      "es": "Temas secretos",
+      "zh": "秘密主题",
+      "fr": "Thèmes secrets"
+    },
+    {
+      "pt": "Arte confinada dentro do banner e dos cards. Nada atravessa header, sidebar ou texto.",
+      "en": "Artwork stays inside banners and cards. Nothing crosses headers, sidebar or text.",
+      "es": "La obra de arte se queda dentro de los banners y las cartas. Nada cruza encabezados, barra lateral o texto.",
+      "zh": "艺术作品保留在横幅和卡片内,没有任何东西能穿过信头、侧边栏或文字。",
+      "fr": "Artwork reste à l'intérieur des bannières et des cartes. Rien ne croise les en-têtes, la barre latérale ou le texte."
+    },
+    {
+      "pt": "Cada identidade é desbloqueada de uma forma diferente. Cards bloqueados escondem a condição real, mas revelam uma pista quando você passa o mouse por qualquer parte deles.",
+      "en": "Every identity unlocks differently. Locked cards hide the real condition, but reveal a hint when you hover anywhere over the card.",
+      "es": "Cada identidad se desbloquea de manera diferente. Las tarjetas bloqueadas ocultan la condición real, pero revelan una pista cuando se pasa por encima de la tarjeta.",
+      "zh": "每个身份的解锁都不同。锁着的卡片隐藏了真实状况,但当您在卡片上徘徊到任何地方时,会显示一个提示。",
+      "fr": "Chaque identité se déverrouille différemment. Les cartes verrouillées cachent l'état réel, mais révèlent un indice lorsque vous planez n'importe où sur la carte."
+    },
+    {
+      "pt": "CORES DO TEMA",
+      "en": "THEME COLORS",
+      "es": "LOS COLORES DE TEMA",
+      "zh": "专题气候",
+      "fr": "THÈME COULEURS"
+    },
+    {
+      "pt": "Personalize uma área ou restaure o tema para voltar à identidade original.",
+      "en": "Customize one area or restore the theme to return to its original identity.",
+      "es": "Personaliza un área o restaura el tema para volver a su identidad original.",
+      "zh": "定制一个区域或恢复主题以恢复其原始特性 。",
+      "fr": "Personnaliser une zone ou restaurer le thème pour revenir à son identité originale."
+    },
+    {
+      "pt": "Fundo do app",
+      "en": "App background",
+      "es": "Fondo de la aplicación",
+      "zh": "附录背景背景背景",
+      "fr": "Historique de l'application"
+    },
+    {
+      "pt": "Barra lateral",
+      "en": "Sidebar",
+      "es": "Barra lateral",
+      "zh": "侧边边栏",
+      "fr": "Barre latérale"
+    },
+    {
+      "pt": "Painel principal",
+      "en": "Main panel",
+      "es": "Panel principal",
+      "zh": "主要小组会议",
+      "fr": "Panneau principal"
+    },
+    {
+      "pt": "Dentro das caixas",
+      "en": "Card interior",
+      "es": "Interior de tarjetas",
+      "zh": "内部贺卡内",
+      "fr": "Carte intérieure"
+    },
+    {
+      "pt": "Caixa ativa",
+      "en": "Active card",
+      "es": "Tarjeta activa",
+      "zh": "活动卡卡",
+      "fr": "Carte active"
+    },
+    {
+      "pt": "Caixa do ícone",
+      "en": "Icon box",
+      "es": "Caja de iconos",
+      "zh": "图标框",
+      "fr": "Boîte à icônes"
+    },
+    {
+      "pt": "Cor de destaque",
+      "en": "Accent",
+      "es": "Accent",
+      "zh": "升温",
+      "fr": "Accent"
+    },
+    {
+      "pt": "Hover principal",
+      "en": "Main hover",
+      "es": "Sostén principal",
+      "zh": "主盘旋",
+      "fr": "Piste principale"
+    },
+    {
+      "pt": "Texto",
+      "en": "Text",
+      "es": "Texto",
+      "zh": "文字文字文字文字文字",
+      "fr": "Texte"
+    },
+    {
+      "pt": "Bordas",
+      "en": "Borders",
+      "es": "Bordes",
+      "zh": "边境边界",
+      "fr": "Frontières"
+    },
+    {
+      "pt": "RESTAURAR TEMA",
+      "en": "RESTORE THEME",
+      "es": "RESTORE TEMA",
+      "zh": "恢复主题",
+      "fr": "THÈME DE RÉTABLISSEMENT"
+    },
+    {
+      "pt": "ÁUDIO // SOUND STUDIO",
+      "en": "AUDIO // SOUND STUDIO",
+      "es": "AUDIO // SONIDO ESTUDIO",
+      "zh": "AUDIO / SOUND 大学",
+      "fr": "AUDIO // ÉTUDE SONDE"
+    },
+    {
+      "pt": "Escolha a identidade sonora do ZKStrap. Música e efeitos podem ser controlados separadamente.",
+      "en": "Choose ZKStrap's sound identity. Music and effects can be controlled separately.",
+      "es": "Elija la identidad sonora de ZKStrap. La música y los efectos se pueden controlar por separado.",
+      "zh": "选择 ZKStap 的音效身份。 音乐和效果可以分开控制 。",
+      "fr": "Choisissez l'identité sonore de ZKStrap. La musique et les effets peuvent être contrôlés séparément."
+    },
+    {
+      "pt": "10 packs locais, 2 trilhas melódicas por pack e efeitos diferentes para navegação, scroll, sliders, tema, Combo Planner, avisos e carregamento.",
+      "en": "10 local packs, 2 melodic background tracks per pack and distinct effects for navigation, scroll, sliders, themes, Combo Planner, alerts and loading.",
+      "es": "10 paquetes locales, 2 pistas de fondo melódicas por paquete y diferentes efectos para la navegación, desplazamiento, deslizadores, temas, Combo Planner, alertas y carga.",
+      "zh": "10个当地包、每包2个多边背景跟踪,以及导航、卷轴、滑轮、主题、Combo Planner、警报和装载的不同效果。",
+      "fr": "10 packs locaux, 2 pistes de fond mélodiques par pack et des effets distincts pour la navigation, défilement, sliders, thèmes, Combo Planner, alertes et chargement."
+    },
+    {
+      "pt": "MÚSICA DE FUNDO",
+      "en": "BACKGROUND MUSIC",
+      "es": "ANTECEDENTES MÚSICA",
+      "zh": "背 后 音 音",
+      "fr": "MUSIQUE D'INFORMATION"
+    },
+    {
+      "pt": "EFEITOS / SFX",
+      "en": "EFFECTS / SFX",
+      "es": "EFECTOS / SFX",
+      "zh": "效果/SFX",
+      "fr": "EFFETS / SFX"
+    },
+    {
+      "pt": "VOLUME DA MÚSICA",
+      "en": "MUSIC VOLUME",
+      "es": "TOMO DE MÚSICA",
+      "zh": "音乐之声",
+      "fr": "VOLUME MUSIQUE"
+    },
+    {
+      "pt": "VOLUME DOS EFEITOS",
+      "en": "SFX VOLUME",
+      "es": "VOLUMEN SFX",
+      "zh": "SFX 伏击",
+      "fr": "SFX VOLUME"
+    },
+    {
+      "pt": "PACKS DE SOM",
+      "en": "SOUND PACKS",
+      "es": "ENVASES DE SONIDO",
+      "zh": "声包",
+      "fr": "EMBALLAGES SONDÉS"
+    },
+    {
+      "pt": "Cada pack usa composição, ritmo e harmonia próprios. Use TESTAR para ouvir a assinatura antes de trocar.",
+      "en": "Each pack uses its own composition, rhythm and harmony. Use TEST to hear its signature before switching.",
+      "es": "Cada pack utiliza su propia composición, ritmo y armonía. Utilice TEST para escuchar su firma antes de cambiar.",
+      "zh": "每包使用自己的组成、节奏和和谐。在切换之前,使用TET来听其签名。",
+      "fr": "Chaque pack utilise sa composition, son rythme et son harmonie. Utilisez TEST pour entendre sa signature avant de changer."
+    },
+    {
+      "pt": "▶ TESTAR",
+      "en": "▶ TEST",
+      "es": "• Ensayo",
+      "zh": "测试",
+      "fr": ")?ESSAI"
+    },
+    {
+      "pt": "USAR PACK",
+      "en": "USE PACK",
+      "es": "USO PACK",
+      "zh": "使用包",
+      "fr": "UTILISATION EMBALLAGE"
+    },
+    {
+      "pt": "EVENTOS SONOROS",
+      "en": "SOUND EVENTS",
+      "es": "SONIDO EVENTOS",
+      "zh": "声音事件",
+      "fr": "ÉVÉNEMENTS CONNEXES"
+    },
+    {
+      "pt": "O ZKStrap usa variações para não repetir o mesmo clique.",
+      "en": "ZKStrap uses variants so the same click is not repeated constantly.",
+      "es": "ZKStrap utiliza variantes para que el mismo clic no se repita constantemente.",
+      "zh": "ZKStrap 使用变量, 使相同的点击不会连续重复 。",
+      "fr": "ZKStrap utilise des variantes de sorte que le même clic n'est pas répété constamment."
+    },
+    {
+      "pt": "CENTRAL DE DESEMPENHO",
+      "en": "PERFORMANCE CENTER",
+      "es": "CENTRO DE EJECUCIÓN",
+      "zh": "绩效中心",
+      "fr": "CENTRE DE RENDEMENT"
+    },
+    {
+      "pt": "Prepare o Windows e a sessão do Roblox sem misturar boost com limpeza ou restauração.",
+      "en": "Prepare Windows and the Roblox session without mixing performance tools with cleanup or rollback.",
+      "es": "Preparar Windows y la sesión de Roblox sin mezclar herramientas de rendimiento con limpieza o rollback.",
+      "zh": "准备 Windows 和 Roblox 会话, 不将性能工具与清理或回滚混合 。",
+      "fr": "Préparez Windows et la session Roblox sans mélanger les outils de performance avec le nettoyage ou le retour."
+    },
+    {
+      "pt": "PAINEL DE PERFORMANCE",
+      "en": "PERFORMANCE DASHBOARD",
+      "es": "EJECUCIÓN DE LA FUERZA",
+      "zh": "业绩业绩学院",
+      "fr": "DÉSIGNATION DU RENDEMENT"
+    },
+    {
+      "pt": "Diagnóstico rápido antes de mudar qualquer coisa. CPU/RAM altos podem indicar concorrência real por recursos.",
+      "en": "Run a quick diagnostic before changing anything. High CPU/RAM can reveal real resource contention.",
+      "es": "Ejecute un diagnóstico rápido antes de cambiar cualquier cosa. Alta CPU / RAM puede revelar la contención de recursos reales.",
+      "zh": "快速诊断后才能改变任何东西 。 高 CPU/ RAM 可以揭示真实的资源争议 。",
+      "fr": "Exécutez un diagnostic rapide avant de changer quoi que ce soit. High CPU/RAM peut révéler la véritable discorde des ressources."
+    },
+    {
+      "pt": "Clique em ANALISAR para ler CPU, RAM, Roblox e captura em segundo plano.",
+      "en": "Click ANALYZE to read CPU, RAM, Roblox and background capture.",
+      "es": "Haga clic en Analizar para leer la CPU, RAM, Roblox y captura de fondo.",
+      "zh": "单击 ANAAYZE 读取 CPU、 RAM、 Roblox 和背景抓取 。",
+      "fr": "Cliquez sur ANALYZE pour lire CPU, RAM, Roblox et la capture d'arrière-plan."
+    },
+    {
+      "pt": "ANALISAR",
+      "en": "ANALYZE",
+      "es": "ANÁLIZO",
+      "zh": "分析分析",
+      "fr": "ANALYZE"
+    },
+    {
+      "pt": "WINDOWS PARA JOGOS",
+      "en": "WINDOWS FOR GAMING",
+      "es": "VENTAJAS PARA GARANTIZAR",
+      "zh": "加明的树窗",
+      "fr": "COUVERTURES POUR L'EXERCICE"
+    },
+    {
+      "pt": "Use recursos nativos do Windows para reduzir gravação em segundo plano e escolher a GPU do Roblox. Nada aqui desativa segurança.",
+      "en": "Use native Windows features to reduce background recording and choose the Roblox GPU. Nothing here disables security.",
+      "es": "Utilice las características nativas de Windows para reducir la grabación de fondo y seleccione la GPU de Roblox. Nada desactiva la seguridad.",
+      "zh": "使用本地 Windows 功能来减少背景记录, 并选择 Roblox GPU 。 这里没有什么能禁用安全 。",
+      "fr": "Utilisez les fonctionnalités natives de Windows pour réduire l'enregistrement de fond et choisissez le Roblox GPU. Rien ici ne désactive la sécurité."
+    },
+    {
+      "pt": "MODO DE JOGO",
+      "en": "GAME MODE",
+      "es": "MODO DEL JUEGO",
+      "zh": "游戏模式",
+      "fr": "MODÈLE DU JEU"
+    },
+    {
+      "pt": "GPU DO ROBLOX",
+      "en": "ROBLOX GPU",
+      "es": "GPU ROBLOX",
+      "zh": "ROBLOX GPU",
+      "fr": "GPU ROBLOX"
+    },
+    {
+      "pt": "ENERGIA",
+      "en": "POWER",
+      "es": "PODER",
+      "zh": "权力者",
+      "fr": "POUVOIR"
+    },
+    {
+      "pt": "DESATIVAR CAPTURA/GRAVAÇÃO EM SEGUNDO PLANO",
+      "en": "DISABLE BACKGROUND CAPTURE/RECORDING",
+      "es": "CAPTURA DE ANTECEDENTES DE DISCAPACIDAD/RECONOCIMIENTO",
+      "zh": "A. 背景情况获取/筹资",
+      "fr": "CAPTURE HISTORIQUE HISTORIQUE HISTORIQUE/RECORDANCE"
+    },
+    {
+      "pt": "FOCO NO ROBLOX",
+      "en": "ROBLOX FOCUS",
+      "es": "ROBLOX FOCUS",
+      "zh": "ROBLOX 焦点",
+      "fr": "ROBLOX FOCUS"
+    },
+    {
+      "pt": "Ações temporárias para dar mais espaço à sessão do jogo. Prioridade volta ao normal quando o Roblox fecha; encerrar apps sempre pede confirmação.",
+      "en": "Temporary actions to give the game session more room. Priority resets when Roblox closes; closing apps always asks first.",
+      "es": "Acciones temporales para dar más espacio a la sesión del juego. La prioridad se reinicia cuando Roblox cierra; cerrar aplicaciones siempre pregunta primero.",
+      "zh": "给游戏会话更多空间的临时动作。 当 Roblox 关闭时优先重置; 关闭应用程序总是先询问 。",
+      "fr": "Actions temporaires pour donner plus de place à la session de jeu. Priorité réinitialise lorsque Roblox ferme; fermeture des applications demande toujours en premier."
+    },
+    {
+      "pt": "PRIORIDADE ACIMA DO NORMAL",
+      "en": "ABOVE-NORMAL PRIORITY",
+      "es": "PRIORIDAD ANTERIOR A NORMAS",
+      "zh": "波罗的海-北欧优先",
+      "fr": "PRIORITÉ NORMALE ABOVE"
+    },
+    {
+      "pt": "FECHAR OVERLAYS",
+      "en": "CLOSE OVERLAYS",
+      "es": "CERRAR OVERLAYS",
+      "zh": "闭 闭 闭 闭 过 过 过",
+      "fr": "APERÇU DE CLÔTURE"
+    },
+    {
+      "pt": "PREPARAR SESSÃO",
+      "en": "PREPARE SESSION",
+      "es": "PREPARATIVO DEL PERÍODO DE SESIONES",
+      "zh": "价调会议",
+      "fr": "PRÉPARER LA SESSION"
+    },
+    {
+      "pt": "ENERGIA & INICIALIZAÇÃO",
+      "en": "POWER & STARTUP",
+      "es": "PODER & startup",
+      "zh": "POWER & 启动",
+      "fr": "POUVOIR ET STARTUP"
+    },
+    {
+      "pt": "Plano Alto Desempenho pode ajudar a evitar economia agressiva de CPU em alguns PCs. Em notebooks, ele também pode aumentar consumo e temperatura.",
+      "en": "High Performance can reduce aggressive CPU power saving on some PCs. On laptops it can also increase power draw and temperature.",
+      "es": "Alto rendimiento puede reducir el ahorro de energía de la CPU agresiva en algunos PCs. En los ordenadores portátiles también puede aumentar la extracción de energía y la temperatura.",
+      "zh": "高性能可以降低某些个人电脑的具有攻击性的CPU节能。 在笔记本电脑上,它也可以增加电量和温度。",
+      "fr": "Haute Performance peut réduire les économies d'énergie agressives CPU sur certains PC. Sur les ordinateurs portables, il peut également augmenter le tirage d'énergie et la température."
+    },
+    {
+      "pt": "ATIVAR ALTO DESEMPENHO",
+      "en": "ENABLE HIGH PERFORMANCE",
+      "es": "HABILIDAD DE ALTO RENDIMIENTO",
+      "zh": "可持续的高绩效",
+      "fr": "HAUTE PERFORMANCE UTILISABLE"
+    },
+    {
+      "pt": "APPS DE INICIALIZAÇÃO",
+      "en": "STARTUP APPS",
+      "es": "APLICACIONES DE startup",
+      "zh": "裁 期 标",
+      "fr": "APPLICABLES DE STARTUP"
+    },
+    {
+      "pt": "Dica: desative manualmente da inicialização só programas que você reconhece e não precisa abrindo com o Windows.",
+      "en": "Tip: disable only startup apps you recognize and do not need launching with Windows.",
+      "es": "Sugerencia: deshabilite solo las aplicaciones de inicio que reconozca y no necesite lanzar con Windows.",
+      "zh": "提示: 只禁用您识别的启动应用程序, 不需要用 Windows 启动 。",
+      "fr": "Astuce : désactivez uniquement les applications de démarrage que vous reconnaissez et n'avez pas besoin de lancer avec Windows."
+    },
+    {
+      "pt": "RECUPERAÇÃO & LIMPEZA",
+      "en": "RECOVERY & CLEANUP",
+      "es": "RECUPERACIÓN Y LIMPIEZA",
+      "zh": "回收和清洁",
+      "fr": "RECOUVREMENT ET CLEANUP"
+    },
+    {
+      "pt": "Backups, arquivos temporários e retorno ao original ficam separados das ferramentas de desempenho.",
+      "en": "Backups, temporary files and rollback are kept separate from performance tools.",
+      "es": "Las copias de seguridad, los archivos temporales y la reversión se mantienen separados de las herramientas de rendimiento.",
+      "zh": "备份、临时文件和回退与业绩工具分开。",
+      "fr": "Les sauvegardes, les fichiers temporaires et les retours sont séparés des outils de performance."
+    },
+    {
+      "pt": "LIMPEZA SEGURA",
+      "en": "SAFE CLEANUP",
+      "es": "LIMPIEZA SEGURA",
+      "zh": "安全清洁",
+      "fr": "SAUVETE CLEANUP"
+    },
+    {
+      "pt": "Remove logs e downloads temporários do Roblox. Isso libera organização/espaço, mas não é tratado como aumento mágico de FPS.",
+      "en": "Removes Roblox logs and temporary downloads. This helps cleanup/storage, not magic FPS.",
+      "es": "Elimina los registros de Roblox y las descargas temporales. Esto ayuda a la limpieza/almacenamiento, no mágico FPS.",
+      "zh": "删除 Roblox 日志和临时下载。 这有助于清理/ 存储, 而不是神奇的 FPS 。",
+      "fr": "Supprime les journaux Roblox et les téléchargements temporaires. Cela aide à nettoyer/stockage, et non pas à créer un FPS magique."
+    },
+    {
+      "pt": "ABRIR PASTA LOCAL DO ROBLOX",
+      "en": "OPEN ROBLOX LOCAL FOLDER",
+      "es": "HERRAMIENTA LOCAL ABIERTA ROBLOX",
+      "zh": "开放ROBLOX 洛杉矶联邦州",
+      "fr": "EXPLOITATION LOCALE OUVERTE ROBLOX"
+    },
+    {
+      "pt": "RESTAURAR ALTERAÇÕES",
+      "en": "RESTORE CHANGES",
+      "es": "CAMBIOS DE RESTORE",
+      "zh": "恢复变化",
+      "fr": "CHANGEMENTS DE RÉSEAU"
+    },
+    {
+      "pt": "Volte cada área ao original sem misturar essa ação com os botões de boost. O reset completo remove as configurações gerenciadas pelo ZKStrap.",
+      "en": "Restore each area without mixing rollback with boost controls. Full reset removes settings managed by ZKStrap.",
+      "es": "Restaurar cada área sin mezclar rollback con los controles de impulso. Reset completo elimina los ajustes gestionados por ZKStrap.",
+      "zh": "恢复每个区域, 不将回滚与助推控制混合。 全部重置移除由 ZKStrap 管理的设置 。",
+      "fr": "Restaurer chaque zone sans mélanger le retournement avec les commandes boost. La réinitialisation complète supprime les paramètres gérés par ZKStrap."
+    },
+    {
+      "pt": "CURSOR ORIGINAL",
+      "en": "ORIGINAL CURSOR",
+      "es": "CURSO ORIGINAL",
+      "zh": "哥斯罗族",
+      "fr": "COURS ORIGINAL"
+    },
+    {
+      "pt": "FONTES ORIGINAIS",
+      "en": "ORIGINAL FONTS",
+      "es": "FONDOS ORIGINALES",
+      "zh": "(卡罗亚角)",
+      "fr": "FONTES ORIGINAIRES"
+    },
+    {
+      "pt": "PLANO EQUILIBRADO",
+      "en": "BALANCED POWER",
+      "es": "PODER BALANCEADO",
+      "zh": "平等权力者",
+      "fr": "POUVOIR BALANCÉ"
+    },
+    {
+      "pt": "ROLLBACK COMPLETO — CURSOR + FONTES + CONFIG",
+      "en": "FULL ROLLBACK — CURSOR + FONTS + CONFIG",
+      "es": "FULL ROLLBACK — CURSOR + FONDOS + CONFIG",
+      "zh": "完整圆环 - 圆环 + 孔 + 折叠",
+      "fr": "FULL ROLLBACK — CURSOR + FONTS + CONFIG"
+    },
+    {
+      "pt": "ATUALIZAÇÕES // UPDATE CENTER",
+      "en": "UPDATES // UPDATE CENTER",
+      "es": "ACTUALIZACIÓN // CENTRO ACTUALIZADO",
+      "zh": "更新//更新中心",
+      "fr": "MISE À JOUR // CENTRE DE MISE À JOUR"
+    },
+    {
+      "pt": "Atualize sem baixar um novo ZIP pelo Discord a cada versão.",
+      "en": "Update without downloading a new Discord ZIP for every version.",
+      "es": "Actualizar sin descargar un nuevo Discord ZIP para cada versión.",
+      "zh": "更新时不为每个版本下载新的差异 ZIP 。",
+      "fr": "Mettre à jour sans télécharger un nouveau Discord ZIP pour chaque version."
+    },
+    {
+      "pt": "Canal oficial: GitHub • download verificado por SHA-256 • backup antes de instalar.",
+      "en": "Official GitHub channel • SHA-256 verified downloads • backup before install.",
+      "es": "Canal oficial de GitHub • descargas verificadas SHA-256 • copia de seguridad antes de instalar.",
+      "zh": "• 安装前备份。",
+      "fr": "Canal officiel GitHub • SHA-256 téléchargements vérifiés • sauvegarde avant installation."
+    },
+    {
+      "pt": "● PRONTO PARA VERIFICAR",
+      "en": "● READY TO CHECK",
+      "es": "● Listos para comprobar",
+      "zh": "* 准备检查",
+      "fr": "● PRÉCÉDENT DE VÉRIFICATION"
+    },
+    {
+      "pt": "REDE: verificando…",
+      "en": "NETWORK: checking…",
+      "es": "Comprobando...",
+      "zh": "检查...",
+      "fr": "Vérifie..."
+    },
+    {
+      "pt": "VERIFICAR ATUALIZAÇÕES",
+      "en": "CHECK FOR UPDATES",
+      "es": "VERIFICACIÓN DE LAS ACTUALIDADES",
+      "zh": "更新检查",
+      "fr": "CONTRÔLE DES MISES À JOUR"
+    },
+    {
+      "pt": "ATUALIZAR AGORA",
+      "en": "UPDATE NOW",
+      "es": "ACTUALIZA AHORA",
+      "zh": "更新",
+      "fr": "MISE À JOUR"
+    },
+    {
+      "pt": "VERIFICAR AUTOMATICAMENTE AO ABRIR",
+      "en": "CHECK AUTOMATICALLY ON STARTUP",
+      "es": "VERIFICACIÓN AUTOMÁTICA DE LA COMPETENCIA",
+      "zh": "启动时的快速检查",
+      "fr": "CONTRÔLE AUTOMATIQUE SUR LE DÉBUT"
+    },
+    {
+      "pt": "RESTAURAR VERSÃO ANTERIOR",
+      "en": "RESTORE PREVIOUS VERSION",
+      "es": "VERSIÓN ANTERIOR DE RESTAURACIÓN",
+      "zh": "以往情况以前的情况",
+      "fr": "RESTAURATION VERSION PRÉCÉDENTE"
+    },
+    {
+      "pt": "SUGESTÕES & BUGS",
+      "en": "FEEDBACK & BUGS",
+      "es": "PIENSA Y BUGS",
+      "zh": "FEDBACACK 和 BUUS 和 BUUS",
+      "fr": "BÂTIMENT ET BÂTIMENTS"
+    },
+    {
+      "pt": "Uma central de feedback mais clara para separar ideia nova de problema real.",
+      "en": "A clearer feedback center to separate new ideas from actual bugs.",
+      "es": "Un centro de retroalimentación más claro para separar nuevas ideas de los errores reales.",
+      "zh": "一个更清晰的反馈中心,将新想法与实际的错误区分开来。",
+      "fr": "Un centre de rétroaction plus clair pour séparer les nouvelles idées des bogues réels."
+    },
+    {
+      "pt": "AJUDE A EVOLUIR O ZKSTRAP",
+      "en": "HELP IMPROVE ZKSTRAP",
+      "es": "AYUDA A MEJORAR ZKSTRAP",
+      "zh": "帮助促进齐行",
+      "fr": "AIDE À AMÉLIORER ZKSTRAP"
+    },
+    {
+      "pt": "Descreva o que você gostaria de ver ou explique exatamente o que aconteceu. Quanto mais claro, mais fácil reproduzir.",
+      "en": "Describe what you'd like to see or exactly what happened. Clear reports are easier to reproduce.",
+      "es": "Describa lo que le gustaría ver o exactamente lo que pasó. Los informes claros son más fáciles de reproducir.",
+      "zh": "描述一下你想看到什么或者到底发生了什么。清晰的报告更容易复制。",
+      "fr": "Décrivez ce que vous aimeriez voir ou exactement ce qui s'est passé."
+    },
+    {
+      "pt": "✦  SUGESTÃO",
+      "en": "✦  SUGGESTION",
+      "es": "Sugerencia",
+      "zh": "建议",
+      "fr": "SUGGESTION"
+    },
+    {
+      "pt": "Sugestão",
+      "en": "Suggestion",
+      "es": "Sugerencias",
+      "zh": "建议建议建议建议建议建议",
+      "fr": "Suggestion"
+    },
+    {
+      "pt": "⚠  REPORTAR BUG",
+      "en": "⚠  REPORT BUG",
+      "es": "• INFORME BUG",
+      "zh": "* 报告提交方",
+      "fr": "BUG DU RAPPORT"
+    },
+    {
+      "pt": "Reportar Bug",
+      "en": "Report Bug",
+      "es": "Informar de fallo",
+      "zh": "报告错误报告",
+      "fr": "Signaler un bogue"
+    },
+    {
+      "pt": "DETALHES",
+      "en": "DETAILS",
+      "es": "DETALLES",
+      "zh": "销毁",
+      "fr": "DÉTAILS"
+    },
+    {
+      "pt": "Evite só escrever 'não funciona'. Em bugs, diga a função usada e o que você esperava acontecer.",
+      "en": "Avoid only writing 'it doesn't work'. For bugs, mention the feature used and expected behavior.",
+      "es": "Evite solamente escribir 'no funciona'. Para los errores, mencione la característica usada y el comportamiento esperado.",
+      "zh": "避免只写入“ 它不起作用 ” 。 对于错误, 请提及所使用的特性和预期的行为 。",
+      "fr": "Évitez seulement d'écrire 'ça ne fonctionne pas'. Pour les bogues, mentionnez la fonctionnalité utilisée et le comportement attendu."
+    },
+    {
+      "pt": "Título curto — ex.: Cursor não aplica após update",
+      "en": "Short title — e.g. Cursor not applied after update",
+      "es": "Título corto: por ejemplo, cursor no aplicado después de la actualización",
+      "zh": "短标题——例如更新后不适用的光标",
+      "fr": "Titre abrégé — Par exemple: Curseur non appliqué après mise à jour"
+    },
+    {
+      "pt": "0 caracteres",
+      "en": "0 characters",
+      "es": "0 caracteres",
+      "zh": "0 字符",
+      "fr": "0 caractères"
+    },
+    {
+      "pt": "Ao reportar um bug, o diagnóstico técnico do app é anexado automaticamente.",
+      "en": "When reporting a bug, app diagnostics are attached automatically.",
+      "es": "Cuando se informa de un error, los diagnósticos de aplicaciones se adjuntan automáticamente.",
+      "zh": "当报告错误时,应用程序诊断会自动附加。",
+      "fr": "Lors de la déclaration d'un bogue, les diagnostics app sont attachés automatiquement."
+    },
+    {
+      "pt": "ENVIAR FEEDBACK",
+      "en": "SEND FEEDBACK",
+      "es": "ENVIAR ALIMENTOS",
+      "zh": "发件人 feeiback",
+      "fr": "Envoyer les repas"
+    },
+    {
+      "pt": "ANTES DE REPORTAR UM BUG",
+      "en": "BEFORE REPORTING A BUG",
+      "es": "ANTES DE PRESENTAR UN BUG",
+      "zh": "在报告报告报告之前",
+      "fr": "QUELLES SONT LES INFORMATIONS A CONNAITRE AVANT DE SOUMETTRE UN BUG"
+    },
+    {
+      "pt": "✓ reinicie o Roblox  •  ✓ confira a version-* detectada  •  ✓ veja o log inferior  •  ✓ diga qual tema/Windows está usando",
+      "en": "✓ restart Roblox  •  ✓ check detected version-*  •  ✓ inspect the bottom log  •  ✓ mention your theme/Windows version",
+      "es": "✓ reiniciar Roblox • ✓ comprobar la versión detectada-* • ✓ inspeccionar el registro inferior • ✓ mencionar su tema/versión de Windows",
+      "zh": "• 检查底对账记录 • • 提及主题/窗口版本",
+      "fr": "✓ redémarrer Roblox • ✓ vérifier la version détectée-* • ✓ inspecter le log du bas • ✓ mentionner votre version thème/Windows"
+    },
+    {
+      "pt": "MODO DE ENVIO: endpoint seguro quando configurado; caso contrário, copia para a área de transferência.",
+      "en": "SEND MODE: secure endpoint when configured; otherwise copies to clipboard.",
+      "es": "MODO DE ENVÍO: endpoint seguro cuando está configurado; de lo contrario copia al portapapeles.",
+      "zh": "SEND MODE: 配置时的安全端点; 否则复制到剪贴板 。",
+      "fr": "Envoyer le mode: sécuriser le paramètre lorsque configuré; sinon copie dans le presse-papiers."
+    },
+    {
+      "pt": "APOIAR // ZKSTRAP",
+      "en": "SUPPORT // ZKSTRAP",
+      "es": "APOYO // ZKSTRAP",
+      "zh": "支助/ZKSTRAP",
+      "fr": "SOUTIEN // ZKSTRAP"
+    },
+    {
+      "pt": "O apoio financeiro será ativado em breve. O ZKStrap continua gratuito.",
+      "en": "Financial support is coming soon. ZKStrap remains free.",
+      "es": "El apoyo financiero viene pronto. ZKStrap permanece libre.",
+      "zh": "资金支持即将到来,ZKStrap仍然自由。",
+      "fr": "Le soutien financier est bientôt disponible. ZKStrap reste gratuit."
+    },
+    {
+      "pt": "💚 FORTALEÇA O PROJETO",
+      "en": "💚 SUPPORT THE PROJECT",
+      "es": "APOYO AL PROYECTO",
+      "zh": "支持项目",
+      "fr": "SOUTIEN AU PROJET"
+    },
+    {
+      "pt": "A estrutura já está pronta, mas o recebimento ainda não foi ativado. Quando chegar, apoiar continuará sendo totalmente opcional.",
+      "en": "The structure is ready, but payments are not enabled yet. Supporting will remain completely optional when it launches.",
+      "es": "La estructura está lista, pero los pagos aún no están habilitados. El soporte seguirá siendo completamente opcional cuando se lance.",
+      "zh": "该结构已经准备就绪, 但还不能支付。 当启动时, 支持仍将是完全可选的 。",
+      "fr": "La structure est prête, mais les paiements ne sont pas encore activés. Le soutien restera entièrement facultatif lorsqu'il lancera."
+    },
+    {
+      "pt": "STATUS: EM BREVE  •  nenhuma forma de pagamento está ativa nesta versão.",
+      "en": "STATUS: COMING SOON  •  no payment method is active in this version.",
+      "es": "ESTADO: EN VENIDA • ningún método de pago está activo en esta versión.",
+      "zh": "• 本版本没有使用付款方法。",
+      "fr": "ÉTAT: COMING SOON • aucun mode de paiement n'est actif dans cette version."
+    },
+    {
+      "pt": "APOIO FINANCEIRO — EM BREVE",
+      "en": "FINANCIAL SUPPORT — COMING SOON",
+      "es": "APOYO FINANCIERO — EN EL PRÓXIMO",
+      "zh": "财政支助 -- -- 即将到来",
+      "fr": "SOUTIEN FINANCIER — VENIR DOS"
+    },
+    {
+      "pt": "ABRIR PÁGINA",
+      "en": "OPEN PAGE",
+      "es": "PÁGINA ABIERTA",
+      "zh": "开放年龄",
+      "fr": "PAGE OUVERTE"
+    },
+    {
+      "pt": "PRIVACIDADE",
+      "en": "PRIVACY",
+      "es": "PRIVACIDAD",
+      "zh": "私 商 商 商 号",
+      "fr": "PRIVÉ"
+    },
+    {
+      "pt": "O botão apenas abre o site oficial de apoio do ZKStrap no navegador.",
+      "en": "The button only opens the official ZKStrap support site in your browser.",
+      "es": "El botón sólo abre el sitio oficial de soporte ZKStrap en su navegador.",
+      "zh": "按钮只打开您浏览器中的官方 ZKSstrap 支持站点 。",
+      "fr": "Le bouton n'ouvre que le site officiel de support de ZKStrap dans votre navigateur."
+    },
+    {
+      "pt": "✓ nenhum dado bancário fica salvo no ZKStrap\n✓ o app não lê pagamentos\n✓ o app não pede login do banco\n✓ antes de pagar, confira os dados mostrados pelo próprio provedor",
+      "en": "✓ no banking data is stored in ZKStrap\n✓ the app does not read payments\n✓ the app never asks for bank login\n✓ before paying, verify the details shown by the payment provider",
+      "es": "✓ no se almacenan datos bancarios en ZKStrap ✓ la aplicación no lee pagos ✓ la aplicación nunca pide acceso bancario ✓ antes de pagar, verificar los detalles mostrados por el proveedor de pagos",
+      "zh": "ZKStrap 中没有任何银行数据存储在 ZKStrap 中 {该应用程序不阅读付款 } {该应用程序在付款前从未要求银行登录 }, 校验付款提供人所显示的细节 。",
+      "fr": "✓ aucune donnée bancaire n'est stockée dans ZKStrap ✓ l'application ne lit pas les paiements ✓ l'application ne demande jamais de connexion bancaire ✓ avant de payer, vérifier les détails indiqués par le fournisseur de paiement"
+    },
+    {
+      "pt": "SOBRE // ABOUT 2.0",
+      "en": "ABOUT // 2.0",
+      "es": "ACERCA DE // 2.0",
+      "zh": "大约 / 2. 0",
+      "fr": "À propos de // 2.0"
+    },
+    {
+      "pt": "De uma ferramenta de flags para uma central completa do jogador.",
+      "en": "From a flags utility to a complete player hub.",
+      "es": "De una utilidad banderas a un centro de jugadores completo.",
+      "zh": "从旗帜公用设备到完整的玩家枢纽。",
+      "fr": "D'un utilitaire de drapeaux à un hub de lecteur complet."
+    },
+    {
+      "pt": "Central de otimização, personalização e ferramentas para Roblox, com foco especial na experiência de quem joga Blox Fruits.",
+      "en": "Optimization, customization and Roblox tools, with special focus on Blox Fruits players.",
+      "es": "Optimización, personalización y herramientas Roblox, con especial atención a los jugadores de Blox Fruits.",
+      "zh": "优化、定制和Roblox工具,特别侧重于Blox水果的玩家。",
+      "fr": "Optimisation, personnalisation et outils Roblox, avec un accent particulier sur les joueurs Blox Fruits."
+    },
+    {
+      "pt": "O ZKStrap nasceu porque o zkvez usava FastFlags em um PC fraco e viu como pequenos ajustes podiam ajudar. A ideia evoluiu para um launcher separado do Roblox: ele organiza ajustes locais, desempenho, personalização e ferramentas úteis sem pedir senha do Roblox.\n\nHoje o objetivo é ser algo que o jogador tenha motivo para abrir de novo: Combo Planner, Build Roulette, Creator Mode, áudio, temas, diagnóstico, recuperação e outras ferramentas em evolução.",
+      "en": "ZKStrap started because zkvez used FastFlags on a weak PC and saw how small adjustments could help. It evolved into a launcher separate from Roblox: local settings, performance, customization and useful tools without asking for a Roblox password.\n\nThe goal now is to be something players actually want to reopen: Combo Planner, Build Roulette, Creator Mode, audio, themes, diagnostics, recovery and more.",
+      "es": "ZKStrap comenzó porque zkvez usó FastFlags en un PC débil y vio cómo los pequeños ajustes podrían ayudar. Se convirtió en un lanzador separado de Roblox: ajustes locales, rendimiento, personalización y herramientas útiles sin pedir una contraseña de Roblox. El objetivo ahora es ser algo que los jugadores realmente quieren reabrir: Combo Planner, Build Roulette, Creator Mode, audio, temas, diagnósticos, recuperación y más.",
+      "zh": "ZKSstrap之所以启动,是因为 zkvez 在一个薄弱的PC 上使用了快速炉, 并且看到小的调整会有什么帮助。 它演变成一个发射器, 与罗布洛克斯分离: 本地设置、 性能、 定制和有用的工具, 而不需要罗布洛克斯密码。 现在的目标是让玩家真正想要重开它: Combo Planner、 构建 Roulette、 创造者模式、 音频、 主题、 诊断、 恢复等等 。",
+      "fr": "ZKStrap a commencé parce que zkvez a utilisé FastFlags sur un PC faible et a vu comment de petits ajustements pouvaient aider. Il a évolué en un lanceur séparé de Roblox: paramètres locaux, performances, personnalisation et outils utiles sans demander un mot de passe Roblox. Le but est maintenant d'être quelque chose que les joueurs veulent réellement rouvrir: Combo Planner, Build Roulette, Creator Mode, audio, thèmes, diagnostics, récupération et plus encore."
+    },
+    {
+      "pt": "LINHA DO TEMPO",
+      "en": "TIMELINE",
+      "es": "TIEMPO",
+      "zh": "时间线",
+      "fr": "Échéancier"
+    },
+    {
+      "pt": "PRIVACIDADE & CONTROLE",
+      "en": "PRIVACY & CONTROL",
+      "es": "PRIVACIDAD Y CONTROL",
+      "zh": "私人和控制",
+      "fr": "PRIVÉ ET CONTRÔLE"
+    },
+    {
+      "pt": "Configurações ficam locais. O app não pede senha do Roblox. Integrações externas usam autorização oficial quando disponível.",
+      "en": "Settings stay local. The app does not ask for a Roblox password. External integrations use official authorization when available.",
+      "es": "La configuración permanece local. La aplicación no pide una contraseña de Roblox. Las integraciones externas utilizan la autorización oficial cuando están disponibles.",
+      "zh": "设置保持本地化。 应用程序不要求 Roblox 密码。 外部整合在可用时使用官方授权 。",
+      "fr": "Les paramètres restent locaux. L'application ne demande pas de mot de passe Roblox. Les intégrations externes utilisent l'autorisation officielle lorsque disponible."
+    },
+    {
+      "pt": "Spotify/Mídia usa somente controles locais do Windows: sem login, Client ID, OAuth, API ou senha.",
+      "en": "Spotify/Media uses local Windows media controls only: no login, Client ID, OAuth, API or password.",
+      "es": "Spotify/Media sólo utiliza controles locales de medios de Windows: ningún acceso, ID de cliente, OAuth, API o contraseña.",
+      "zh": "点点/媒体仅使用本地Windows媒体控制:不登录、客户身份、OAUT、API或密码。",
+      "fr": "Spotify/Media utilise les contrôles locaux des médias Windows uniquement : pas de login, identifiant client, OAuth, API ou mot de passe."
+    },
+    {
+      "pt": "FUTURO DO ZKSTRAP",
+      "en": "ZKSTRAP FUTURE",
+      "es": "ZKSTRAP FUTURE",
+      "zh": "未来",
+      "fr": "ZKSTRAP FUTURE"
+    },
+    {
+      "pt": "PvP Coach mais avançado, análise de sessão, Creator tools, integrações oficiais e novos recursos para Blox Fruits — sem prometer funções antes de estarem prontas.",
+      "en": "More advanced PvP Coach, session analysis, creator tools, official integrations and new Blox Fruits tools — without promising features before they are ready.",
+      "es": "Más avanzado PvP Coach, análisis de sesiones, herramientas creadoras, integraciones oficiales y nuevas herramientas de Blox Fruits, sin características prometedoras antes de que estén listas.",
+      "zh": "更先进的PvP教练、会议分析、创作工具、官方整合和新的布洛克斯水果工具——在它们准备就绪之前没有有前途的特色。",
+      "fr": "Entraîneur PvP plus avancé, analyse de session, outils créateurs, intégrations officielles et nouveaux outils Blox Fruits — sans fonctionnalités prometteuses avant qu'ils ne soient prêts."
+    },
+    {
+      "pt": "FEITO PELO ZKVEZ",
+      "en": "MADE BY ZKVEZ",
+      "es": "MANDATO DE ZKVEZ",
+      "zh": "兹克韦兹",
+      "fr": "FAITE PAR ZKVEZ"
+    },
+    {
+      "pt": "Criado por zkvez, criador de conteúdo de Blox Fruits. Muitas ideias do app vêm do uso real, de vídeos e das sugestões dos inscritos.\n\nDe uma ferramenta de flags para uma central completa do jogador.",
+      "en": "Created by zkvez, a Blox Fruits content creator. Many features come from real use, videos and subscriber suggestions.\n\nFrom a flags utility to a complete player hub.",
+      "es": "Creado por zkvez, un creador de contenido de Blox Fruits. Muchas características vienen de uso real, videos y sugerencias de suscriptores.",
+      "zh": "由Blox水果内容创作者Zkvez创建,许多功能来自实际使用、视频和订阅者建议。从旗帜公用事业到完整的玩家枢纽。",
+      "fr": "Créé par zkvez, un créateur de contenu Blox Fruits. De nombreuses fonctionnalités proviennent d'une utilisation réelle, de vidéos et de suggestions d'abonnés."
+    },
+    {
+      "pt": "LINKS & SUPORTE",
+      "en": "LINKS & SUPPORT",
+      "es": "ENLACES Y APOYO",
+      "zh": "链接与支持",
+      "fr": "LIENS ET SOUTIEN"
+    },
+    {
+      "pt": "Atalhos oficiais do projeto e suporte.",
+      "en": "Official project and support shortcuts.",
+      "es": "Proyecto oficial y atajos de apoyo.",
+      "zh": "官方项目和支持快捷键 。",
+      "fr": "Raccourcis officiels pour le projet et le soutien."
+    },
+    {
+      "pt": "!  REPORTAR BUG",
+      "en": "!  REPORT BUG",
+      "es": "Informe BUG",
+      "zh": "报告报告报告报告报告机构",
+      "fr": "- C'est bon."
+    },
+    {
+      "pt": "↻  VERIFICAR ATUALIZAÇÃO",
+      "en": "↻  CHECK UPDATE",
+      "es": "ACTUALIZACIÓN DE CHEQUEO",
+      "zh": "检查更新",
+      "fr": "CONTRÔLE DE LA MISE À JOUR"
+    },
+    {
+      "pt": "O catálogo textual usa a página oficial do Blox Fruits e guias públicos da comunidade. Miniaturas são carregadas sob demanda e armazenadas apenas em cache local. Os nomes e imagens pertencem aos respectivos criadores/detentores.",
+      "en": "The text catalog uses the official Blox Fruits page and public community guides. Thumbnails are loaded on demand and stored only in local cache. Names and images belong to their respective creators/owners.",
+      "es": "El catálogo de texto utiliza la página oficial de Blox Fruits y guías de la comunidad pública. Las miniaturas se cargan bajo demanda y se almacenan sólo en caché local. Los nombres y las imágenes pertenecen a sus respectivos creadores/propietarios.",
+      "zh": "文本目录使用正式的布洛克斯水果网页和公共社区指南,缩略图随需求而加载,只储存在本地缓存中,名称和图像属于其各自的创造者/所有者。",
+      "fr": "Le catalogue de texte utilise la page officielle Blox Fruits et les guides communautaires publics. Les vignettes sont chargées sur demande et stockées uniquement dans le cache local. Les noms et les images appartiennent à leurs créateurs/propriétaires respectifs."
+    },
+    {
+      "pt": "FECHAR",
+      "en": "CLOSE",
+      "es": "CERRAR",
+      "zh": "闭闭闭",
+      "fr": "FERMETURE"
+    },
+    {
+      "pt": "Nenhum combo salvo ainda. Clique em ＋ NOVO COMBO.",
+      "en": "No saved combos yet. Click ＋ NEW COMBO.",
+      "es": "No hay combos guardados todavía. Haga clic en + COMBO NUEVO.",
+      "zh": "还没有保存的组合。 单击 + New COMBO 。",
+      "fr": "Pas encore de combos enregistrés. Cliquez sur + NOUVEAU COMBO."
+    },
+    {
+      "pt": "EDITAR",
+      "en": "EDIT",
+      "es": "EDIT",
+      "zh": "编辑 编辑 编辑 编辑",
+      "fr": "ÉDIT"
+    },
+    {
+      "pt": "ESTILO",
+      "en": "STYLE",
+      "es": "ESTILO",
+      "zh": "方格",
+      "fr": "STYLE"
+    },
+    {
+      "pt": "FRUTA",
+      "en": "FRUIT",
+      "es": "FRUTAS",
+      "zh": "联邦",
+      "fr": "FRUIT"
+    },
+    {
+      "pt": "Sem sequência escrita.",
+      "en": "No sequence written.",
+      "es": "No hay secuencia escrita.",
+      "zh": "没有写入序列 。",
+      "fr": "Pas de séquence écrite."
+    },
+    {
+      "pt": "Excluir este combo?",
+      "en": "Delete this combo?",
+      "es": "¿Borrar esta combinación?",
+      "zh": "删除此组合吗 ?",
+      "fr": "Supprimer ce combo ?"
+    },
+    {
+      "pt": "EDITAR COMBO",
+      "en": "EDIT COMBO",
+      "es": "COMBO EDIT",
+      "zh": "EDIT 通信部",
+      "fr": "EDIT COMBO"
+    },
+    {
+      "pt": "Pesquisar...",
+      "en": "Search...",
+      "es": "Buscar...",
+      "zh": "搜索...",
+      "fr": "Rechercher..."
+    },
+    {
+      "pt": "FINALIZAR BUILD",
+      "en": "FINISH BUILD",
+      "es": "CONSTRUCCIÓN FINAL",
+      "zh": "完 完 完 完 完 完 完 完 完 完",
+      "fr": "BÂTIMENT FINANCIER"
+    },
+    {
+      "pt": "Nome da build — ex.: Gravity Main",
+      "en": "Build name — e.g. Gravity Main",
+      "es": "Nombre de construcción, por ejemplo Gravity Main",
+      "zh": "构建名称 - 例如, 重力主控",
+      "fr": "Nom de construction — p.ex. Gravity Main"
+    },
+    {
+      "pt": "SEQUÊNCIA DO COMBO",
+      "en": "COMBO SEQUENCE",
+      "es": "SECUENCIA COMBO",
+      "zh": "常 务 职",
+      "fr": "SECUENCE COMBO"
+    },
+    {
+      "pt": "SALVAR BUILD",
+      "en": "SAVE BUILD",
+      "es": "SALVAR CONSTRUCCIÓN",
+      "zh": "安全桶",
+      "fr": "ÉTABLISSEMENT"
+    },
+    {
+      "pt": "Escolha uma opção antes de continuar.",
+      "en": "Choose an option before continuing.",
+      "es": "Elija una opción antes de continuar.",
+      "zh": "在继续前选择一个选项 。",
+      "fr": "Choisissez une option avant de continuer."
+    },
+    {
+      "pt": "Minha build",
+      "en": "My build",
+      "es": "Mi edificio",
+      "zh": "我的建筑",
+      "fr": "Ma construction"
+    },
+    {
+      "pt": "← VOLTAR",
+      "en": "← BACK",
+      "es": "← VOLVER",
+      "zh": "后退",
+      "fr": "← retour"
+    },
+    {
+      "pt": "INVENTÁRIO DA ROLETA",
+      "en": "ROULETTE INVENTORY",
+      "es": "INVENTARIO ROULETTE",
+      "zh": "卢卢尔特登记册",
+      "fr": "INVENTAIRE ROULETTE"
+    },
+    {
+      "pt": "Isso só filtra o sorteio. Desative o que você não quer que apareça. Em Fruits, isso também serve para não gastar uma fruta difícil de conseguir ou a única unidade que você tem.",
+      "en": "This only filters the roll. Disable anything you do not want to appear. For Fruits, this also avoids spending a rare or single copy you want to keep.",
+      "es": "Esto solo filtra el rollo. Desactiva cualquier cosa que no quieras aparecer. Para Fruits, esto también evita gastar una copia rara o única que quieras conservar.",
+      "zh": "仅此过滤滚动。 禁用任何您不想出现的东西 。 对于水果, 这也会避免花费您想要保存的稀有或单一副本 。",
+      "fr": "Cela filtre seulement le rouleau. Désactivez tout ce que vous ne voulez pas apparaître. Pour Fruits, cela évite également de dépenser une copie rare ou unique que vous voulez conserver."
+    },
+    {
+      "pt": "TODOS",
+      "en": "ALL",
+      "es": "TODOS",
+      "zh": "全部全部",
+      "fr": "TOUS"
+    },
+    {
+      "pt": "NENHUM",
+      "en": "NONE",
+      "es": "NINGUNA",
+      "zh": "无 无",
+      "fr": "Aucune"
+    },
+    {
+      "pt": "CANCELAR",
+      "en": "CANCEL",
+      "es": "CANCEL",
+      "zh": "间距",
+      "fr": "ANNULATION"
+    },
+    {
+      "pt": "SALVAR FILTROS",
+      "en": "SAVE FILTERS",
+      "es": "SALVA FILTROS",
+      "zh": "安全油罐",
+      "fr": "ENREGISTREMENT DES FILTRES"
+    },
+    {
+      "pt": "Nenhuma build sorteada ainda.",
+      "en": "No rolls yet.",
+      "es": "Todavía no hay rollos.",
+      "zh": "还没有卷。",
+      "fr": "Pas encore de rouleaux."
+    },
+    {
+      "pt": "web_optin_required",
+      "en": "no_isolated_audio_session",
+      "es": "no_aislado_audio_sesión",
+      "zh": "无孤立区",
+      "fr": "Pas de session_isolée_audio"
+    },
+    {
+      "pt": "ativa",
+      "en": "desativada",
+      "es": "desativada",
+      "zh": "缺乏动力",
+      "fr": "desativada"
+    },
+    {
+      "pt": "REDE: ONLINE  •  serviços online disponíveis",
+      "en": "NETWORK: ONLINE  •  online services available",
+      "es": "NETWORK: ONLINE • servicios en línea disponibles",
+      "zh": "网络网络:ONLINE 提供在线服务",
+      "fr": "RÉSEAU: EN LIGNE • Services en ligne disponibles"
+    },
+    {
+      "pt": "MODO OFFLINE  •  ferramentas locais continuam funcionando",
+      "en": "OFFLINE MODE  •  local tools keep working",
+      "es": "MODO OFFLINE • herramientas locales siguen funcionando",
+      "zh": "• 地方工具继续工作",
+      "fr": "OFFLINE MODE • Les outils locaux continuent de fonctionner"
+    },
+    {
+      "pt": "ENVIANDO…",
+      "en": "SENDING…",
+      "es": "Enviar...",
+      "zh": "发送...",
+      "fr": "Envoyer..."
+    },
+    {
+      "pt": "FEEDBACK ENVIADO",
+      "en": "FEEDBACK SENT",
+      "es": "ENVIADO DE FEEDBACK",
+      "zh": "折叠表",
+      "fr": "ENTENTE DE FEUILLES"
+    },
+    {
+      "pt": "Relatório recebido pela central de suporte.",
+      "en": "Report received by the support service.",
+      "es": "Informe recibido por el servicio de apoyo.",
+      "zh": "支助服务处收到的报告。",
+      "fr": "Rapport reçu par le service de soutien."
+    },
+    {
+      "pt": "Medindo...",
+      "en": "Measuring...",
+      "es": "Medición...",
+      "zh": "测量...",
+      "fr": "Mesurer..."
+    },
+    {
+      "pt": "pt",
+      "en": "en",
+      "es": "en",
+      "zh": "环环",
+      "fr": "en"
+    },
+    {
+      "pt": "CONFIGURAÇÃO ATUAL  →  CONFIGURAÇÃO A APLICAR",
+      "en": "CURRENT CONFIG  →  CONFIG TO APPLY",
+      "es": "CONFIG → CONFIG PARA APLICAR",
+      "zh": "目前的共 共 和",
+      "fr": "CONFIG ACTUEL → CONFIG POUR APPLIQUER"
+    },
+    {
+      "pt": "[MÓDULOS]",
+      "en": "[MODULES]",
+      "es": "[MODULOS]",
+      "zh": "[默",
+      "fr": "[MODULES]"
+    },
+    {
+      "pt": "[FLAGS GERENCIADAS]",
+      "en": "[MANAGED FLAGS]",
+      "es": "[Flags MANAGED]",
+      "zh": "[控制FLAGS]",
+      "fr": "[GÉRAGE DES FLAGS]"
+    },
+    {
+      "pt": "APLICAR AGORA",
+      "en": "APPLY NOW",
+      "es": "APLICAR AHORA",
+      "zh": "现在应用",
+      "fr": "APPLIQUEZ MAINTENANT"
+    },
+    {
+      "pt": "Ativar o Modo FPS / gráficos no mínimo e aplicar?\n\nO ZKStrap não fechará seus programas e não ativará automaticamente opções experimentais.",
+      "en": "Enable FPS Mode / minimum graphics and apply?\n\nZKStrap will not close your programs or automatically enable experimental options.",
+      "es": "¿Habilitar el modo FPS / gráficos mínimos y aplicar? ZKStrap no cerrará sus programas ni habilitará automáticamente las opciones experimentales.",
+      "zh": "启用 FPS 模式/ 最小图形并应用吗 ? ZKSstrap 不会关闭您的程序或自动启用实验选项 。",
+      "fr": "Activer le mode FPS / graphiques minimum et appliquer? ZKStrap ne fermera pas vos programmes ou activera automatiquement des options expérimentales."
+    },
+    {
+      "pt": "CONFIGURAÇÕES APLICADAS",
+      "en": "SETTINGS APPLIED",
+      "es": "CONSTITUCIONES APLICADAS",
+      "zh": "适用的《公约》",
+      "fr": "RÈGLEMENTS APPLICABLES"
+    },
+    {
+      "pt": "FALHA AO APLICAR",
+      "en": "APPLY FAILED",
+      "es": "SOLICITUD",
+      "zh": "适用适用",
+      "fr": "RÉPONSE DE LA DEMANDE"
+    },
+    {
+      "pt": "Veja o System Log para os detalhes.",
+      "en": "Check System Log for details.",
+      "es": "Compruebe el registro del sistema para más detalles.",
+      "zh": "检查系统日志的细节 。",
+      "fr": "Vérifiez le registre du système pour plus de détails."
+    },
+    {
+      "pt": "Restaurar ClientSettings, cursor e fontes originais e desligar todos os módulos do ZKStrap?",
+      "en": "Restore original ClientSettings, cursor and fonts and disable all ZKStrap modules?",
+      "es": "Restaurar ClientSettings, cursor y fuentes originales y desactivar todos los módulos ZKStrap?",
+      "zh": "还原原始客户端设置、 光标和字体, 并禁用所有 ZKScap 模块吗 ?",
+      "fr": "Restaurer les réglages clients originaux, les curseurs et les polices et désactiver tous les modules ZKStrap ?"
+    },
+    {
+      "pt": "Rollback concluído. ClientSettings do ZKStrap removido e assets restaurados quando havia backup.",
+      "en": "Rollback complete. ZKStrap ClientSettings removed and assets restored when backups existed.",
+      "es": "ZKStrap ClientSettings eliminados y activos restaurados cuando existían copias de seguridad.",
+      "zh": "返回完成 。 ZKStrap 客户端配置在备份存在时被移除并恢复资产 。",
+      "fr": "Rouleau terminé. ZKStrap ClientParamètres supprimés et actifs restaurés lorsque les sauvegardes existaient."
+    },
+    {
+      "pt": "Ativar o plano Alto Desempenho do Windows?\n\nEle pode reduzir economia agressiva de CPU, mas em notebooks pode aumentar consumo e temperatura.",
+      "en": "Enable Windows High Performance power plan?\n\nIt can reduce aggressive CPU power saving, but may increase power use and temperature on laptops.",
+      "es": "¿Habilitar el plan de alimentación de alto rendimiento de Windows? Puede reducir el ahorro de energía de la CPU agresiva, pero puede aumentar el uso de energía y la temperatura en los ordenadores portátiles.",
+      "zh": "启用 Windows 高性能功率电计划? 它可以减少具有攻击性的 CPU 节能, 但可以增加膝上型电脑的功率和温度。",
+      "fr": "Activer le plan d'alimentation haute performance de Windows? Il peut réduire l'économie d'énergie agressive CPU, mais peut augmenter l'utilisation de l'énergie et la température sur les ordinateurs portables."
+    },
+    {
+      "pt": "Alto Desempenho",
+      "en": "High Performance",
+      "es": "Alto rendimiento",
+      "zh": "高绩效 高表现",
+      "fr": "Haute performance"
+    },
+    {
+      "pt": "Equilibrado",
+      "en": "Balanced",
+      "es": "Saldo",
+      "zh": "结余",
+      "fr": "Équilibré"
+    },
+    {
+      "pt": "Abra o Roblox primeiro para preparar a sessão.",
+      "en": "Open Roblox first to prepare the session.",
+      "es": "Abrir Roblox primero para preparar la sesión.",
+      "zh": "先是开罗布洛克斯 来筹备这届会议",
+      "fr": "Ouvrez d'abord Roblox pour préparer la session."
+    },
+    {
+      "pt": "Quer verificar overlays/gravadores conhecidos e escolher se fecha?\n\nNada será encerrado sem uma segunda confirmação.",
+      "en": "Check known overlays/recorders and choose whether to close them?\n\nNothing will be closed without another confirmation.",
+      "es": "Chequea las superposiciones/grabadoras conocidas y elige si cerrarlas? Nada se cerrará sin otra confirmación.",
+      "zh": "检查已知的覆盖/ 记录, 并选择是否关闭它们? 没有再次确认, 任何内容都不会关闭 。",
+      "fr": "Vérifier les superpositions/enregistrements connus et choisir de les fermer? Rien ne sera fermé sans une autre confirmation."
+    },
+    {
+      "pt": "APLICAR CONFIGURAÇÕES",
+      "en": "APPLY SETTINGS",
+      "es": "SOLICITUDES DE APLICACION",
+      "zh": "专 写 书 写",
+      "fr": "APPLICABLES"
+    },
+    {
+      "pt": "Rede: --",
+      "en": "Network: --",
+      "es": "Red: --",
+      "zh": "网络：--",
+      "fr": "Réseau : --"
+    },
+    {
+      "pt": "Testando rota…",
+      "en": "Testing route…",
+      "es": "Probando ruta…",
+      "zh": "正在测试路由…",
+      "fr": "Test de la route…"
+    },
+    {
+      "pt": "Testando DNS por RTT real…",
+      "en": "Testing DNS by real RTT…",
+      "es": "Probando DNS por RTT real…",
+      "zh": "正在按真实 RTT 测试 DNS…",
+      "fr": "Test DNS par RTT réel…"
+    },
+    {
+      "pt": "FECHAR LOG",
+      "en": "CLOSE LOG",
+      "es": "CERRAR LOG",
+      "zh": "关闭日志",
+      "fr": "FERMER LE JOURNAL"
+    },
+    {
+      "pt": "ABRIR LOG",
+      "en": "OPEN LOG",
+      "es": "ABRIR LOG",
+      "zh": "打开日志",
+      "fr": "OUVRIR LE JOURNAL"
+    },
+    {
+      "pt": "DICA SECRETA // SINAL ENCONTRADO",
+      "en": "DICA SECRETA  //  SIGNAL FOUND",
+      "es": "DICA SECRETA // SEÑAL ENCONTRADO",
+      "zh": "DICA Secretta/ Signal FOUND",
+      "fr": "SECRÉTA DICA // FONDS SIGNAUX"
+    },
+    {
+      "pt": "SPOTIFY // SESSÃO ALVO",
+      "en": "SPOTIFY // TARGET SESSION",
+      "es": "Período de sesiones especial //",
+      "zh": "研讨会// 国际会议",
+      "fr": "STRATÉGIE // TARGET SESSION"
+    },
+    {
+      "pt": "Spotify não detectado",
+      "en": "Spotify not detected",
+      "es": "Spotify no se ha detectado",
+      "zh": "未检测到斑点",
+      "fr": "Spotify non détecté"
+    },
+    {
+      "pt": "Use Spotify Desktop para controle 100% exclusivo. No navegador, sessões ambíguas são bloqueadas.",
+      "en": "Use Spotify Desktop for 100% exclusive control. In the browser, ambiguous sessions are blocked.",
+      "es": "Utilice Spotify Desktop para un control 100% exclusivo. En el navegador, las sesiones ambiguas están bloqueadas.",
+      "zh": "100%的独家控制使用 Spotify 桌面。 在浏览器中, 模糊的会话被屏蔽 。",
+      "fr": "Utilisez Spotify Desktop pour un contrôle exclusif à 100%. Dans le navigateur, les sessions ambiguës sont bloquées."
+    },
+    {
+      "pt": "0:00",
+      "en": "0:00",
+      "es": "0:00",
+      "zh": "0:00",
+      "fr": "0:00"
+    },
+    {
+      "pt": "SPOTIFY WEB DETECTADO • ative o controle Web abaixo",
+      "en": "SPOTIFY WEB DETECTED • activate the web control below",
+      "es": "SPOTIFY WEB DETECTED • activar el control web a continuación",
+      "zh": "• 启动以下网络控制",
+      "fr": "SPOTIFY WEB DÉTECTE • activez le contrôle web ci-dessous"
+    },
+    {
+      "pt": "VOLUME EXCLUSIVO  abra o Spotify Desktop",
+      "en": "VOLUME EXCLUSIVO • abra o Spotify Desktop",
+      "es": "TOMO EXCLUSIVO • abra o Spotify Desktop",
+      "zh": "VOLUME EXCLUSIVO 焦点桌面",
+      "fr": "VOLUME EXCLUSIVO • abra o Bureau Spotify"
+    },
+    {
+      "pt": "VOLUME EXCLUSIVO • indisponível",
+      "en": "VOLUME EXCLUSIVE • Not available",
+      "es": "VOLUMEN EXCLUSIVA • No disponible",
+      "zh": "• 不详",
+      "fr": "VOLUME EXCLUSIF • Non disponible"
+    },
+    {
+      "pt": "MODO // ASSISTENTE LOCAL",
+      "en": "METHOD // LOCAL ASSISTANT",
+      "es": "MÉTODO // ASISTENCIA LOCAL",
+      "zh": "方法 / LOCOL 研究人员",
+      "fr": "MÉTHODE // ASSISTANT LOCAL"
+    },
+    {
+      "pt": "Estado real do app • atalhos diretos • sem conversa livre",
+      "en": "Real app status • direct shortcuts • no free conversation",
+      "es": "Estado real de la aplicación • accesos directos • sin conversación gratuita",
+      "zh": "实际应用程序状态 • 直接捷径 • 没有自由对话",
+      "fr": "État de l'application réelle • raccourcis directs • pas de conversation libre"
+    },
+    {
+      "pt": "Nenhum download necessário.",
+      "en": "No download required.",
+      "es": "No se requiere descarga.",
+      "zh": "不需要下载 。",
+      "fr": "Aucun téléchargement requis."
+    },
+    {
+      "pt": "??? // SECRETE DESCONHECIDO",
+      "en": "??? // SECRET DISCOVERED",
+      "es": "??? // SECRETO DESCUBRE",
+      "zh": "//秘密分散",
+      "fr": "??? // SECRET DÉCOUVRÉ"
+    },
+    {
+      "pt": "Isso não aparece sempre. Concluir pode esconder algo além do histórico.",
+      "en": "This doesn't always come up.",
+      "es": "Esto no siempre surge.",
+      "zh": "这种事不是总能想到的",
+      "fr": "Ça n'arrive pas toujours."
+    },
+    {
+      "pt": "ACEITAR DESAFIO",
+      "en": "ACCEPT CHALLENGE",
+      "es": "ACEPTAR EL RETO",
+      "zh": "接受挑战",
+      "fr": "ACCEPTER LES DÉFIS"
+    },
+    {
+      "pt": "SESSO COMPLETA",
+      "en": "SESSION COMPLETE",
+      "es": "PERÍODO DE SESIONES",
+      "zh": "会议闭幕",
+      "fr": "SÉANCE COMPLÈTE"
+    },
+    {
+      "pt": "CONTINUAR",
+      "en": "CONTINUAR",
+      "es": "CONTINUAR",
+      "zh": "继续",
+      "fr": "CONTINUAIRE"
+    },
+    {
+      "pt": "ZKSTRAP",
+      "en": "ZKSTRAP",
+      "es": "ZKSTRAP",
+      "zh": "ZKSTRAP",
+      "fr": "ZKSTRAP"
+    },
+    {
+      "pt": "YOUTUBE",
+      "en": "YOUTUBE",
+      "es": "YOUTUBE",
+      "zh": "YOUTUBE",
+      "fr": "YOUTUBE"
+    },
+    {
+      "pt": "GITHUB",
+      "en": "GITHUB",
+      "es": "GITHUB",
+      "zh": "GITHUB",
+      "fr": "GITHUB"
+    },
+    {
+      "pt": "DISCORD",
+      "en": "DISCORD",
+      "es": "DISCORD",
+      "zh": "DISCORD",
+      "fr": "DISCORD"
+    },
+    {
+      "pt": "DIAGNÓSTICO RÁPIDO",
+      "en": "QUICK DIAGNOSTIC",
+      "es": "DIAGNÓSTICO RÁPIDO",
+      "zh": "快速诊断",
+      "fr": "DIAGNOSTIC RAPIDE"
+    },
+    {
+      "pt": "Roblox  massas  bandeiras  cão de guarda  tema",
+      "en": "Roblox • pasta • flags • watchdog • tema",
+      "es": "Roblox • pasta • banderas • perro guardián • tema",
+      "zh": "• 监督 • 特马",
+      "fr": "Roblox • pâtes • drapeaux • chien de garde • tema"
+    },
+    {
+      "pt": "ANALISAR AGORA",
+      "en": "ANALYZE NOW",
+      "es": "ANALIZAR AHORA",
+      "zh": "立即分析",
+      "fr": "ANALYSER MAINTENANT"
+    },
+    {
+      "pt": "Lê sua configuração atual • não altera nada sem você clicar",
+      "en": "Read your current configuration • does not change anything without you clicking",
+      "es": "Lea su configuración actual • no cambia nada sin hacer clic",
+      "zh": "阅读您当前配置的当前配置 . 没有点击, 无法更改任何更改 。",
+      "fr": "Lire votre configuration actuelle • ne change rien sans vous cliquer"
+    },
+    {
+      "pt": "🔒  PvP Coach / IA livre ainda está em desenvolvimento. Esta aba é o Assistente do app e já funciona completa.",
+      "en": "PvP Coach/IA free is still in development. This tab is the App Wizard and already works full.",
+      "es": "PvP Coach/IA free todavía está en desarrollo. Esta pestaña es el Asistente de aplicaciones y ya funciona completamente.",
+      "zh": "PvP 教练/ IA 免费仍在开发中。 此标签是 App 向导, 并已全部工作 。",
+      "fr": "PvP Coach/IA gratuit est toujours en développement. Cet onglet est l'App Wizard et fonctionne déjà plein."
+    },
+    {
+      "pt": "ZK AUDIO ENGINE",
+      "en": "ZK AUDIO ENGINE",
+      "es": "ZK AUDIO ENGINE",
+      "zh": "ZKAUDIO工程公司",
+      "fr": "ZK AUDIO ENGINE"
+    },
+    {
+      "pt": "100% = volume original • até 150% = boost dos barulhos da interface",
+      "en": "100% = original volume • up to 150% = interface noise boost",
+      "es": "100% = volumen original • hasta 150% = aumento de ruido de interfaz",
+      "zh": "100% = 原始体积 = 高达150% = 接口噪音助推",
+      "fr": "100 % = volume initial • jusqu'à 150 % = augmentation du bruit d'interface"
+    },
+    {
+      "pt": "BLOX HUB // CENTRO",
+      "en": "BLOX HUB // CENTRAL",
+      "es": "BLOX HUB // CENTRAL",
+      "zh": "BLOX HUB // 中部",
+      "fr": "BLOX HUB // CENTRAL"
+    },
+    {
+      "pt": "Planner carregado em modo seguro. Seus combos continuam salvos.",
+      "en": "Planner loaded in secure mode, your combos are still safe.",
+      "es": "Planificador cargado en modo seguro, sus combos siguen siendo seguros.",
+      "zh": "计划者装入了安全模式 你的组合还是安全的",
+      "fr": "Planificateur chargé en mode sécurisé, vos combos sont toujours en sécurité."
+    },
+    {
+      "pt": "COMO USAR",
+      "en": "HOW TO USE",
+      "es": "CÓMO USAR",
+      "zh": "如何使用",
+      "fr": "COMMENT UTILISER"
+    },
+    {
+      "pt": "IR PARA BUILD ROULETTE",
+      "en": "IR PARA BUILD ROULETTE",
+      "es": "IR PARA CONSTRUCCIÓN DE ROULETTE",
+      "zh": "伊尔·帕拉·布鲁德·鲁尔韦特",
+      "fr": "ROULET DE BÂTIMENT IR PARA"
+    },
+    {
+      "pt": "SECRET pode aparecer raramente em qualquer geração. Cada secreto tem identidade própria e pode esconder uma recompensa.",
+      "en": "SECRET can rarely appear in any generation. Each secret has its own identity and can hide a reward.",
+      "es": "SECRET rara vez puede aparecer en cualquier generación. Cada secreto tiene su propia identidad y puede ocultar una recompensa.",
+      "zh": "秘密秘书处在任何一代人中都很少出现,每个秘密都有自己的身份,可以隐藏报酬。",
+      "fr": "SECRET peut rarement apparaître dans n'importe quelle génération. Chaque secret a sa propre identité et peut cacher une récompense."
+    },
+    {
+      "pt": "IMPORTAR PNG",
+      "en": "IMPORT PNG",
+      "es": "IMPORTAR PNG",
+      "zh": "导入 PNG",
+      "fr": "IMPORTER PNG"
+    },
+    {
+      "pt": "PACK IMPORTAR",
+      "en": "IMPORTAR PACK",
+      "es": "ENVASE IMPORTAR",
+      "zh": "轻质包装",
+      "fr": "EMBALLAGE IMPORTAIRE"
+    },
+    {
+      "pt": "CLIENTE ROBLOX",
+      "en": "ROBLOX CLIENT",
+      "es": "CLIENTE ROBLOX",
+      "zh": "ROBLOX 客户端",
+      "fr": "CLIENT ROBLOX"
+    },
+    {
+      "pt": "Pronto para testar.",
+      "en": "Ready to test.",
+      "es": "Listos para probar.",
+      "zh": "准备测试",
+      "fr": "Prêt à tester."
+    },
+    {
+      "pt": "1080p / 720p / 480p",
+      "en": "1080p / 720p / 480p",
+      "es": "1080p / 720p / 480p",
+      "zh": "1080p / 720p / 480p",
+      "fr": "1080p / 720p / 480p"
+    },
+    {
+      "pt": "RANDOM CONSTRUO DE ENGENHARIA",
+      "en": "RANDOM BUILD ENGINE",
+      "es": "MOTOR CONSTRUIDO RANDOM",
+      "zh": "兰多姆BU型工程",
+      "fr": "RANDOM ENGINE DE BÂTIMENT"
+    },
+    {
+      "pt": "BUILD ROULETTE // 4-SLOT",
+      "en": "BUILD ROULETTE // 4-SLOT",
+      "es": "ROULETTE DE CONSTRUCCIÓN // 4-SLOT",
+      "zh": "BULD ROULETTE / / 4SLOT",
+      "fr": "ROULET DE CONSTRUCTION // 4 SLOT"
+    },
+    {
+      "pt": "Ícones locais • histórico • favoritos • inventário por categoria",
+      "en": "Local icons • history • bookmarks • inventory by category",
+      "es": "Iconos locales • historial • marcadores • inventario por categoría",
+      "zh": "当地图标 • 历史 • 书签 • 按类别分列的清单",
+      "fr": "Icônes locales • historique • signets • inventaire par catégorie"
+    },
+    {
+      "pt": "MODO",
+      "en": "METHOD",
+      "es": "METODO",
+      "zh": "方法方法方法",
+      "fr": "MÉTHODE"
+    },
+    {
+      "pt": "SORTEIE UMA BUILD COMPLETA",
+      "en": "HAPPY A COMPLETE BUILD",
+      "es": "FELIZ CONSTRUCCIÓN COMPLETA",
+      "zh": "(欢庆一个完整的早餐)",
+      "fr": "VENIR UN BÂTIMENT COMPLET"
+    },
+    {
+      "pt": "Os desafios do Creator Mode ficam mais interessantes usando o resultado daqui, mas continuam funcionando com qualquer build.",
+      "en": "The challenges of Creator Mode get more interesting using the result here, but they continue to work with any build.",
+      "es": "Los desafíos del Modo Creador se vuelven más interesantes usando el resultado aquí, pero continúan trabajando con cualquier construcción.",
+      "zh": "利用此结果,创造者模式的挑战变得更加有趣,但是它们继续与任何建构合作。",
+      "fr": "Les défis du mode Créateur deviennent plus intéressants en utilisant le résultat ici, mais ils continuent à travailler avec n'importe quelle construction."
+    },
+    {
+      "pt": "FPS MÁXIMO",
+      "en": "MAXIMUM FPS",
+      "es": "MAXIMUM FPS",
+      "zh": "混合混合纤维",
+      "fr": "MAXIMUM FPS"
+    },
+    {
+      "pt": "PC FRACO",
+      "en": "PC FRACO",
+      "es": "PC FRACO",
+      "zh": "PCFRACO 太平洋",
+      "fr": "PC FRACO"
+    },
+    {
+      "pt": "SALVAR ALTERAÇÕES",
+      "en": "SAVE AMENDMENTS",
+      "es": "ENMIENDAS DE SALVAJE",
+      "zh": "外 派 修 修",
+      "fr": "ÉTABLISSEMENT DES MODIFICATIONS"
+    },
+    {
+      "pt": "PARAR DE EDITAR",
+      "en": "STOP EDITING",
+      "es": "DETENER LA EDICIÓN",
+      "zh": "停止编辑",
+      "fr": "ARRÊT DE L'ÉDITION"
+    },
+    {
+      "pt": "SESSÃO DE MÍDIA",
+      "en": "MEDIA SESSION",
+      "es": "SESIÓN MULTIMEDIA",
+      "zh": "媒体会话",
+      "fr": "SESSION MÉDIA"
+    },
+    {
+      "pt": "ATUALIZAR",
+      "en": "REFRESH",
+      "es": "ACTUALIZAR",
+      "zh": "刷新",
+      "fr": "ACTUALISER"
+    },
+    {
+      "pt": "MINI-PLAYER",
+      "en": "MINI-PLAYER",
+      "es": "MINI-PLAYER",
+      "zh": "MIMI - 玩家",
+      "fr": "MINI-PLAYER"
+    },
+    {
+      "pt": "A galeria será carregada quando esta página for aberta.",
+      "en": "The gallery will be loaded when this page is opened.",
+      "es": "La galería se cargará cuando se abra esta página.",
+      "zh": "当此页面打开时, 画廊将会被装入 。",
+      "fr": "La galerie sera chargée lorsque cette page sera ouverte."
+    },
+    {
+      "pt": "Os mundos especiais serão carregados sob demanda.",
+      "en": "The special worlds will be loaded on demand.",
+      "es": "Los mundos especiales serán cargados bajo demanda.",
+      "zh": "特殊世界将充满需求。",
+      "fr": "Les mondes spéciaux seront chargés sur demande."
+    },
+    {
+      "pt": "Recompensas secretas serão carregadas junto da galeria.",
+      "en": "Secret rewards will be loaded by the gallery.",
+      "es": "Las recompensas secretas serán cargadas por la galería.",
+      "zh": "画廊将载入秘密奖赏。",
+      "fr": "Les récompenses secrètes seront chargées par la galerie."
+    },
+    {
+      "pt": "COR DE DESTAQUE RÁPIDA",
+      "en": "FAST HIGHLIGHT COLOR",
+      "es": "ANTERIOR COLOR DE ALTA LUZ",
+      "zh": "甚高光谱",
+      "fr": "COULEUR FAST HIGHLIGHT"
+    },
+    {
+      "pt": "ZK",
+      "en": "ZK",
+      "es": "ZK",
+      "zh": "ZK",
+      "fr": "ZK"
+    },
+    {
+      "pt": "Primeiro setup",
+      "en": "FIRST SETUP",
+      "es": "PRIMER ESTABLECIMIENTO",
+      "zh": "首期首期",
+      "fr": "PREMIÈRE STRUCTURE"
+    },
+    {
+      "pt": "Configure a linguagem da interface antes de entrar no app.",
+      "en": "Configure the interface language before entering the app.",
+      "es": "Configure el idioma de la interfaz antes de entrar en la aplicación.",
+      "zh": "在输入应用程序前配置接口语言 。",
+      "fr": "Configurez le langage d'interface avant d'entrer dans l'application."
+    },
+    {
+      "pt": "PREFERNCIA LOCAL",
+      "en": "LOCAL PREFERENCE",
+      "es": "PREFERENCIA LOCAL",
+      "zh": "地方授权",
+      "fr": "PRÉFÉRENCE LOCALE"
+    },
+    {
+      "pt": "01 / 01  LINGUAGEM",
+      "en": "01 / 01   •   LANGUAGE",
+      "es": "01 / 01 • Lenguaje",
+      "zh": "01/01 语文",
+      "fr": "01 / 01 • LANGUE"
+    },
+    {
+      "pt": "Escolha seu idioma",
+      "en": "Choose your language",
+      "es": "Elija su idioma",
+      "zh": "选择您的语言",
+      "fr": "Choisissez votre langue"
+    },
+    {
+      "pt": "Escolha o seu idioma de interface",
+      "en": "Choose your interface language",
+      "es": "Elija su idioma de interfaz",
+      "zh": "选择您的界面语言",
+      "fr": "Choisissez votre langage d'interface"
+    },
+    {
+      "pt": "Você pode alterar depois em Personalizar.",
+      "en": "You can change it later in Customize.",
+      "es": "Puedes cambiarlo más tarde en Personalizar.",
+      "zh": "您可以稍后在自定义中更改它 。",
+      "fr": "Vous pouvez le modifier plus tard dans Personnaliser."
+    },
+    {
+      "pt": "5 Idiomas // Pronto",
+      "en": "5 LANGUAGES  //  READY",
+      "es": "5 IDIOMAS // READY",
+      "zh": "5种语文//准备",
+      "fr": "5 LANGUES // LECTURE"
+    },
+    {
+      "pt": "RBX",
+      "en": "RBX",
+      "es": "RBX",
+      "zh": "RBX",
+      "fr": "RBX"
+    },
+    {
+      "pt": "ZK OWNER LAB // PRIVATE",
+      "en": "ZK OWNER LAB  //  PRIVATE",
+      "es": "ZK OWNER LAB // PRIVATE",
+      "zh": "ZK OWNER LAB // 私人",
+      "fr": "ZK OWNER LAB // PRIVÉ"
+    },
+    {
+      "pt": "Console local de testes. Não aparece na navegação normal e não é necessária para usuários comuns.",
+      "en": "Local test console. It does not appear in normal browsing and is not required for ordinary users.",
+      "es": "Consola de prueba local. No aparece en la navegación normal y no es necesario para los usuarios ordinarios.",
+      "zh": "本地测试控制台。 它不出现在普通浏览中, 普通用户不需要它 。",
+      "fr": "Console de test locale. Il n'apparaît pas dans la navigation normale et n'est pas requis pour les utilisateurs ordinaires."
+    },
+    {
+      "pt": "OVERRIDES DE DESENVOLVEDOR",
+      "en": "OVERRIDES DE DESENVOLVEDOR",
+      "es": "OVERRIDES DE DESENVOLVEDOR",
+      "zh": "二、总体情况概述",
+      "fr": "OUVERTURES DE DESENVOLVEDOR"
+    },
+    {
+      "pt": "Esses switches servem para TESTAR. Não contam como unlock real nem alteram o histórico do usuário.",
+      "en": "These switches are for TESTAR. They do not count as real unlock or change user history.",
+      "es": "Estos interruptores son para TESTAR. No cuentan como desbloqueo real o cambiar el historial del usuario.",
+      "zh": "这些开关是给TESTAR的, 它们并不算作真正的解锁或改变用户历史 。",
+      "fr": "Ces commutateurs sont pour TESTAR. Ils ne comptent pas comme véritable déverrouillage ou changer l'historique de l'utilisateur."
+    },
+    {
+      "pt": "Liberar todos os SECRET THEMES para teste",
+      "en": "Liberar todos os SECRET THEMES para teste",
+      "es": "Liberar todos os SECRET THEMES para teste",
+      "zh": "自由托多斯 OS 秘密 它的双假睾丸",
+      "fr": "ThéMES SECRET para teste"
+    },
+    {
+      "pt": "Forçar desafios SECRET ao gerar",
+      "en": "Force SECRET challenges when generating",
+      "es": "Forzar los desafíos de SECRET al generar",
+      "zh": "部队秘书处在产生挑战时面临的挑战",
+      "fr": "Forcez SECRET défis lors de la génération"
+    },
+    {
+      "pt": "REVELAO SECRETA",
+      "en": "SECRET REVEAL",
+      "es": "SECRET REVEAL",
+      "zh": "秘秘 秘 秘 秘 秘 秘 秘 秘 秘 秘 秘 秘 秘 秘 书 编 编",
+      "fr": "SECRET REVEAL"
+    },
+    {
+      "pt": "TEMAS",
+      "en": "THEMES",
+      "es": "TEMAS",
+      "zh": "他们",
+      "fr": "THÈMES"
+    },
+    {
+      "pt": "CRIADORES",
+      "en": "CREATOR",
+      "es": "CREADOR",
+      "zh": "检查器",
+      "fr": "CRÉATEUR"
+    },
+    {
+      "pt": "LAB USUÁRIO FRESCO",
+      "en": "FRESH USER LAB",
+      "es": "FRESH USUARIO LAB",
+      "zh": "FRESH 使用液压",
+      "fr": "EAU D' UTILISATEUR EAU"
+    },
+    {
+      "pt": "O perfil de teste fica em uma pasta separada. Seu perfil real permanece intacto e volta com um clique.",
+      "en": "The test profile is in a separate folder. Its actual profile remains intact and returns with one click.",
+      "es": "El perfil de prueba está en una carpeta separada. Su perfil real permanece intacto y regresa con un clic.",
+      "zh": "测试配置文件位于一个单独的文件夹中。 它的实际配置文件仍然完好无损, 只要点击一次返回 。",
+      "fr": "Le profil de test est dans un dossier séparé. Son profil actuel reste intact et retourne en un clic."
+    },
+    {
+      "pt": "LAB PROGRESSO",
+      "en": "PROGRESSION LAB",
+      "es": "LABOR DE PROGRESIÓN",
+      "zh": "进步实验室",
+      "fr": "ÉTAT D'AVANCEMENT"
+    },
+    {
+      "pt": "Edite contadores para testar unlocks reais. Recomendado usar isso dentro do Fresh User Test.",
+      "en": "Edit counters to test real unlocks. Recommended to use this within the Fresh User Test.",
+      "es": "Editar contadores para probar desbloqueos reales. Recomendado para usar esto dentro de la Prueba de Usuario Fresh.",
+      "zh": "编辑对称以测试真正的锁。 推荐在新用户测试中使用此选项 。",
+      "fr": "Modifier les compteurs pour tester les déverrouillages réels. Recommandé d'utiliser ceci dans le test d'utilisateur frais."
+    },
+    {
+      "pt": "APLICAR CONTADORES",
+      "en": "APPLY COUNTERS",
+      "es": "CUENTAS APLICABLES",
+      "zh": "专 专 款 款 款 款 款",
+      "fr": "APPLIQUER LES COUNTEURS"
+    },
+    {
+      "pt": "ZERAR REWARDS / HISTÓRICO",
+      "en": "ZERAR REWARDS / HISTORY",
+      "es": "REMISIONES DE ZERAR / HISTORIA",
+      "zh": "扎尔重新偿还/历史",
+      "fr": "RÉMUNÉRATIONS DE ZÉRAR / HISTOIRE"
+    },
+    {
+      "pt": "Dica: 5 desafios = Party • 20 rolls = Jackpot • 60s música = Frequency. Architect depende de 5 builds salvas.",
+      "en": "Tip: 5 challenges = Party • 20 rolls = Jackpot • 60s music = Frequency. Architect depends on 5 saved builds.",
+      "es": "Consejo: 5 desafíos = Fiesta • 20 rollos = Jackpot • Música de 60s = Frecuencia. El arquitecto depende de 5 construcciones guardadas.",
+      "zh": "提示:5项挑战 = 缔约方 20卷 = 中奖 = 60 音乐 = 频率 建筑师依靠5个节省的建筑",
+      "fr": "Astuce : 5 challenges = Party • 20 rouleaux = Jackpot • musique des années 60 = Fréquence. L'architecte dépend de 5 builds sauvegardés."
+    },
+    {
+      "pt": "BACKUP / RESTORE",
+      "en": "BACKUP / RESTORE",
+      "es": "APOYO / RESTAURACIÓN",
+      "zh": "备份/恢复",
+      "fr": "RAPPEL / RESTAURATION"
+    },
+    {
+      "pt": "CRIAR SNAPSHOT",
+      "en": "CREATE SNAPSHOT",
+      "es": "CREAR SNAPSHOT",
+      "zh": "红盐",
+      "fr": "CRÉER LE NAPSHOT"
+    },
+    {
+      "pt": "RESTAURAR ÚLTIMO",
+      "en": "RESTORE LAST",
+      "es": "RESTORE ÚLTIMA",
+      "zh": "收复最后时间",
+      "fr": "RESTAURATION DERNIÈRE"
+    },
+    {
+      "pt": "ESCOLHER SNAPSHOT",
+      "en": "ESCOLHER SNAPSHOT",
+      "es": "ESCOLHER SNAPSHOT",
+      "zh": "萨尔瓦多",
+      "fr": "ESCOLHER SNAPSHOT"
+    },
+    {
+      "pt": "ABRIR BACKUPS",
+      "en": "OPEN BACKUPS",
+      "es": "ACCESO ABIERTO",
+      "zh": "开放后背",
+      "fr": "RAPPELS OUVERTS"
+    },
+    {
+      "pt": "ABRIR DADOS PRINCIPAIS",
+      "en": "OPEN MAIN DATA",
+      "es": "DATOS PRINCIPALES ABIERTOS",
+      "zh": "公开主要数据",
+      "fr": "PRINCIPALES DONNÉES OUVERTES"
+    },
+    {
+      "pt": "ABRIR VAULT OWNER",
+      "en": "OPEN VAULT OWNER",
+      "es": "PROPIEDAD DE VALOR ABIERTA",
+      "zh": "开放文化拥有者",
+      "fr": "PROPRIÉTÉ DE VAULT OUVERTE"
+    },
+    {
+      "pt": "Segurança: a chave OWNER fica fora do pacote público. A senha nunca é salva em texto puro; apenas hash+salt local.",
+      "en": "Security: The OWNER key stays out of the public package. The password is never saved in plain text; only local hash+salt.",
+      "es": "Seguridad: La clave OWNER no se incluye en el paquete público. La contraseña nunca se guarda en texto plano; solo hash+sal local.",
+      "zh": "安全性 : OWNER 键不能进入公共软件包。 密码从未以纯文本保存; 只有本地 hash+salt 。",
+      "fr": "Sécurité: La clé OWNER reste hors du paquet public. Le mot de passe n'est jamais enregistré en texte simple; seul le hash+salt local."
+    },
+    {
+      "pt": "CLIENTE LOCAL // CONTROLE DECK",
+      "en": "LOCAL CLIENT  //  CONTROL DECK",
+      "es": "CLIENTE LOCAL // DECLARACION DE CONTROL",
+      "zh": "LOCAL 客户 // 控制DEC",
+      "fr": "CLIENTS LOCAUX // CONTRÔLE"
+    },
+    {
+      "pt": "ZK AUDIO // LOCAL",
+      "en": "ZK AUDIO  //  LOCAL",
+      "es": "ZK AUDIO // LOCAL",
+      "zh": "ZK AUDIO / LOCAL",
+      "fr": "ZK AUDIO // LOCAL"
+    },
+    {
+      "pt": "SPOTIFY // ZK DECK",
+      "en": "SPOTIFY // ZK DECK",
+      "es": "SPOTIFY // ZK DECK",
+      "zh": "SPOTIFY / / ZK DEK",
+      "fr": "DÉCHETS SPOTIFIÉS // ZK"
+    },
+    {
+      "pt": "Reprodução  reprodução  volume  busca",
+      "en": "Now Playing • playback • volume • busca",
+      "es": "Ahora Reproducir • reproducción • volumen • búsqueda",
+      "zh": "现在播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放的播放",
+      "fr": "Maintenant Lecture • lecture • volume • busca"
+    },
+    {
+      "pt": "SPOTIFY // LOCAL",
+      "en": "SPOTIFY  //  LOCAL",
+      "es": "ESPOTIFÍA // LOCAL",
+      "zh": "SPOTIFY / LOCAL",
+      "fr": "SPOTIFIE // LOCAL"
+    },
+    {
+      "pt": "Spotify Spotify",
+      "en": "Spotify",
+      "es": "Spotify",
+      "zh": "斑点",
+      "fr": "Spotify"
+    },
+    {
+      "pt": "Agora jogar do Windows",
+      "en": "Now Playing do Windows",
+      "es": "Ahora jugar hacer Windows",
+      "zh": "正在播放窗口",
+      "fr": "Maintenant Lecture faire Windows"
+    },
+    {
+      "pt": "SIGNATURE CORE",
+      "en": "SIGNATURE CORE",
+      "es": "FIRMA BÁSICA",
+      "zh": "签字核心",
+      "fr": "CORE DE SIGNATURE"
+    },
+    {
+      "pt": "Desempenho  Visual  Ativos",
+      "en": "Performance  •  Visual  •  Assets",
+      "es": "Rendimiento • Visual • Activos",
+      "zh": "• 资产",
+      "fr": "Performance • Visuel • Actifs"
+    },
+    {
+      "pt": "ZKSTRAP CORE ENGINE",
+      "en": "ZKSTRAP CORE ENGINE",
+      "es": "MOTOR BÁSICO ZKSTRAP",
+      "zh": "ZKSTRAP 核心工程",
+      "fr": "ZKSTRAP CORE ENGINE"
+    },
+    {
+      "pt": "CONFIGURADOR DE CLIENTES ROBLOX  MODO LOCAL",
+      "en": "ROBLOX CLIENT CONFIGURATOR  •  LOCAL MODE",
+      "es": "CONFIGURADOR DE CLIENTE ROBLOX • MODO LOCAL",
+      "zh": "• 利比里亚模式",
+      "fr": "CONFIGURATEUR DE CLIENT ROBLOX • MODE LOCAL"
+    },
+    {
+      "pt": "PREPARANDO SEU AMBIENTE",
+      "en": "PREPARING YOUR ENVIRONMENT",
+      "es": "PREPARACIÓN DE SU MEDIO AMBIENTE",
+      "zh": "改善环境",
+      "fr": "PRÉPARER VOTRE ENVIRONNEMENT"
+    },
+    {
+      "pt": "Inicializando o ZKStrap em paralelo — esta tela nunca bloqueia o app.",
+      "en": "Initializing ZKStrap in parallel — this screen never blocks the app.",
+      "es": "Inicializar ZKStrap en paralelo — esta pantalla nunca bloquea la aplicación.",
+      "zh": "平行初始化 ZKSstrap —— 这个屏幕从不阻塞应用程序 。",
+      "fr": "Initialisation de ZKStrap en parallèle — cet écran ne bloque jamais l'application."
+    },
+    {
+      "pt": "Inicializando núcleo…",
+      "en": "Initializing core...",
+      "es": "Inicializando el núcleo...",
+      "zh": "正在初始化核心...",
+      "fr": "Initialisation du noyau..."
+    },
+    {
+      "pt": "00%",
+      "en": "00%",
+      "es": "00%",
+      "zh": "00%",
+      "fr": "00%"
+    },
+    {
+      "pt": "configuração local",
+      "en": "local configuration",
+      "es": "configuración local",
+      "zh": "本地配置",
+      "fr": "configuration locale"
+    },
+    {
+      "pt": "PRÓXIMA DECISÃO",
+      "en": "NEXT DECISION",
+      "es": "PRÓXIMA DECISIÓN",
+      "zh": "下一步决定",
+      "fr": "PROCHAINE DÉCISION"
+    },
+    {
+      "pt": "⌕  BUSCA UNIVERSAL",
+      "en": "? UNIVERSAL BUSCA",
+      "es": "BUSCA UNIVERSAL",
+      "zh": "* 通用百草枯",
+      "fr": "? BUSCA UNIVERSELLE"
+    },
+    {
+      "pt": "CTRL + K  ESC",
+      "en": "CTRL + K   •   ESC",
+      "es": "CTRL+K • ESC",
+      "zh": "CTRL + K + K · ESC",
+      "fr": "CTRL + K • ESC"
+    },
+    {
+      "pt": "ZKSTRAP // COMPACTO",
+      "en": "ZKSTRAP // COMPACT",
+      "es": "ZKSTRAP // COMPACT",
+      "zh": "ZKSTRAP // 竞争程序",
+      "fr": "ZKSTRAP // COMPACT"
+    },
+    {
+      "pt": "⚡ APLICAR CONFIGURAÇÕES",
+      "en": ". APPLY CONFIGURATIONS",
+      "es": ". CONFIGURACIONES DE APLICACIÓN",
+      "zh": ". 令人不服",
+      "fr": "CONFIGURATIONS APPLICABLES"
+    },
+    {
+      "pt": "VOLTAR AO ZKSTRAP",
+      "en": "BACK TO ZKSTRAP",
+      "es": "VOLVER A ZKSTRAP",
+      "zh": "回到芝士",
+      "fr": "Retour à ZKSTRAP"
+    },
+    {
+      "pt": "VAULTA SECRETA // IDENTIDADES OCIDENTES",
+      "en": "SECRET VAULT  //  HIDDEN IDENTITIES",
+      "es": "VALOR DE SECRET // IDENTIDADES DE OCUPACIÓN",
+      "zh": "秘书处//加拿大",
+      "fr": "IDENTITÉS DE SECRET VAULT // HIDDEN"
+    },
+    {
+      "pt": "EMBALAGENS LOCKED",
+      "en": "HOVER LOCKED CARDS",
+      "es": "CARDOS ABORDADOS",
+      "zh": "封闭的掩体",
+      "fr": "CAMPAGNES LOCKED"
+    },
+    {
+      "pt": "IDENTIDADE DESCOBERTA",
+      "en": "IDENTITY UNCOUNTED",
+      "es": "IDENTIDAD NO CONTADA",
+      "zh": "与身份、身份、",
+      "fr": "IDENTITÉ NON CONTENUE"
+    },
+    {
+      "pt": "PISTA OCULTA  //  PASSE O MOUSE NO CARD",
+      "en": "OCULT CLUE // PASS THE MOUSE ON THE CARD",
+      "es": "PISTA DE OCULT // PASA EL MOUSO EN LA TARJETA",
+      "zh": "//将《标准标准谅解备忘录》",
+      "fr": "OCULT CLUE // PASSER LA MOUSSE SUR LA CARTE"
+    },
+    {
+      "pt": "A condição continua escondida. Explore o ZKStrap e passe o mouse aqui quando quiser uma pista.",
+      "en": "The condition is still hidden. Explore ZKStrap and pass the mouse here when you want a clue.",
+      "es": "La condición sigue oculta. Explore ZKStrap y pase el ratón aquí cuando desee una pista.",
+      "zh": "条件仍然隐藏。 探索 ZKSstrap 并在此传递鼠标, 如果您想要线索 。",
+      "fr": "L'état est encore caché. Explorez ZKStrap et passez la souris ici quand vous voulez un indice."
+    },
+    {
+      "pt": "TEMAS ESPECIAIS // EMBALAGENS DE JOGO",
+      "en": "SPECIAL THEMES  //  GAME PACKS",
+      "es": "TEMAS ESPECIALES // ENVASES DE JUEGO",
+      "zh": "特殊主题// GME 包",
+      "fr": "THÈMES PARTICULIERS // EMBALLAGES DE JEU"
+    },
+    {
+      "pt": "HOVER // AO VIVO",
+      "en": "HOVER  //  LIVE",
+      "es": "HOVER // VIVIR",
+      "zh": "人//活",
+      "fr": "COUVERTURE // VIE"
+    },
+    {
+      "pt": "FONTES & CRÉDITOS",
+      "en": "SOURCES & CREDITS",
+      "es": "FUENTES Y CRÉDITOS",
+      "zh": "资源和图书馆",
+      "fr": "SOURCES ET CREDITS"
+    },
+    {
+      "pt": "DUP",
+      "en": "DUP",
+      "es": "DUP",
+      "zh": "DUP",
+      "fr": "DUP"
+    },
+    {
+      "pt": "Nenhum desafio ativo.",
+      "en": "No active challenge.",
+      "es": "No hay desafío activo.",
+      "zh": "没有积极的挑战。",
+      "fr": "Pas de défi actif."
+    },
+    {
+      "pt": "Escolha dificuldade + quantidade e clique em GERAR DESAFIOS.",
+      "en": "Choose difficulty + quantity and click Generate CHALLENGES.",
+      "es": "Elija dificultad + cantidad y haga clic en Generar RETOS.",
+      "zh": "选择难度 + 数量,单击“产生挑战”。",
+      "fr": "Choisissez la difficulté + la quantité et cliquez sur Générer des DÉFIS."
+    },
+    {
+      "pt": "−1",
+      "en": "−1",
+      "es": "−1",
+      "zh": "−1",
+      "fr": "−1"
+    },
+    {
+      "pt": "+ ADICIONAR BOUNTY",
+      "en": "+ ADDITION BOUNTY",
+      "es": "+ BOUNTY DE ADICIÓN",
+      "zh": "+ 附加责任",
+      "fr": "+ BUT D'ADDITION"
+    },
+    {
+      "pt": "+1 VITÓRIA 5M+",
+      "en": "+1 VICTORY 5M+",
+      "es": "+1 VICTORIA 5M+",
+      "zh": "+1 5M+",
+      "fr": "+1 VISITOIRE 5M+"
+    },
+    {
+      "pt": "PERDI — RESET",
+      "en": "LOST — RESET",
+      "es": "PERDIDO - RESET",
+      "zh": "损失——救济",
+      "fr": "DOSSIER — RESET"
+    },
+    {
+      "pt": "MARCAR CONCLUÍDO",
+      "en": "CONCLUDED MARK",
+      "es": "MARCA CONCLUIDA",
+      "zh": "结束的市场",
+      "fr": "MARQUE CONCLUE"
+    },
+    {
+      "pt": "MORRI — RESET",
+      "en": "DEARI — RESET",
+      "es": "DEARI — RESET",
+      "zh": "毒品——对策",
+      "fr": "DEAERI — RESET"
+    },
+    {
+      "pt": "RESET",
+      "en": "RESET",
+      "es": "RESET",
+      "zh": "战 地 方",
+      "fr": "RESET"
+    },
+    {
+      "pt": "Nenhum desafio concluído ainda.",
+      "en": "No challenge complete yet.",
+      "es": "No hay desafío completo todavía.",
+      "zh": "挑战还没有完成。",
+      "fr": "Aucun défi n'est encore terminé."
+    },
+    {
+      "pt": "CORE",
+      "en": "CORE",
+      "es": "CORE",
+      "zh": "CORE",
+      "fr": "CORE"
+    },
+    {
+      "pt": "// LOCAL",
+      "en": "//  LOCAL",
+      "es": "// LOCAL",
+      "zh": "/ 中亚区域办事处",
+      "fr": "// LOCAL"
+    },
+    {
+      "pt": "REDE --",
+      "en": "NETWORK --",
+      "es": "NETWORK --",
+      "zh": "网络网络-",
+      "fr": "RÉSEAU --"
+    },
+    {
+      "pt": "PERFIL",
+      "en": "PROFILE",
+      "es": "PERFIL",
+      "zh": "资料",
+      "fr": "PROFIL"
+    },
+    {
+      "pt": "LOCAL CORE Pronto",
+      "en": "LOCAL CORE READY",
+      "es": "CORREO LOCAL PREPARADO",
+      "zh": "核心准备",
+      "fr": "LOCAL CORE PRÊT"
+    },
+    {
+      "pt": "LOCAL CORE",
+      "en": "LOCAL CORE",
+      "es": "LOCAL CORE",
+      "zh": "LOCAL CORE",
+      "fr": "LOCAL CORE"
+    },
+    {
+      "pt": "● READY",
+      "en": "● READY",
+      "es": "● READY",
+      "zh": "● READY",
+      "fr": "● READY"
+    },
+    {
+      "pt": "?   TUTORIAL",
+      "en": "?   TUTORIAL",
+      "es": "?   TUTORIAL",
+      "zh": "?   教程",
+      "fr": "?   TUTORIEL"
+    },
+    {
+      "pt": "Nenhum setup salvo ainda.",
+      "en": "No setup saved yet.",
+      "es": "Aún no hay setups guardados.",
+      "zh": "尚未保存任何配置。",
+      "fr": "Aucun setup enregistré pour le moment."
+    },
+    {
+      "pt": "SELEÇÃO EM MASSA POR RARIDADE",
+      "en": "SELECTION IN MASSA BY RARITY",
+      "es": "SELECCIÓN EN MASSÁ POR RARIDAD",
+      "zh": "按种族在马萨诸塞州选举",
+      "fr": "SÉLECTION EN MASSA PAR RARITÉ"
+    },
+    {
+      "pt": "ASSETS",
+      "en": "ASSETS",
+      "es": "RECURSOS",
+      "zh": "资源",
+      "fr": "RESSOURCES"
+    },
+    {
+      "pt": "ONLINE",
+      "en": "ONLINE",
+      "es": "EN LÍNEA",
+      "zh": "在线",
+      "fr": "EN LIGNE"
+    },
+    {
+      "pt": "NÃO LOCALIZADO",
+      "en": "NOT LOCATED",
+      "es": "NO LOCALIZADO",
+      "zh": "未找到",
+      "fr": "NON LOCALISÉ"
+    },
+    {
+      "pt": "SIM",
+      "en": "YES",
+      "es": "SÍ",
+      "zh": "是",
+      "fr": "OUI"
+    },
+    {
+      "pt": "PADRÃO",
+      "en": "DEFAULT",
+      "es": "PREDETERMINADO",
+      "zh": "默认",
+      "fr": "PAR DÉFAUT"
+    },
+    {
+      "pt": "CURSOR",
+      "en": "CURSOR",
+      "es": "CURSOR",
+      "zh": "光标",
+      "fr": "CURSEUR"
+    },
+    {
+      "pt": "FONTE",
+      "en": "FONT",
+      "es": "FUENTE",
+      "zh": "字体",
+      "fr": "POLICE"
+    },
+    {
+      "pt": "IMPORTAR PACK",
+      "en": "IMPORT PACK",
+      "es": "IMPORTAR PACK",
+      "zh": "导入包",
+      "fr": "IMPORTER UN PACK"
+    }
+  ],
+  "stats": {
+    "legacy_pairs": 351,
+    "uncovered": 144,
+    "rows": 503,
+    "source_pt": 78,
+    "source_en": 53,
+    "source_keep": 13
+  }
+}
