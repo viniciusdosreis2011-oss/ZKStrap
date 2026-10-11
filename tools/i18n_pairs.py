@@ -24,7 +24,6 @@ class V(ast.NodeVisitor):
         self.generic_visit(node)
 V().visit(app)
 
-# unique by pair, preserve first method/line
 seen=set(); out_rows=[]
 for row in sorted(rows,key=lambda x:x[1]):
     key=(row[3],row[4])
@@ -37,5 +36,4 @@ for method,line,cond,pt,en in out_rows:
     out.append(f'{method} | {line} | {cond} | {pt} | {en}')
 Path('tmp').mkdir(exist_ok=True)
 Path('tmp/i18n_pairs_3196.txt').write_text('\n'.join(out),encoding='utf-8')
-print('\n'.join(out[:40]))
-print('Wrote',len(out_rows),'pairs')
+print('Wrote',len(out_rows),'legacy bilingual pairs to tmp/i18n_pairs_3196.txt')
