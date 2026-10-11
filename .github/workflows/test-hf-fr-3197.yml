@@ -1,0 +1,23 @@
+name: Test offline French translation model
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/test-hf-fr-3197.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install CPU translation stack
+        run: |
+          python -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install --disable-pip-version-check transformers sentencepiece sacremoses
+      - name: Test French model
+        env:
+          HF_HUB_DISABLE_XET: '1'
+        run: python tools/test_hf_fr_3197.py
