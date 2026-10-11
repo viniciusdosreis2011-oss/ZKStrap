@@ -46,6 +46,21 @@ class LiteralVisitor(ast.NodeVisitor):
         self.generic_visit(node)
 LiteralVisitor().visit(app)
 
+# The old self.tr dictionary is still used by several buttons/labels. Include
+# all of its string values too so ES/ZH/FR never fall back to untranslated EN.
+for node in ast.walk(app):
+    if not isinstance(node,ast.Assign):
+        continue
+    is_tr=False
+    for target in node.targets:
+        if isinstance(target,ast.Attribute) and isinstance(target.value,ast.Name) and target.value.id=='self' and target.attr=='tr':
+            is_tr=True; break
+    if not is_tr:
+        continue
+    for sub in ast.walk(node.value):
+        if isinstance(sub,ast.Constant) and isinstance(sub.value,str):
+            literals.append(sub.value)
+
 brand_exact={'','ZK','ZKSTRAP','ROBLOX','SPOTIFY','YOUTUBE','GITHUB','DISCORD','0:00','00%','←','−1','DUP','CORE'}
 def translatable(s):
     s=str(s or '').strip()
