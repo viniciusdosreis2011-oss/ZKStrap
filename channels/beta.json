@@ -1,16 +1,17 @@
 {
   "channel": "beta",
-  "version": "3.20.1",
-  "published_at": "2026-10-11T21:59:13Z",
+  "version": "3.20.2",
+  "published_at": "2026-10-11T22:05:59Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.1-beta/ZKStrap-v3.20.1-beta-win64.zip",
-  "sha256": "b44508e2af925610245e01fdf7562c9bc77c6b0a143738fe668ddae0d407a94f",
-  "size_bytes": 110400424,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.2-beta/ZKStrap-v3.20.2-beta-win64.zip",
+  "sha256": "203962a95673a0baf7a50566228522fa0812021ef2d1ba122e9de053aa5bc84e",
+  "size_bytes": 110411620,
   "notes": [
-    "First Run Lab agora inicia sem compactar o perfil principal inteiro.",
-    "A simulação zera somente TEST_PROFILE, ativa o modo de teste e reinicia.",
-    "Seu perfil principal continua intocado; snapshot manual permanece separado no Owner Lab.",
-    "Corrige o estado PREPARANDO PRIMEIRA EXECUÇÃO que podia ficar minutos parado na v3.20.0."
+    "Novo fluxo inicial: idioma, vínculo público do Roblox, tutorial e escolha do setup pronto.",
+    "O nick vinculado é usado no tutorial.",
+    "Após o tutorial, a tela escurece e oferece FPS MÁXIMO ou PC FRACO com descrição de cada opção.",
+    "Consentimento de áudio não interrompe mais o onboarding.",
+    "First Run Lab isolado da v3.20.1 foi mantido."
   ]
 }
