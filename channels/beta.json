@@ -1,17 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.19.8",
-  "published_at": "2026-10-11T20:58:48Z",
+  "version": "3.19.9",
+  "published_at": "2026-10-11T21:16:56Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.8-beta/ZKStrap-v3.19.8-beta-win64.zip",
-  "sha256": "0bc2c080e1dc97bf74dd9f8e2205cb459376ed54b63b942e904fd0e6c4ce9d4a",
-  "size_bytes": 110398057,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.19.9-beta/ZKStrap-v3.19.9-beta-win64.zip",
+  "sha256": "a659badc1a34a6589faa8d3ede8bb30fafeb278854bddd44029edd20c37b4c1b",
+  "size_bytes": 110399946,
   "notes": [
-    "A tela de seleção de idioma aparece novamente uma vez para quem já confirmou a revisão anterior.",
-    "Não precisa apagar config nem LocalAppData.",
-    "Depois de escolher o idioma, a revisão 4 é salva e o onboarding volta a aparecer somente quando necessário.",
-    "Mantém a internacionalização completa da v3.19.7.",
+    "Corrige tela branca/congelamento ao usar CRIAR SNAPSHOT no ZK Owner Lab.",
+    "Snapshot manual agora compacta o perfil em uma thread de trabalho e mantém a interface responsiva.",
+    "Botão mostra estado CRIANDO SNAPSHOT e bloqueia cliques duplicados.",
+    "Snapshots automáticos de segurança antes de reset/restauração continuam bloqueantes por segurança.",
+    "Mantém idiomas completos e onboarding da v3.19.8.",
     "Stable continua inalterada."
   ]
 }
