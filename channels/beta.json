@@ -1,16 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.20.3",
-  "published_at": "2026-10-11T22:27:32Z",
+  "version": "3.20.4",
+  "published_at": "2026-10-11T22:45:41Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.3-beta/ZKStrap-v3.20.3-beta-win64.zip",
-  "sha256": "d6b2ec264a13aa09fd806bd4c0667a43fb44a9a3a60939157e553884a1359d40",
-  "size_bytes": 110414171,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.4-beta/ZKStrap-v3.20.4-beta-win64.zip",
+  "sha256": "20e3535ace8b3549f9468357773adeda4b37d9b9dfbc1efd1ea9f339ea942ce4",
+  "size_bytes": 110430352,
   "notes": [
-    "Corrige o onboarding pulando a etapa de nick/Roblox após selecionar idioma.",
-    "Agora o fluxo real é Idioma -> Roblox/Nick -> Tutorial -> Setup.",
-    "O tutorial não abre enquanto a etapa Roblox ainda não tiver sido concluída.",
-    "Mantém o seletor final FPS MÁXIMO / PC FRACO da v3.20.2."
+    "Rework completo das telas Idioma, Roblox/Nick e Tutorial.",
+    "Fundos de onboarding e seletor final agora usam blur do app em vez de fundo preto.",
+    "Tutorial desbloqueia as áreas progressivamente e troca de passo sem animação lenta.",
+    "Cada passo mostra uma amostra real da aba.",
+    "Cursor ganhou ANI Lab com importação .ANI/.CUR e preview animado.",
+    "Stable continua inalterada."
   ]
 }
