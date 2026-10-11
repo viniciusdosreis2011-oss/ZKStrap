@@ -1,0 +1,29 @@
+name: Audit uncovered ZKStrap v3.19.6 i18n
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-i18n-uncovered-3.19.6.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Build uncovered report
+        run: python tools/i18n_uncovered_3196.py
+      - name: Commit report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tmp/i18n_uncovered_3196.txt
+          git commit -m 'Audit hard-coded UI strings outside legacy language pairs'
+          git pull --rebase origin main
+          git push origin HEAD:main
