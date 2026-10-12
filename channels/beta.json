@@ -1,18 +1,19 @@
 {
   "channel": "beta",
-  "version": "3.20.7",
-  "published_at": "2026-10-11T23:47:45Z",
+  "version": "3.20.8",
+  "published_at": "2026-10-12T00:54:57Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.7-beta/ZKStrap-v3.20.7-beta-win64.zip",
-  "sha256": "7bf3269237f789e74fc506318370e757b9d64d368f7d2502c4c14fcd0349fac3",
-  "size_bytes": 110430199,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.8-beta/ZKStrap-v3.20.8-beta-win64.zip",
+  "sha256": "a33b158be6436ffde1e71875d2c1d6c5a45b3506cfd36b0275b27a05c2f3662d",
+  "size_bytes": 110429665,
   "notes": [
-    "Corrige tutorial capturando o próprio tutorial dentro da prévia.",
-    "Prévia agora esconde o overlay, renderiza a aba, espera o repaint do Windows e só então captura.",
-    "Cliques rápidos em Próximo/Voltar descartam capturas antigas.",
-    "Prévia foca mais no conteúdo real da aba e menos na sidebar/chrome do app.",
-    "Mantém correção do Roblox Link da 3.20.6.",
+    "Tutorial agora acontece dentro do ZKStrap real, não em uma tela separada.",
+    "Abas futuras somem da sidebar e são liberadas uma por uma conforme o usuário avança.",
+    "Página real da etapa abre instantaneamente, sem screenshots ou prévias.",
+    "Card pequeno flutuante explica a etapa sem esconder o app.",
+    "Ao terminar/sair, todas as abas são restauradas antes da escolha de setup.",
+    "Mantém Roblox Link, ANI Lab e demais correções anteriores.",
     "Stable continua inalterada."
   ]
 }
