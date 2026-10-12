@@ -1,20 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.20.11",
-  "published_at": "2026-10-12T14:02:53Z",
+  "version": "3.20.12",
+  "published_at": "2026-10-12T15:12:06Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.11-beta/ZKStrap-v3.20.11-beta-win64.zip",
-  "sha256": "85414ddbc90e93e1fed185122584c4d7596f7503a946c39ed207d229826fe8eb",
-  "size_bytes": 110464274,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.12-beta/ZKStrap-v3.20.12-beta-win64.zip",
+  "sha256": "d882cfd5df3f97d1811e7143db0780c5c27a7cb47d47d57fcbedbcc91b10ff20",
+  "size_bytes": 157405922,
   "notes": [
-    "Cursor animado agora é um overlay exclusivo para o Roblox, sem ANI Lab dentro do app.",
-    "Overlay segue o mouse diretamente sem suavização e só aparece com Roblox em foco.",
-    "Músicas agora formam sessões de 3+ minutos antes de repetir.",
-    "SFX evitam repetir a mesma variação seguida.",
-    "Primeiro acesso ganhou música de introdução e sons nas etapas.",
-    "Confirmação do perfil Roblox ganhou uma tela visual própria.",
-    "Tutorial ampliado e interface com menos texto visível por padrão.",
+    "Tutorial agora marca a interface inteira como MODO GUIADO e mantém os desbloqueios reais.",
+    "Todas as músicas ambiente dos packs foram substituídas por novas faixas originais com mais de 2 minutos.",
+    "Combo Planner agora recebe scroll da rodinha em toda a grade de itens.",
+    "Cursor animado valida o arquivo e só mostra ATIVO depois do helper responder READY.",
+    "Falha do helper restaura automaticamente o cursor normal.",
     "Stable continua inalterada."
   ]
 }
