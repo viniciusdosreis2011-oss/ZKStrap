@@ -44,30 +44,38 @@ jobs:
           python patches/v3_19_5.py; python patches/v3_19_6.py; python patches/v3_19_7_runtime.py; python patches/v3_19_8.py; python patches/v3_19_9.py
           python patches/v3_20_0.py; python patches/v3_20_1.py; python patches/v3_20_2.py; python patches/v3_20_3.py; python patches/v3_20_4_onboarding.py; python patches/v3_20_4_ani.py
           python patches/v3_20_5.py; python patches/v3_20_6.py; python patches/v3_20_7.py; python patches/v3_20_8.py; python patches/v3_20_9.py; python patches/v3_20_10.py; python patches/v3_20_11.py; python patches/v3_20_12.py
-      - name: Print relevant source
+      - name: Extract relevant source
         shell: pwsh
+        env:
+          PYTHONIOENCODING: utf-8
         run: |
-          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
           @'
           import ast,os,pathlib,re
           p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
-          s=p.read_text(encoding='utf-8')
-          tree=ast.parse(s)
-          lines=s.splitlines()
-          print('=== GLOBAL ASSIGNMENTS CONTAINING PACK/AUDIO ===')
+          s=p.read_text(encoding='utf-8');tree=ast.parse(s);lines=s.splitlines()
+          out=[]
           for n in tree.body:
               if isinstance(n,(ast.Assign,ast.AnnAssign)):
                   seg=ast.get_source_segment(s,n) or ''
-                  if re.search(r'(?i)(audio|sound|pack)',seg) and len(seg)<12000: print(seg[:12000])
-          app=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
-          for n in app.body:
-              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and re.search(r'(?i)(audio|sound|pack|music)',n.name):
-                  seg='\n'.join(lines[n.lineno-1:n.end_lineno])
-                  if len(seg)<30000:
-                      print('\n=== METHOD',n.name,'===\n',seg)
-          print('\n=== STRING HITS ===')
-          for i,line in enumerate(lines,1):
-              if re.search(r'(?i)(zk_signature|cyber_pulse|void_calm|audio pack|sound pack|packs/)',line):
-                  print(i,line[:500])
+                  if seg.startswith('AUDIO_PACKS') or seg.startswith('DEFAULT_AUDIO_PACK'):
+                      out.append(seg)
+          for cls_name in ('ZKSoundManager','ModernConfigApp'):
+              cls=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name==cls_name)
+              for n in cls.body:
+                  if not isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):continue
+                  if re.search(r'(?i)(sound_pack|audio|music|ambient|sound_choice|build_audio|page_audio|render_audio)',n.name):
+                      seg='\n'.join(lines[n.lineno-1:n.end_lineno])
+                      if len(seg)<50000:out.append('\n### '+cls_name+'.'+n.name+'\n'+seg)
+          for n in tree.body:
+              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name=='_cursor_overlay_decode_file':
+                  out.append('\n### cursor decoder\n'+'\n'.join(lines[n.lineno-1:n.end_lineno]))
+          pathlib.Path('audio_ui_excerpt.txt').write_text('\n\n'.join(out),encoding='utf-8')
+          print('excerpt bytes',pathlib.Path('audio_ui_excerpt.txt').stat().st_size)
           '@ | Set-Content inspect.py -Encoding UTF8
           python inspect.py
+      - name: Upload excerpt
+        uses: actions/upload-artifact@v4
+        with:
+          name: audio-ui-excerpt
+          path: audio_ui_excerpt.txt
+          retention-days: 1
