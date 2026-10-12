@@ -1,0 +1,265 @@
+name: Build ZKStrap v3.20.14 Corrected
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/build-v3.20.14-corrected.yml'
+      - 'patches/v3214_corrected/**'
+      - 'tools/generate_v3214_sfx.py.gz.b64'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout corrected branch
+        uses: actions/checkout@v4
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode bootstrap tools
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+          foreach ($name in @('generate_v3213_audio','test_v3213_ani_parser')) {
+            $b64=(Get-Content "tools/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path('tools/'+n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          $sfx=(Get-Content 'tools/generate_v3214_sfx.py.gz.b64' -Raw).Trim()
+          [IO.File]::WriteAllBytes('generate_v3214_sfx.gz',[Convert]::FromBase64String($sfx))
+          python -c "import gzip,pathlib; pathlib.Path('tools/generate_v3214_sfx.py').write_bytes(gzip.decompress(pathlib.Path('generate_v3214_sfx.gz').read_bytes()))"
+          $joined=(Get-ChildItem 'patches/v3214_corrected/part*.b64' | Sort-Object Name | ForEach-Object { (Get-Content $_.FullName -Raw).Trim() }) -join ''
+          if ($joined.Length -ne 50048) { throw "Corrected patch payload length mismatch: $($joined.Length)" }
+          [IO.File]::WriteAllBytes('v3_20_14_corrected.gz',[Convert]::FromBase64String($joined))
+          python -c "import gzip,pathlib; pathlib.Path('patches/v3_20_14_corrected.py').write_bytes(gzip.decompress(pathlib.Path('v3_20_14_corrected.gz').read_bytes()))"
+          python -m py_compile patches/v3_20_14_corrected.py tools/generate_v3214_sfx.py
+
+      - name: Rebuild pristine v3.20.13
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py
+          python patches/v3_19_6.py
+          python patches/v3_19_7_runtime.py
+          python patches/v3_19_8.py
+          python patches/v3_19_9.py
+          python patches/v3_20_0.py
+          python patches/v3_20_1.py
+          python patches/v3_20_2.py
+          python patches/v3_20_3.py
+          python patches/v3_20_4_onboarding.py
+          python patches/v3_20_4_ani.py
+          python patches/v3_20_5.py
+          python patches/v3_20_6.py
+          python patches/v3_20_7.py
+          python patches/v3_20_8.py
+          python patches/v3_20_9.py
+          python patches/v3_20_10.py
+          python patches/v3_20_11.py
+          python patches/v3_20_12.py
+          python patches/v3_20_13.py
+          python patches/v3_20_13_winapi.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          $hash=(Get-FileHash "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne '9c0a6f09a6c66a48c50523906c4a74c9fd8441fc19b326eb4e4628552ff0fa17') { throw "Unexpected v3.20.13 source hash: $hash" }
+          @'
+          import ast,hashlib,os,pathlib
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py';s=p.read_text(encoding='utf-8');t=ast.parse(s)
+          app=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          chunks=[]
+          for n in app.body:
+              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and 'spotify' in n.name.lower():chunks.append(ast.get_source_segment(s,n) or '')
+          pathlib.Path('spotify_before.sha').write_text(hashlib.sha256('\n'.join(chunks).encode()).hexdigest())
+          for n in t.body:
+              if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id=='FLAG_MODULES' for x in n.targets):
+                  pathlib.Path('flags_before.sha').write_text(hashlib.sha256((ast.get_source_segment(s,n) or '').encode()).hexdigest());break
+          '@ | Set-Content baseline_fingerprint.py -Encoding UTF8
+          python baseline_fingerprint.py
+
+      - name: Apply corrected v3.20.14
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python patches/v3_20_14_corrected.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          $hash=(Get-FileHash "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne 'c422667f18e3e8fc0f1a5be22135a57e65f7a9ed079686881f35dec2764b8d98') { throw "Unexpected v3.20.14 source hash: $hash" }
+
+      - name: Validate corrected UX and architecture
+        shell: pwsh
+        run: |
+          @'
+          import ast,hashlib,os,pathlib,re
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py';s=p.read_text(encoding='utf-8');t=ast.parse(s)
+          app=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          methods={n.name:(ast.get_source_segment(s,n) or '') for n in app.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          def need(cond,msg):
+              if not cond: raise SystemExit(msg)
+          need('APP_VERSION = "3.20.14"' in s,'wrong APP_VERSION')
+          home=methods['_lazy_build_page_home'];updates=methods['_lazy_build_page_updates'];audio=methods['_lazy_build_page_audio'];owner=methods['_owner_open_panel'];compact=methods['abrir_modo_compacto'];tools=methods['_lazy_build_page_recovery']
+          need('BENCHMARK' not in home.upper() and 'executar_benchmark' not in home,'benchmark returned to Home')
+          need('_load_profile_avatar_ctk' in home and 'RESTAURAR ROBLOX' in home,'Home profile/restore missing')
+          need('ZKStrap — Primeira versão' in updates and 'ZKStrap — Rework completo' in updates,'two update milestones missing')
+          need('CHANGELOG' not in updates and 'v3.18.0' not in updates,'old update history leaked into page')
+          need('_audio_test_pack' not in audio and 'EVENTOS SONOROS' not in audio and 'TESTAR TEMA SONORO' in audio,'old Sound Studio tests remain')
+          need('_combo_get_ctk_thumb' in owner and '_combo_catalog' in owner and 'EDITAR BUILD' in owner,'Owner real build picker/icons missing')
+          need('OWNER // ZKVEZ' in owner and '_load_profile_avatar_ctk' in owner,'Owner identity/avatar missing')
+          need('TEMAS.update' not in owner and 'self.tema_atual=' not in owner,'Owner theme mutates global app theme')
+          own_theme=methods['_owner_set_admin_theme'];need('TEMAS' not in own_theme and 'tema_atual' not in own_theme,'Admin-only theme escapes owner window')
+          for token in ('language','roblox','tutorial','setup','no_roblox','no_profile','skipped'):
+              need(token in owner,f'First Run scenario missing: {token}')
+          for token in ('tutorial','onboarding','profile','preset','secret_progress','secret_unlocks','combos','challenges','cursors','fonts','audio','roblox','notifications','visual'):
+              need(token in owner,f'selective reset missing: {token}')
+          for token in ('CURSOR','FONTE','REAPLICAR','CLIENTSETTINGS'):
+              need(token in compact.upper(),f'Compact missing {token}')
+          need('ROBLOX TOOLS' in tools and 'LIMPEZA AUTOMÁTICA' in tools,'Roblox Tools/cache missing')
+          fps=methods['_lazy_build_page_fps'];need('DISTÂNCIA VISUAL' in fps and 'advanced_values' in fps and 'lod' in fps,'real LOD visual distance control missing')
+          need('STREAMING' not in fps.upper(),'streaming optimization should not be exposed')
+          nav=methods.get('criar_interface','');need('ROBLOX TOOLS' in nav,'sidebar still uses Recovery')
+          # Preserve Spotify and the pre-existing verified FastFlag module table byte-for-byte.
+          chunks=[]
+          for n in app.body:
+              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and 'spotify' in n.name.lower():chunks.append(ast.get_source_segment(s,n) or '')
+          need(hashlib.sha256('\n'.join(chunks).encode()).hexdigest()==pathlib.Path('spotify_before.sha').read_text().strip(),'Spotify methods changed unexpectedly')
+          for n in t.body:
+              if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id=='FLAG_MODULES' for x in n.targets):
+                  flags_hash=hashlib.sha256((ast.get_source_segment(s,n) or '').encode()).hexdigest();break
+          else: raise SystemExit('FLAG_MODULES missing')
+          need(flags_hash==pathlib.Path('flags_before.sha').read_text().strip(),'FLAG_MODULES changed; do not invent flags in 3.20.14')
+          # All major new UI methods use the existing five-language _L translator.
+          for name in ('_lazy_build_page_home','_lazy_build_page_fps','_lazy_build_page_audio','_lazy_build_page_recovery','_lazy_build_page_updates','abrir_modo_compacto','_owner_open_panel'):
+              need('self._L' in methods[name] or 'L=self._L' in methods[name],f'{name} is not wired to live i18n')
+          print('Corrected v3.20.14 UX/architecture validation OK')
+          '@ | Set-Content validate_3214_corrected.py -Encoding UTF8
+          python validate_3214_corrected.py
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller numpy
+
+      - name: Validate ANI parser and rebuild 18 long-form tracks
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python tools/test_v3213_ani_parser.py
+          python tools/generate_v3213_audio.py
+          @'
+          import json,os,pathlib
+          root=pathlib.Path(os.environ['ZK_SOURCE']);r=json.loads((root/'v3213_audio_report.json').read_text(encoding='utf-8'))
+          if len(r)!=18:raise SystemExit(f'expected 18 music identities, got {len(r)}')
+          if len({x['sha256'] for x in r})!=18:raise SystemExit('duplicate long-form music tracks')
+          if len({x['genre'] for x in r})!=18:raise SystemExit('music genres are not unique')
+          for x in r:
+              if not 120<=float(x['duration'])<=165:raise SystemExit('track duration outside 2:00-2:45')
+          print('18 long-form music tracks validation OK')
+          '@ | Set-Content validate_music_3214.py -Encoding UTF8
+          python validate_music_3214.py
+
+      - name: Generate and validate 18 independent SFX identities
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python tools/generate_v3214_sfx.py
+          @'
+          import json,os,pathlib
+          root=pathlib.Path(os.environ['ZK_SOURCE']);r=json.loads((root/'v3214_sfx_report.json').read_text(encoding='utf-8'))
+          if len(r)!=18:raise SystemExit('expected 18 SFX identities')
+          events=set(r[0]['events']);
+          if len(events)!=24:raise SystemExit(f'expected 24 SFX events, got {len(events)}')
+          hashes=[]
+          for pack in r:
+              if set(pack['events'])!=events:raise SystemExit('incomplete SFX pack '+pack['name'])
+              hashes.extend(v['sha256'] for v in pack['events'].values())
+          if len(hashes)!=432 or len(set(hashes))!=432:raise SystemExit('SFX are not 432 unique WAVs')
+          print('18 x 24 = 432 unique SFX validation OK')
+          '@ | Set-Content validate_sfx_3214.py -Encoding UTF8
+          python validate_sfx_3214.py
+
+      - name: Build updater
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name "ZKUpdater" --distpath "updater_dist" --workpath "updater_build" --specpath "updater_spec" "ZKUpdater.py"
+          if (-not (Test-Path "updater_dist/ZKUpdater.exe")) { throw 'Updater build failed.' }
+
+      - name: Build ZKStrap v3.20.14 ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" --hidden-import "pycaw.api.endpointvolume" --hidden-import "comtypes" --hidden-import "comtypes.client" `
+            --collect-all "pycaw" --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" --add-data "zkstrap_icon.ico;." --add-data "zkstrap_icon.png;." --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap build failed.' }
+          Copy-Item "updater_dist/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Package corrected beta
+        id: pkg
+        shell: pwsh
+        run: |
+          $dist=Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.20.14-corrected-beta-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower();$size=(Get-Item $name).Length
+          Write-Host "PACKAGE=$name"
+          Write-Host "SHA256=$hash"
+          Write-Host "SIZE=$size"
+          "name=$name" >> $env:GITHUB_OUTPUT
+          "sha256=$hash" >> $env:GITHUB_OUTPUT
+
+      - name: Upload corrected beta artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrap-v3.20.14-corrected-beta-win64
+          path: ZKStrap-v3.20.14-corrected-beta-win64.zip
+          retention-days: 14
+          if-no-files-found: error
