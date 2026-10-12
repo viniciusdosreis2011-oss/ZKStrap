@@ -84,7 +84,7 @@ jobs:
           python patches/v3_20_13_winapi.py
           python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
 
-      - name: Inspect helper methods
+      - name: Inspect 3.20.14 targets
         shell: pwsh
         run: |
           $env:PYTHONIOENCODING='utf-8'
@@ -92,25 +92,45 @@ jobs:
           import ast, os, pathlib
           p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
           s=p.read_text(encoding='utf-8'); tree=ast.parse(s)
-          targets={
-            '_section_card','_refresh_home_profile_card','_render_profile_button','_mostrar_confirmacao_perfil',
-            'salvar_config_app','resetar_roblox','limpar_logs_cache','_owner_refresh_panel_status',
-            '_owner_backup_now','_owner_backup_done','_owner_backup_failed','_owner_restore_snapshot_path',
-            '_owner_choose_restore','_owner_factory_reset_current','_owner_clear_reward_progress',
-            '_module_switch','_compile_module_flags','compilar_flags','_audio_test_pack','_audio_select_pack',
-            '_audio_refresh_page','_combo_catalog_for_kind','_combo_search_items','_combo_fetch_thumb_async',
-            '_combo_load_thumb','_combo_item_card','_combo_open_editor','_combo_editor','_combo_bind_modal_scroll',
-            '_watchdog_capturar_json_editor','evento_watchdog_config','watchdog_clientsettings_tick'
-          }
-          found=[]
-          for cls in [n for n in tree.body if isinstance(n,ast.ClassDef)]:
-            for fn in [n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))]:
-              if fn.name in targets:
-                found.append((cls.name,fn.name,ast.get_source_segment(s,fn) or ''))
-          print('@@FOUND', [name for _,name,_ in found])
-          for cls,name,src in found:
-            print(f'@@METHOD {cls}.{name}')
-            print(src[:35000])
-            print('@@ENDMETHOD')
-          '@ | Set-Content inspect_helpers.py -Encoding UTF8
-          python inspect_helpers.py
+          classes={n.name:n for n in tree.body if isinstance(n,ast.ClassDef)}
+          def emit(cls,fn):
+              src=ast.get_source_segment(s,fn) or ''
+              print(f'@@METHOD {cls}.{fn.name}')
+              print(src[:50000])
+              print('@@ENDMETHOD')
+          sound=classes.get('ZKSoundManager')
+          if sound:
+              print('@@SOUND_INDEX')
+              for fn in sound.body:
+                  if isinstance(fn,(ast.FunctionDef,ast.AsyncFunctionDef)):
+                      print(fn.name)
+              for fn in sound.body:
+                  if isinstance(fn,(ast.FunctionDef,ast.AsyncFunctionDef)):
+                      emit('ZKSoundManager',fn)
+          app=classes.get('ModernConfigApp')
+          print('@@APP_INDEX_MATCHES')
+          focus=[]
+          if app:
+              for fn in app.body:
+                  if not isinstance(fn,(ast.FunctionDef,ast.AsyncFunctionDef)):continue
+                  src=ast.get_source_segment(s,fn) or ''
+                  low=src.casefold(); name=fn.name.casefold()
+                  hit=(
+                    fn.name in {'_owner_open_panel','_lazy_build_page_home','_lazy_build_page_audio','_compact_open_window','criar_interface'}
+                    or any(x in name for x in ('update','atualiza','recovery','recuper','tool','cache','clientsettings','flag','fps'))
+                    or any(x in low for x in ('advanced_values','"lod"','watchdog','benchmark','roblox client','roblox profile','changelog','release notes'))
+                  )
+                  if hit:
+                      focus.append(fn)
+                      print(fn.name)
+              print('@@APP_DETAILS')
+              for fn in focus:
+                  emit('ModernConfigApp',fn)
+          print('@@GLOBALS_FLAGS')
+          for n in tree.body:
+              if isinstance(n,(ast.Assign,ast.AnnAssign)):
+                  src=ast.get_source_segment(s,n) or ''
+                  if any(x in src for x in ('FLAG_MODULES','ADVANCED','lod','LOD','texture','grass','msaa')):
+                      print(src[:30000])
+          '@ | Set-Content inspect_3214.py -Encoding UTF8
+          python inspect_3214.py
