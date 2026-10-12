@@ -20,11 +20,11 @@ jobs:
         with:
           ref: main
 
-      - name: Normalize v3.20.13 base64 payloads
+      - name: Validate and normalize v3.20.13 payloads
         shell: bash
         run: |
           python - <<'PY'
-          import base64, pathlib
+          import base64, gzip, pathlib
           paths = [
               pathlib.Path('tools/generate_v3213_audio.py.gz.b64'),
               pathlib.Path('tools/test_v3213_ani_parser.py.gz.b64'),
@@ -38,14 +38,16 @@ jobs:
               if pad:
                   s += '=' * pad
               try:
-                  base64.b64decode(s, validate=True)
+                  packed = base64.b64decode(s, validate=True)
+                  source = gzip.decompress(packed)
+                  compile(source, str(p), 'exec')
               except Exception as e:
-                  raise SystemExit(f'{p}: invalid base64 even after padding: {e}')
+                  raise SystemExit(f'{p}: corrupt payload: {e}')
               normalized = s + '\n'
               if raw != normalized:
                   p.write_text(normalized, encoding='utf-8')
                   changed = True
-              print(f'{p}: chars {before} -> {len(s)}, added padding={pad}')
+              print(f'{p}: chars {before} -> {len(s)}, padding={pad}, gzip+python OK')
           pathlib.Path('.payload_changed').write_text('1' if changed else '0')
           PY
 
@@ -56,10 +58,10 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add tools/generate_v3213_audio.py.gz.b64 tools/test_v3213_ani_parser.py.gz.b64
-            git commit -m 'Fix v3.20.13 base64 payload padding'
+            git commit -m 'Normalize v3.20.13 payloads'
             git push origin main
           else
-            echo 'Payloads already normalized.'
+            echo 'Payloads already valid and normalized.'
           fi
 
       - name: Dispatch v3.20.13 release workflow
