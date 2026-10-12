@@ -1,0 +1,52 @@
+name: Inspect ZKStrap Audio Assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/inspect-audio-assets.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' source -Force
+          $root=Get-ChildItem source -Directory | Select-Object -First 1
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+      - name: Build audio report
+        shell: pwsh
+        run: |
+          @'
+          import json,wave,pathlib,os
+          root=pathlib.Path(os.environ['ZK_SOURCE'])/'zkstrap_assets'/'sounds'
+          out=[]
+          for p in sorted(root.rglob('*.wav')):
+              try:
+                  with wave.open(str(p),'rb') as w:
+                      dur=w.getnframes()/max(1,w.getframerate())
+                      out.append({'file':str(p.relative_to(root)).replace('\\','/'),'seconds':round(dur,3),'rate':w.getframerate(),'channels':w.getnchannels(),'width':w.getsampwidth(),'bytes':p.stat().st_size})
+              except Exception as e:
+                  out.append({'file':str(p.relative_to(root)).replace('\\','/'),'error':repr(e)})
+          pathlib.Path('audio_report.json').write_text(json.dumps(out,indent=2,ensure_ascii=False),encoding='utf-8')
+          print('WAV files:',len(out))
+          for x in out: print(x)
+          '@ | Set-Content inspect_audio.py -Encoding UTF8
+          python inspect_audio.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zkstrap-audio-report
+          path: audio_report.json
+          retention-days: 1
