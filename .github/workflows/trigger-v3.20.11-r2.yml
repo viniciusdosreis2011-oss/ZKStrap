@@ -18,3 +18,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run release-v3.20.11-beta.yml --repo '${{ github.repository }}' --ref main
+
+# retrigger: cursor-size anchor hardened
