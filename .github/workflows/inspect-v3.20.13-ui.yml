@@ -84,41 +84,33 @@ jobs:
           python patches/v3_20_13_winapi.py
           python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
 
-      - name: Inspect UI methods
+      - name: Inspect helper methods
         shell: pwsh
         run: |
           $env:PYTHONIOENCODING='utf-8'
           @'
           import ast, os, pathlib
           p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
-          s=p.read_text(encoding='utf-8')
-          tree=ast.parse(s)
-          wanted_tokens=[
-              'ROBLOX PROFILE','ROBLOX CLIENT','ZKSTRAP // COMPACT','CLIENTSETTINGS',
-              'WATCHDOG','AUDIO ENGINE','SOUND STUDIO','ATUALIZAÇÕES','UPDATES','CHANGELOG',
-              'APLICAR CONFIGURAÇÕES','APPLY SETTINGS','ROBLOX PADRÃO','ROBLOX ORIGINAL',
-              'FIRST RUN LAB','OWNER LAB','FPS & GRÁFICOS','FPS & GRAPHICS'
-          ]
-          methods=[]
-          for cls in [n for n in tree.body if isinstance(n,ast.ClassDef)]:
-              for fn in [n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))]:
-                  src=ast.get_source_segment(s,fn) or ''
-                  hits=[k for k in wanted_tokens if k.casefold() in src.casefold()]
-                  if hits:
-                      methods.append((cls.name,fn.name,hits,src))
-          print('@@INDEX')
-          for cls,name,hits,_ in methods:
-              print(f'{cls}.{name} :: {hits}')
-          print('@@DETAILS')
-          focus_names={
-              '_owner_open_panel','_refresh_home_profile_card','_lazy_build_page_home','_lazy_build_page_audio',
-              '_lazy_build_page_fps','_lazy_build_page_info','_lazy_build_page_updates','_open_compact_mode',
-              '_show_compact_mode','_toggle_compact_mode','criar_cabecalho','_build_header','_lazy_build_page_settings'
+          s=p.read_text(encoding='utf-8'); tree=ast.parse(s)
+          targets={
+            '_section_card','_refresh_home_profile_card','_render_profile_button','_mostrar_confirmacao_perfil',
+            'salvar_config_app','resetar_roblox','limpar_logs_cache','_owner_refresh_panel_status',
+            '_owner_backup_now','_owner_backup_done','_owner_backup_failed','_owner_restore_snapshot_path',
+            '_owner_choose_restore','_owner_factory_reset_current','_owner_clear_reward_progress',
+            '_module_switch','_compile_module_flags','compilar_flags','_audio_test_pack','_audio_select_pack',
+            '_audio_refresh_page','_combo_catalog_for_kind','_combo_search_items','_combo_fetch_thumb_async',
+            '_combo_load_thumb','_combo_item_card','_combo_open_editor','_combo_editor','_combo_bind_modal_scroll',
+            '_watchdog_capturar_json_editor','evento_watchdog_config','watchdog_clientsettings_tick'
           }
-          for cls,name,hits,src in methods:
-              if name in focus_names or any(x.casefold() in src.casefold() for x in ['ZKSTRAP // COMPACT','ROBLOX PROFILE','ROBLOX CLIENT','APLICAR CONFIGURAÇÕES','ATUALIZAÇÕES']):
-                  print(f'@@METHOD {cls}.{name} hits={hits}')
-                  print(src[:26000])
-                  print('@@ENDMETHOD')
-          '@ | Set-Content inspect_ui.py -Encoding UTF8
-          python inspect_ui.py
+          found=[]
+          for cls in [n for n in tree.body if isinstance(n,ast.ClassDef)]:
+            for fn in [n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))]:
+              if fn.name in targets:
+                found.append((cls.name,fn.name,ast.get_source_segment(s,fn) or ''))
+          print('@@FOUND', [name for _,name,_ in found])
+          for cls,name,src in found:
+            print(f'@@METHOD {cls}.{name}')
+            print(src[:35000])
+            print('@@ENDMETHOD')
+          '@ | Set-Content inspect_helpers.py -Encoding UTF8
+          python inspect_helpers.py
