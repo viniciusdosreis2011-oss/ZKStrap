@@ -87,23 +87,38 @@ jobs:
       - name: Inspect UI methods
         shell: pwsh
         run: |
+          $env:PYTHONIOENCODING='utf-8'
           @'
           import ast, os, pathlib
           p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
           s=p.read_text(encoding='utf-8')
           tree=ast.parse(s)
-          keys=['ROBLOX PROFILE','ROBLOX CLIENT','OWNER LAB','FIRST RUN LAB','COMPACT','CLIENTSETTINGS','WATCHDOG','SOUND STUDIO','AUDIO ENGINE','ATUALIZA','UPDATE','CHANGELOG','HISTÓRICO','HISTORY','ROBLOX TOOLS','FACTORY RESET','RESTORE','RESTAURAR']
+          wanted_tokens=[
+              'ROBLOX PROFILE','ROBLOX CLIENT','ZKSTRAP // COMPACT','CLIENTSETTINGS',
+              'WATCHDOG','AUDIO ENGINE','SOUND STUDIO','ATUALIZAÇÕES','UPDATES','CHANGELOG',
+              'APLICAR CONFIGURAÇÕES','APPLY SETTINGS','ROBLOX PADRÃO','ROBLOX ORIGINAL',
+              'FIRST RUN LAB','OWNER LAB','FPS & GRÁFICOS','FPS & GRAPHICS'
+          ]
+          methods=[]
           for cls in [n for n in tree.body if isinstance(n,ast.ClassDef)]:
               for fn in [n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))]:
                   src=ast.get_source_segment(s,fn) or ''
-                  hits=[k for k in keys if k.lower() in src.lower()]
+                  hits=[k for k in wanted_tokens if k.casefold() in src.casefold()]
                   if hits:
-                      print(f'@@METHOD {cls.name}.{fn.name} hits={hits}')
-                      print(src[:14000])
-                      print('@@ENDMETHOD')
-          print('@@TOPLEVEL_NAMES')
-          for n in tree.body:
-              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef,ast.ClassDef)):
-                  print(type(n).__name__,n.name)
+                      methods.append((cls.name,fn.name,hits,src))
+          print('@@INDEX')
+          for cls,name,hits,_ in methods:
+              print(f'{cls}.{name} :: {hits}')
+          print('@@DETAILS')
+          focus_names={
+              '_owner_open_panel','_refresh_home_profile_card','_lazy_build_page_home','_lazy_build_page_audio',
+              '_lazy_build_page_fps','_lazy_build_page_info','_lazy_build_page_updates','_open_compact_mode',
+              '_show_compact_mode','_toggle_compact_mode','criar_cabecalho','_build_header','_lazy_build_page_settings'
+          }
+          for cls,name,hits,src in methods:
+              if name in focus_names or any(x.casefold() in src.casefold() for x in ['ZKSTRAP // COMPACT','ROBLOX PROFILE','ROBLOX CLIENT','APLICAR CONFIGURAÇÕES','ATUALIZAÇÕES']):
+                  print(f'@@METHOD {cls}.{name} hits={hits}')
+                  print(src[:26000])
+                  print('@@ENDMETHOD')
           '@ | Set-Content inspect_ui.py -Encoding UTF8
           python inspect_ui.py
