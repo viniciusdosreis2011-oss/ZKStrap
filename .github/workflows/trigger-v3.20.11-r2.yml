@@ -1,0 +1,20 @@
+name: Trigger ZKStrap v3.20.11 R2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/trigger-v3.20.11-r2.yml'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch release workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run release-v3.20.11-beta.yml --repo '${{ github.repository }}' --ref main
