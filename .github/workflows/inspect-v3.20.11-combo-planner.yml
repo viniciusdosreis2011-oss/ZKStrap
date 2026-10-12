@@ -79,8 +79,9 @@ jobs:
       - name: Inspect combo planner methods and wheel bindings
         shell: pwsh
         run: |
+          $env:PYTHONIOENCODING='utf-8'
           @'
-          import ast,os,pathlib,re
+          import ast,os,pathlib
           p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
           s=p.read_text(encoding='utf-8')
           tree=ast.parse(s)
@@ -104,7 +105,9 @@ jobs:
           '@ | Set-Content inspect_combo.py -Encoding UTF8
           python inspect_combo.py
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: combo-planner-report
           path: combo_planner_report.txt
+          if-no-files-found: ignore
           retention-days: 1
