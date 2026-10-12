@@ -1,18 +1,18 @@
 {
   "channel": "beta",
-  "version": "3.20.12",
-  "published_at": "2026-10-12T15:12:06Z",
+  "version": "3.20.13",
+  "published_at": "2026-10-12T16:54:25Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.12-beta/ZKStrap-v3.20.12-beta-win64.zip",
-  "sha256": "d882cfd5df3f97d1811e7143db0780c5c27a7cb47d47d57fcbedbcc91b10ff20",
-  "size_bytes": 157405922,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.13-beta/ZKStrap-v3.20.13-beta-win64.zip",
+  "sha256": "ed3fb24609f20e6027ae0dc1c3aa9723a245243ee0d8482dd1f3774ec70c2b0e",
+  "size_bytes": 174903038,
   "notes": [
-    "Tutorial agora marca a interface inteira como MODO GUIADO e mantém os desbloqueios reais.",
-    "Todas as músicas ambiente dos packs foram substituídas por novas faixas originais com mais de 2 minutos.",
-    "Combo Planner agora recebe scroll da rodinha em toda a grade de itens.",
-    "Cursor animado valida o arquivo e só mostra ATIVO depois do helper responder READY.",
-    "Falha do helper restaura automaticamente o cursor normal.",
-    "Stable continua inalterada."
+    "Parser .ANI refeito para RIFF/ACON, anih/rate/seq e variações de payload de cursor.",
+    "Fallback nativo do Windows tenta renderizar ANI válidos que não abrem diretamente no Pillow.",
+    "A aba Áudio agora possui 18 músicas realmente distintas, de VOID DRIVE a LAST ROUND, todas entre 2:00 e 2:45.",
+    "Cada faixa tem BPM, groove, harmonia, instrumentos e estrutura próprios.",
+    "Spotify não foi alterado.",
+    "Correções da v3.20.12, incluindo scroll do Combo Planner e Guided Mode, permanecem."
   ]
 }
