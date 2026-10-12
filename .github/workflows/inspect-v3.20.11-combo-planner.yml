@@ -1,0 +1,110 @@
+name: Inspect v3.20.11 Combo Planner
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/inspect-v3.20.11-combo-planner.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Download source
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root=Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'No source root' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+      - name: Decode patch payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+      - name: Materialize v3.20.11 source
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py
+          python patches/v3_19_6.py
+          python patches/v3_19_7_runtime.py
+          python patches/v3_19_8.py
+          python patches/v3_19_9.py
+          python patches/v3_20_0.py
+          python patches/v3_20_1.py
+          python patches/v3_20_2.py
+          python patches/v3_20_3.py
+          python patches/v3_20_4_onboarding.py
+          python patches/v3_20_4_ani.py
+          python patches/v3_20_5.py
+          python patches/v3_20_6.py
+          python patches/v3_20_7.py
+          python patches/v3_20_8.py
+          python patches/v3_20_9.py
+          python patches/v3_20_10.py
+          python patches/v3_20_11_patchfix.py
+          python patches/v3_20_11.py
+      - name: Inspect combo planner methods and wheel bindings
+        shell: pwsh
+        run: |
+          @'
+          import ast,os,pathlib,re
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          s=p.read_text(encoding='utf-8')
+          tree=ast.parse(s)
+          lines=s.splitlines()
+          out=[]
+          for cls in [n for n in tree.body if isinstance(n,ast.ClassDef)]:
+              for n in cls.body:
+                  if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):
+                      src='\n'.join(lines[n.lineno-1:n.end_lineno])
+                      low=(n.name+' '+src).lower()
+                      if any(k in low for k in ('combo planner','combo_planner','planner','fruit','sword','gun')):
+                          out.append(f'===== {cls.name}.{n.name} lines {n.lineno}-{n.end_lineno} =====\n{src}\n')
+          for pat in ('<MouseWheel>','<Button-4>','<Button-5>','yview_scroll','CTkScrollableFrame','combo_planner'):
+              out.append(f'===== MATCHES {pat} =====')
+              for i,line in enumerate(lines,1):
+                  if pat.lower() in line.lower():
+                      a=max(1,i-5);b=min(len(lines),i+7)
+                      out.append(f'--- around {i} ---\n'+'\n'.join(f'{j}: {lines[j-1]}' for j in range(a,b+1)))
+          pathlib.Path('combo_planner_report.txt').write_text('\n\n'.join(out),encoding='utf-8')
+          print(pathlib.Path('combo_planner_report.txt').read_text(encoding='utf-8')[:60000])
+          '@ | Set-Content inspect_combo.py -Encoding UTF8
+          python inspect_combo.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: combo-planner-report
+          path: combo_planner_report.txt
+          retention-days: 1
