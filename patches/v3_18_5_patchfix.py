@@ -22,3 +22,12 @@ rep(about_anchor, about_insert, 'about links')
 s = s[:start] + block + s[end:]
 p.write_text(s, encoding='utf-8')
 print('v3.18.5 patch bootstrap fixed')
+
+# Newer beta patch bootstrap fixes are applied here because every release chain
+# already executes this script before validating the version-specific patches.
+# Keep this conditional so older/stable build chains remain unchanged.
+fix_3211 = Path('patches/v3_20_11_patchfix.py')
+target_3211 = Path('patches/v3_20_11.py')
+if fix_3211.exists() and target_3211.exists():
+    import runpy
+    runpy.run_path(str(fix_3211), run_name='__main__')
