@@ -1,0 +1,64 @@
+name: Repair v3.20.13 payloads
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/repair-v3213-payloads.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Canonicalize compressed tool payloads
+        shell: bash
+        run: |
+          python - <<'PY'
+          import ast, base64, gzip, pathlib
+          alphabet=set('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=')
+          targets=[
+              pathlib.Path('tools/generate_v3213_audio.py.gz.b64'),
+              pathlib.Path('tools/test_v3213_ani_parser.py.gz.b64'),
+          ]
+          for p in targets:
+              text=p.read_text(encoding='utf-8-sig')
+              start=text.find('H4sI')
+              if start>=0:text=text[start:]
+              clean=''.join(ch for ch in text if ch in alphabet)
+              clean=clean.rstrip('=')
+              clean += '='*((4-len(clean)%4)%4)
+              raw=base64.b64decode(clean,validate=False)
+              try:
+                  src=gzip.decompress(raw)
+              except Exception as exc:
+                  raise SystemExit(f'{p}: tolerant base64 decode produced invalid gzip: {exc}')
+              ast.parse(src.decode('utf-8'))
+              p.write_text(base64.b64encode(raw).decode('ascii')+'\n',encoding='ascii')
+              print(p,'OK',len(src),'source bytes')
+          wf=pathlib.Path('.github/workflows/release-v3.20.13-beta.yml')
+          data=wf.read_text(encoding='utf-8')
+          marker='# payload-repair-trigger-1'
+          if marker not in data:
+              data=data.rstrip()+f'\n\n{marker}\n'
+              wf.write_text(data,encoding='utf-8')
+          PY
+      - name: Commit repaired payloads and retrigger release
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/generate_v3213_audio.py.gz.b64 tools/test_v3213_ani_parser.py.gz.b64 .github/workflows/release-v3.20.13-beta.yml
+          if git diff --cached --quiet; then
+            echo 'Nothing changed'
+          else
+            git commit -m 'Repair v3.20.13 tool payload encoding'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
