@@ -1,0 +1,73 @@
+name: Inspect v3.20.12 audio UI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/inspect-v3212-audio-ui.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download base
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root=Get-ChildItem source -Directory|Select-Object -First 1
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+      - name: Decode payloads
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+      - name: Materialize source
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python v3_18_1_base.py; python v3_18_1_post.py; python v3_18_2.py; python patches/v3_18_3.py; python v3_18_4.py
+          python patches/v3_18_5.py; python patches/v3_18_6.py; python patches/v3_18_7.py; python patches/v3_18_8.py; python patches/v3_18_9.py
+          python patches/v3_19_0.py; python patches/v3_19_1.py; python patches/v3_19_2.py; python patches/v3_19_3.py; python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py; python patches/v3_19_6.py; python patches/v3_19_7_runtime.py; python patches/v3_19_8.py; python patches/v3_19_9.py
+          python patches/v3_20_0.py; python patches/v3_20_1.py; python patches/v3_20_2.py; python patches/v3_20_3.py; python patches/v3_20_4_onboarding.py; python patches/v3_20_4_ani.py
+          python patches/v3_20_5.py; python patches/v3_20_6.py; python patches/v3_20_7.py; python patches/v3_20_8.py; python patches/v3_20_9.py; python patches/v3_20_10.py; python patches/v3_20_11.py; python patches/v3_20_12.py
+      - name: Print relevant source
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          @'
+          import ast,os,pathlib,re
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          s=p.read_text(encoding='utf-8')
+          tree=ast.parse(s)
+          lines=s.splitlines()
+          print('=== GLOBAL ASSIGNMENTS CONTAINING PACK/AUDIO ===')
+          for n in tree.body:
+              if isinstance(n,(ast.Assign,ast.AnnAssign)):
+                  seg=ast.get_source_segment(s,n) or ''
+                  if re.search(r'(?i)(audio|sound|pack)',seg) and len(seg)<12000: print(seg[:12000])
+          app=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          for n in app.body:
+              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and re.search(r'(?i)(audio|sound|pack|music)',n.name):
+                  seg='\n'.join(lines[n.lineno-1:n.end_lineno])
+                  if len(seg)<30000:
+                      print('\n=== METHOD',n.name,'===\n',seg)
+          print('\n=== STRING HITS ===')
+          for i,line in enumerate(lines,1):
+              if re.search(r'(?i)(zk_signature|cyber_pulse|void_calm|audio pack|sound pack|packs/)',line):
+                  print(i,line[:500])
+          '@ | Set-Content inspect.py -Encoding UTF8
+          python inspect.py
