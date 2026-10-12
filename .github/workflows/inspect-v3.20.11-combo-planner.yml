@@ -76,32 +76,31 @@ jobs:
           python patches/v3_20_10.py
           python patches/v3_20_11_patchfix.py
           python patches/v3_20_11.py
-      - name: Inspect combo planner methods and wheel bindings
+      - name: Inspect combo planner, scroll router and cursor runtime
         shell: pwsh
         run: |
           $env:PYTHONIOENCODING='utf-8'
           @'
           import ast,os,pathlib
           p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
-          s=p.read_text(encoding='utf-8')
-          tree=ast.parse(s)
-          lines=s.splitlines()
-          out=[]
-          for cls in [n for n in tree.body if isinstance(n,ast.ClassDef)]:
-              for n in cls.body:
-                  if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):
-                      src='\n'.join(lines[n.lineno-1:n.end_lineno])
-                      low=(n.name+' '+src).lower()
-                      if any(k in low for k in ('combo planner','combo_planner','planner','fruit','sword','gun')):
-                          out.append(f'===== {cls.name}.{n.name} lines {n.lineno}-{n.end_lineno} =====\n{src}\n')
-          for pat in ('<MouseWheel>','<Button-4>','<Button-5>','yview_scroll','CTkScrollableFrame','combo_planner'):
-              out.append(f'===== MATCHES {pat} =====')
-              for i,line in enumerate(lines,1):
-                  if pat.lower() in line.lower():
-                      a=max(1,i-5);b=min(len(lines),i+7)
-                      out.append(f'--- around {i} ---\n'+'\n'.join(f'{j}: {lines[j-1]}' for j in range(a,b+1)))
+          s=p.read_text(encoding='utf-8'); lines=s.splitlines(); tree=ast.parse(s)
+          out=['===== TOP IMPORTS =====\n'+'\n'.join(lines[:160])]
+          wanted={'_combo_open_editor','_install_global_scroll_router','_install_smooth_scroll','_queue_scroll_step','_scroll_widget_chain_has','_scroll_target_under_pointer','_cursor_overlay_dir','_cursor_overlay_prepare_transparent_base','_cursor_overlay_start','_cursor_overlay_helper_command','_cursor_overlay_pick'}
+          for node in tree.body:
+              if isinstance(node,ast.ClassDef) and node.name=='ZKSmoothScrollFrame':
+                  out.append(f'===== CLASS {node.name} lines {node.lineno}-{node.end_lineno} =====\n'+'\n'.join(lines[node.lineno-1:node.end_lineno]))
+              if isinstance(node,ast.ClassDef):
+                  for n in node.body:
+                      if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):
+                          src='\n'.join(lines[n.lineno-1:n.end_lineno])
+                          low=(n.name+' '+src).lower()
+                          if n.name in wanted or any(k in low for k in ('combo planner','combo_planner')):
+                              out.append(f'===== {node.name}.{n.name} lines {n.lineno}-{n.end_lineno} =====\n{src}\n')
+          for n in tree.body:
+              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name in {'_cursor_overlay_decode_file','_run_cursor_overlay_helper','_cursor_overlay_restore_state_file'}:
+                  out.append(f'===== GLOBAL {n.name} lines {n.lineno}-{n.end_lineno} =====\n'+'\n'.join(lines[n.lineno-1:n.end_lineno]))
           pathlib.Path('combo_planner_report.txt').write_text('\n\n'.join(out),encoding='utf-8')
-          print(pathlib.Path('combo_planner_report.txt').read_text(encoding='utf-8')[:60000])
+          print('report chars',len('\n\n'.join(out)))
           '@ | Set-Content inspect_combo.py -Encoding UTF8
           python inspect_combo.py
       - uses: actions/upload-artifact@v4
