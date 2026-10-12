@@ -1,19 +1,20 @@
 {
   "channel": "beta",
-  "version": "3.20.10",
-  "published_at": "2026-10-12T12:01:52Z",
+  "version": "3.20.11",
+  "published_at": "2026-10-12T14:02:53Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.10-beta/ZKStrap-v3.20.10-beta-win64.zip",
-  "sha256": "2ac361323ce94f1e1034d3c95a269c754ca730c17c9afd2f444582804e02afe2",
-  "size_bytes": 110439573,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.11-beta/ZKStrap-v3.20.11-beta-win64.zip",
+  "sha256": "85414ddbc90e93e1fed185122584c4d7596f7503a946c39ed207d229826fe8eb",
+  "size_bytes": 110464274,
   "notes": [
-    "First Run abre maximizado e o blur usa o fundo real do ZKStrap.",
-    "Blur acompanha redimensionamento da janela.",
-    "Vínculo Roblox agora pede confirmação antes de salvar e permite pesquisar outra conta.",
-    "Perfil do topo é atualizado assim que a conta é confirmada.",
-    "Tutorial recebeu card mais completo sem sair do app.",
-    "Nomes dos presets foram traduzidos em todos os idiomas.",
+    "Cursor animado agora é um overlay exclusivo para o Roblox, sem ANI Lab dentro do app.",
+    "Overlay segue o mouse diretamente sem suavização e só aparece com Roblox em foco.",
+    "Músicas agora formam sessões de 3+ minutos antes de repetir.",
+    "SFX evitam repetir a mesma variação seguida.",
+    "Primeiro acesso ganhou música de introdução e sons nas etapas.",
+    "Confirmação do perfil Roblox ganhou uma tela visual própria.",
+    "Tutorial ampliado e interface com menos texto visível por padrão.",
     "Stable continua inalterada."
   ]
 }
