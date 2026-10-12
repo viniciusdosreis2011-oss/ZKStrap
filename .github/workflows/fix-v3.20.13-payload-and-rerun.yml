@@ -1,0 +1,70 @@
+name: Fix v3.20.13 payload and rerun
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-v3.20.13-payload-and-rerun.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  fix-and-rerun:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Normalize v3.20.13 base64 payloads
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64, pathlib
+          paths = [
+              pathlib.Path('tools/generate_v3213_audio.py.gz.b64'),
+              pathlib.Path('tools/test_v3213_ani_parser.py.gz.b64'),
+          ]
+          changed = False
+          for p in paths:
+              raw = p.read_text(encoding='utf-8')
+              s = ''.join(raw.split())
+              before = len(s)
+              pad = (-len(s)) % 4
+              if pad:
+                  s += '=' * pad
+              try:
+                  base64.b64decode(s, validate=True)
+              except Exception as e:
+                  raise SystemExit(f'{p}: invalid base64 even after padding: {e}')
+              normalized = s + '\n'
+              if raw != normalized:
+                  p.write_text(normalized, encoding='utf-8')
+                  changed = True
+              print(f'{p}: chars {before} -> {len(s)}, added padding={pad}')
+          pathlib.Path('.payload_changed').write_text('1' if changed else '0')
+          PY
+
+      - name: Commit payload normalization
+        shell: bash
+        run: |
+          if [ "$(cat .payload_changed)" = "1" ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add tools/generate_v3213_audio.py.gz.b64 tools/test_v3213_ani_parser.py.gz.b64
+            git commit -m 'Fix v3.20.13 base64 payload padding'
+            git push origin main
+          else
+            echo 'Payloads already normalized.'
+          fi
+
+      - name: Dispatch v3.20.13 release workflow
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run release-v3.20.13-beta.yml --repo '${{ github.repository }}' --ref main
