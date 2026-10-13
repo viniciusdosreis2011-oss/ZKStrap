@@ -2,6 +2,7 @@ from pathlib import Path
 import ast
 import base64
 import re
+import runpy
 
 src_path = Path(__file__).with_name("v3_20_14_support_pix.py")
 src = src_path.read_text(encoding="utf-8")
@@ -60,4 +61,23 @@ else:
 app_path.write_text(app, encoding="utf-8")
 ast.parse(app)
 
-print("v3.20.14 Pix support runner applied successfully with exact validated QR PNG")
+# The release runner owns the final additive admin patch too, so the existing
+# v3.20.14 build workflow always compiles the safe cleanup panel together with
+# the support page without changing the normal app routes.
+admin_patch = Path(__file__).with_name("v3_20_14_admin_cleanup.py")
+if not admin_patch.is_file():
+    raise SystemExit("Admin cleanup patch missing")
+runpy.run_path(str(admin_patch), run_name="__main__")
+
+final_source = app_path.read_text(encoding="utf-8")
+final_tree = ast.parse(final_source)
+app_cls = next(n for n in final_tree.body if isinstance(n, ast.ClassDef) and n.name == "ModernConfigApp")
+method_names = {n.name for n in app_cls.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+for required in ("_owner_cleanup_specs","_owner_cleanup_scan","_owner_cleanup_delete_selected","_owner_cleanup_finish_delete"):
+    if required not in method_names:
+        raise SystemExit(f"Admin cleanup method missing after patch: {required}")
+for required_text in ("LIMPEZA SEGURA // DISCO","MEMORY.DMP","DXCache","WinSxS","Windows\\\\Installer"):
+    if required_text not in final_source:
+        raise SystemExit(f"Admin cleanup safety marker missing: {required_text}")
+
+print("v3.20.14 Pix support + admin safe disk cleanup applied successfully")
