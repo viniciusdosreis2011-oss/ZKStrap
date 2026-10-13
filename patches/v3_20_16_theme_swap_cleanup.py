@@ -44,6 +44,7 @@ def _repair_theme_render_surfaces(self):
                 except Exception:pass
             try:nav.configure(scrollbar_button_color=t["card_active"],scrollbar_button_hover_color=t["hover"])
             except Exception:pass
+            # nav._parent_canvas.configure(bg=sidebar) -- normalized through cv below.
             cv=getattr(nav,"_parent_canvas",None)
             try:
                 if cv is not None and cv.winfo_exists():cv.configure(bg=sidebar,highlightbackground=sidebar,highlightcolor=sidebar)
