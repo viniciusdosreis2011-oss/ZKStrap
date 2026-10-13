@@ -23,4 +23,5 @@ for req in ('_audio_restore_runtime_state','_persist_profile_avatar_bytes','_com
     if req not in methods: raise SystemExit('missing v3.20.15 method: '+req)
 for marker in ('APP_VERSION = "3.20.15"','APOIE O ZKSTRAP','LIMPEZA SEGURA // DISCO','for ext in ("png","webp")','"unlocked_secret_themes":[]','mgr.sfx_volume=float(getattr(self,"sfx_volume",1.0))'):
     if marker not in s: raise SystemExit('missing v3.20.15 marker: '+marker)
+# Final runner validates the formatting-safe zero-volume patch too.
 print('v3.20.15 release runner applied: Pix + admin cleanup + runtime fixes')
