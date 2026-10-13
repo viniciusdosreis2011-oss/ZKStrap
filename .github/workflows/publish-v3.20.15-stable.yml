@@ -1,0 +1,133 @@
+name: Publish ZKStrap v3.20.15 Stable
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/publish-v3.20.15-stable.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download validated v3.20.15 package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p publish
+          gh run download 38424387938 --repo '${{ github.repository }}' --name 'ZKStrap-v3.20.15-win64' --dir publish
+          test -f publish/ZKStrap-v3.20.15-win64.zip
+
+      - name: Verify exact validated package
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACKAGE='publish/ZKStrap-v3.20.15-win64.zip'
+          EXPECTED_SHA='a9117cd26d7729009dc356ca6231ea770fc45bad99e17aec63b1c3ef8cd0ea0d'
+          EXPECTED_SIZE='119941834'
+          SHA=$(sha256sum "$PACKAGE" | awk '{print $1}')
+          SIZE=$(stat -c%s "$PACKAGE")
+          test "$SHA" = "$EXPECTED_SHA"
+          test "$SIZE" = "$EXPECTED_SIZE"
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          p=Path('publish/ZKStrap-v3.20.15-win64.zip')
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              names=z.namelist()
+              assert 'ZKStrap.exe' in names
+              assert 'ZKUpdater.exe' in names
+              pngs=[n for n in names if '/combo_icons/' in n.replace('\\','/') and n.lower().endswith('.png')]
+              assert len(pngs)>=100, len(pngs)
+          print('Package verification OK')
+          PY
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+
+      - name: Create or refresh GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          PACKAGE='publish/ZKStrap-v3.20.15-win64.zip'
+          cat > release-notes.md <<'EOF'
+          ZKStrap v3.20.15
+
+          - Corrige as imagens dos itens no Combo Planner, Owner Loadout e Build Roulette.
+          - Corrige o estado de áudio que podia prender uma música e silenciar clicks/SFX até reiniciar o app.
+          - Corrige a persistência do avatar Roblox após o fluxo de primeiro acesso.
+          - Isola corretamente o Fresh User Test: progresso 0 mantém todos os temas secretos bloqueados.
+          - Inclui a nova aba Apoie o ZKStrap via Pix, com PT/EN/ES/ZH/FR.
+          - Inclui Limpeza Segura no painel Owner/Admin para temporários, caches e dumps descartáveis.
+          EOF
+          if gh release view v3.20.15 --repo '${{ github.repository }}' >/dev/null 2>&1; then
+            gh release upload v3.20.15 "$PACKAGE" --repo '${{ github.repository }}' --clobber
+            gh release edit v3.20.15 --repo '${{ github.repository }}' --title 'ZKStrap v3.20.15' --notes-file release-notes.md --latest
+          else
+            gh release create v3.20.15 "$PACKAGE" --repo '${{ github.repository }}' --target 'be7b514c8b61568bdf07398bedd3955d96b6ecc1' --title 'ZKStrap v3.20.15' --notes-file release-notes.md --latest
+          fi
+
+      - name: Update Stable channel on main
+        env:
+          PACKAGE_SHA: ${{ steps.package.outputs.sha }}
+          PACKAGE_SIZE: ${{ steps.package.outputs.size }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+          python - <<'PY'
+          from pathlib import Path
+          from datetime import datetime, timezone
+          import json, os
+          data={
+            'channel':'stable',
+            'version':'3.20.15',
+            'published_at':datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z'),
+            'mandatory':False,
+            'min_updater_version':'1.0.0',
+            'package_url':'https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.15/ZKStrap-v3.20.15-win64.zip',
+            'sha256':os.environ['PACKAGE_SHA'],
+            'size_bytes':int(os.environ['PACKAGE_SIZE']),
+            'notes':[
+              'Corrige imagens no Combo Planner, Owner Loadout e Build Roulette.',
+              'Corrige troca de músicas e recuperação de clicks/SFX sem precisar reiniciar o app.',
+              'Corrige avatar Roblox após o primeiro acesso e o modo de teste.',
+              'Fresh User Test agora respeita progresso secreto zero e mantém temas secretos bloqueados.',
+              'Adiciona a aba Apoie o ZKStrap via Pix em PT, EN, ES, ZH e FR.',
+              'Adiciona Limpeza Segura de temporários, caches e dumps no Owner/Admin.'
+            ]
+          }
+          Path('channels').mkdir(exist_ok=True)
+          Path('channels/stable.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/stable.json
+          if git diff --cached --quiet; then
+            echo 'Stable channel already current.'
+          else
+            git commit -m 'Publish ZKStrap v3.20.15 stable channel'
+            git push origin main
+          fi
+
+      - name: Verify published channel and release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view v3.20.15 --repo '${{ github.repository }}' --json tagName,assets,isLatest
+          git show origin/main:channels/stable.json
