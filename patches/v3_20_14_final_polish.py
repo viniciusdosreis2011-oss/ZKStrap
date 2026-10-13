@@ -16,4 +16,8 @@ for old,new in repls.items():
         raise SystemExit(f'polish anchor missing: {old[:90]}')
     s=s.replace(old,new,1)
 p.write_text(s,encoding='utf-8',newline='\n')
+# These folders do not exist in a pristine reconstructed source until audio generation.
+# Create them before the hotfix workflow restores the two user-approved tracks.
+for pack in ('abyss','low_gravity'):
+    (root/'zkstrap_assets'/'sounds'/'packs'/pack).mkdir(parents=True,exist_ok=True)
 print('polished', p, 'sha256', hashlib.sha256(p.read_bytes()).hexdigest())
