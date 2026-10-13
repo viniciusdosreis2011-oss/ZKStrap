@@ -1,0 +1,211 @@
+name: Build ZKStrap v3.20.14 Pix Support
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/build-v3.20.14-support-pix.yml'
+      - 'patches/v3_20_14_support_pix.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 70
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode bootstrap and corrected patch
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+          $joined=(Get-ChildItem 'patches/v3214_corrected/part*.b64' | Sort-Object Name | ForEach-Object { (Get-Content $_.FullName -Raw).Trim() }) -join ''
+          if ($joined.Length -ne 50048) { throw "Corrected patch payload length mismatch: $($joined.Length)" }
+          [IO.File]::WriteAllBytes('v3_20_14_corrected.gz',[Convert]::FromBase64String($joined))
+          python -c "import gzip,pathlib; pathlib.Path('patches/v3_20_14_corrected.py').write_bytes(gzip.decompress(pathlib.Path('v3_20_14_corrected.gz').read_bytes()))"
+          python -m py_compile patches/v3_20_14_corrected.py patches/v3_20_14_final_polish.py patches/v3_20_14_hotfix.py patches/v3_20_14_content_pass.py patches/v3_20_14_clean_icons.py patches/v3_20_14_support_pix.py
+
+      - name: Rebuild pristine v3.20.13
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py
+          python patches/v3_19_6.py
+          python patches/v3_19_7_runtime.py
+          python patches/v3_19_8.py
+          python patches/v3_19_9.py
+          python patches/v3_20_0.py
+          python patches/v3_20_1.py
+          python patches/v3_20_2.py
+          python patches/v3_20_3.py
+          python patches/v3_20_4_onboarding.py
+          python patches/v3_20_4_ani.py
+          python patches/v3_20_5.py
+          python patches/v3_20_6.py
+          python patches/v3_20_7.py
+          python patches/v3_20_8.py
+          python patches/v3_20_9.py
+          python patches/v3_20_10.py
+          python patches/v3_20_11.py
+          python patches/v3_20_12.py
+          python patches/v3_20_13.py
+          python patches/v3_20_13_winapi.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+
+      - name: Apply current v3.20.14 plus Pix support page
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python patches/v3_20_14_corrected.py
+          python patches/v3_20_14_final_polish.py
+          python patches/v3_20_14_hotfix.py
+          python patches/v3_20_14_content_pass.py
+          python patches/v3_20_14_clean_icons.py
+          python patches/v3_20_14_support_pix.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+
+      - name: Validate Pix support page and preserved fixes
+        shell: pwsh
+        run: |
+          @'
+          import ast, base64, io, os, pathlib
+          from PIL import Image
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          s=p.read_text(encoding='utf-8')
+          t=ast.parse(s)
+          app=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          methods={n.name:(ast.get_source_segment(s,n) or '') for n in app.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          page=methods.get('_lazy_build_page_support','')
+          icons=methods.get('_ui_pictogram_ctk','')
+          if not page: raise SystemExit('support page missing')
+          required_text=[
+            'APOIE O ZKSTRAP','SUPPORT ZKSTRAP','APOYA ZKSTRAP','支持 ZKSTRAP','SOUTENEZ ZKSTRAP',
+            'IA PARA PVP','IA NO APP','INFRA & APIS','SERVIÇOS ONLINE','ESTABILIDADE & TESTES','NOVOS RECURSOS',
+            'JÁ APOIEI','O ZKStrap não acessa seu banco nem confirma pagamentos'
+          ]
+          missing=[x for x in required_text if x not in page]
+          if missing: raise SystemExit('support copy missing: '+repr(missing))
+          if 'COPIAR CHAVE' in page or 'COPY PIX' in page or 'COPIAR PIX' in page:
+              raise SystemExit('desktop copy controls should not exist on support page')
+          if 'elif key == "support"' not in icons:
+              raise SystemExit('dedicated clean support heart icon missing')
+          if '"page":"ai"' in s or '("ai","ZK ASSIST")' in s or '"ai": self._lazy_build_page_ai' in s:
+              raise SystemExit('ZK Assist exposure regressed')
+          if 'if key=="ai": key="feedback"' not in methods.get('show_page',''):
+              raise SystemExit('stale ai route redirect regressed')
+          marker='_ZK_SUPPORT_QR_B64 = "'
+          i=s.find(marker)
+          if i<0: raise SystemExit('embedded Pix QR missing')
+          j=s.find('"',i+len(marker))
+          raw=base64.b64decode(s[i+len(marker):j])
+          im=Image.open(io.BytesIO(raw)); im.load()
+          if im.width < 300 or im.height < 300: raise SystemExit('Pix QR image unexpectedly small')
+          print('Support page, 5 languages, QR, clean heart icon, and prior safety fixes validated')
+          '@ | Set-Content validate_support_pix.py -Encoding UTF8
+          python validate_support_pix.py
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Reuse validated assets from clean build
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path prior_artifact | Out-Null
+          gh run download 38341711932 --repo '${{ github.repository }}' --name 'ZKStrap-v3.20.14-clean-icons-win64' --dir prior_artifact
+          $inner=Get-ChildItem prior_artifact -Recurse -Filter 'ZKStrap-v3.20.14-clean-icons-win64.zip' | Select-Object -First 1
+          if (-not $inner) { throw 'Clean-icons package not found.' }
+          Expand-Archive $inner.FullName -DestinationPath prior_app -Force
+          $srcAssets=Join-Path (Resolve-Path prior_app) '_internal/zkstrap_assets'
+          $dstAssets=Join-Path $env:ZK_SOURCE 'zkstrap_assets'
+          if (Test-Path $dstAssets) { Remove-Item $dstAssets -Recurse -Force }
+          Copy-Item $srcAssets $dstAssets -Recurse -Force
+          Copy-Item (Join-Path (Resolve-Path prior_app) 'ZKUpdater.exe') 'ZKUpdater.exe' -Force
+          $packs=Join-Path $dstAssets 'sounds/packs'
+          $actual=@(Get-ChildItem $packs -Directory | Select-Object -ExpandProperty Name | Sort-Object)
+          $expected=@('abyss','after_hours','final_phase','low_gravity','midnight_exe','neon_heart','overclock','redline','sunset_mode' | Sort-Object)
+          if (($actual -join ',') -ne ($expected -join ',')) { throw "Unexpected sound packs: $($actual -join ',')" }
+          $abyss=(Get-FileHash (Get-ChildItem (Join-Path $packs 'abyss') -Recurse -File | Select-Object -First 1).FullName -Algorithm SHA256).Hash.ToLower()
+          Write-Host "Reused validated 9-pack asset tree. Sample ABYSS file hash=$abyss"
+
+      - name: Build ZKStrap ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" --hidden-import "pycaw.api.endpointvolume" --hidden-import "comtypes" --hidden-import "comtypes.client" `
+            --collect-all "pycaw" --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" --add-data "zkstrap_icon.ico;." --add-data "zkstrap_icon.png;." --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap build failed.' }
+          Copy-Item "$env:GITHUB_WORKSPACE/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Package Pix support build
+        shell: pwsh
+        run: |
+          $dist=Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.20.14-support-pix-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size=(Get-Item $name).Length
+          Write-Host "SHA256=$hash"
+          Write-Host "SIZE=$size"
+
+      - name: Upload Pix support artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrap-v3.20.14-support-pix-win64
+          path: ZKStrap-v3.20.14-support-pix-win64.zip
+          retention-days: 14
+          if-no-files-found: error
