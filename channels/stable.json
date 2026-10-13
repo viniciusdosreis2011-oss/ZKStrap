@@ -1,16 +1,18 @@
 {
   "channel": "stable",
-  "version": "3.18.8",
-  "published_at": "2026-10-09T20:48:58Z",
+  "version": "3.20.15",
+  "published_at": "2026-10-13T15:50:08Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.18.8/ZKStrap-v3.18.8-win64.zip",
-  "sha256": "330b19be17f7787c06ccc6632676b1a28ea9671e7f660e0429fd11376c7fa875",
-  "size_bytes": 110301524,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.15/ZKStrap-v3.20.15-win64.zip",
+  "sha256": "a9117cd26d7729009dc356ca6231ea770fc45bad99e17aec63b1c3ef8cd0ea0d",
+  "size_bytes": 119941834,
   "notes": [
-    "Corrige a falha de inicialização da v3.18.7 causada pela remoção acidental do callback _open_support_page.",
-    "Restaura os callbacks da página de apoio dentro da ModernConfigApp.",
-    "Mantém o novo roteador de scroll e o visual da v3.18.7.",
-    "Adiciona validação AST no build para impedir que callbacks críticos da UI sumam novamente."
+    "Corrige imagens no Combo Planner, Owner Loadout e Build Roulette.",
+    "Corrige troca de músicas e recuperação de clicks/SFX sem precisar reiniciar o app.",
+    "Corrige avatar Roblox após o primeiro acesso e o modo de teste.",
+    "Fresh User Test agora respeita progresso secreto zero e mantém temas secretos bloqueados.",
+    "Adiciona a aba Apoie o ZKStrap via Pix em PT, EN, ES, ZH e FR.",
+    "Adiciona Limpeza Segura de temporários, caches e dumps no Owner/Admin."
   ]
 }
