@@ -1,0 +1,31 @@
+name: Fetch Official Roblox Logo Pack
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/fetch-official-roblox-logo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download official Roblox press-kit logo pack
+        shell: pwsh
+        run: |
+          $url='https://cms-media.roblox.com/assets/6dd8yllwqeistpspax7k.zip'
+          Invoke-WebRequest -Uri $url -OutFile roblox-logo-pack.zip
+          Expand-Archive roblox-logo-pack.zip -DestinationPath roblox-logo-pack -Force
+          Get-ChildItem roblox-logo-pack -Recurse | ForEach-Object { Write-Host $_.FullName }
+      - name: Upload logo pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-roblox-logo-pack
+          path: roblox-logo-pack
+          retention-days: 1
