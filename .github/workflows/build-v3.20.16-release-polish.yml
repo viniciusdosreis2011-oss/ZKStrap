@@ -1,0 +1,210 @@
+name: Build ZKStrap v3.20.16 Release Polish
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/build-v3.20.16-release-polish.yml'
+      - 'patches/v3_20_16_release_polish.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 75
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode bootstrap and corrected patch
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+            if ($LASTEXITCODE -ne 0) { throw "Failed decoding $name" }
+          }
+          python patches/v3_18_5_patchfix.py
+          if ($LASTEXITCODE -ne 0) { throw 'v3.18.5 bootstrap fix failed' }
+          $joined=(Get-ChildItem 'patches/v3214_corrected/part*.b64' | Sort-Object Name | ForEach-Object { (Get-Content $_.FullName -Raw).Trim() }) -join ''
+          if ($joined.Length -ne 50048) { throw "Corrected patch payload length mismatch: $($joined.Length)" }
+          [IO.File]::WriteAllBytes('v3_20_14_corrected.gz',[Convert]::FromBase64String($joined))
+          python -c "import gzip,pathlib; pathlib.Path('patches/v3_20_14_corrected.py').write_bytes(gzip.decompress(pathlib.Path('v3_20_14_corrected.gz').read_bytes()))"
+          if ($LASTEXITCODE -ne 0) { throw 'Corrected patch decode failed' }
+          python -m py_compile patches/v3_20_14_corrected.py patches/v3_20_14_final_polish.py patches/v3_20_14_hotfix.py patches/v3_20_14_content_pass.py patches/v3_20_14_clean_icons.py patches/v3_20_14_support_pix.py patches/v3_20_14_support_pix_runner.py patches/v3_20_14_admin_cleanup.py patches/v3_20_15_runtime_fixes.py patches/v3_20_15_release_runner.py patches/v3_20_15_audio_zero_volume_fix.py patches/v3_20_16_release_polish.py
+          if ($LASTEXITCODE -ne 0) { throw 'Patch compile validation failed' }
+
+      - name: Rebuild source chain through v3.20.16
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          $patches=@(
+            'v3_18_1_base.py','v3_18_1_post.py','v3_18_2.py','patches/v3_18_3.py','v3_18_4.py',
+            'patches/v3_18_5.py','patches/v3_18_6.py','patches/v3_18_7.py','patches/v3_18_8.py','patches/v3_18_9.py',
+            'patches/v3_19_0.py','patches/v3_19_1.py','patches/v3_19_2.py','patches/v3_19_3.py','patches/v3_19_4_fixed.py',
+            'patches/v3_19_5.py','patches/v3_19_6.py','patches/v3_19_7_runtime.py','patches/v3_19_8.py','patches/v3_19_9.py',
+            'patches/v3_20_0.py','patches/v3_20_1.py','patches/v3_20_2.py','patches/v3_20_3.py','patches/v3_20_4_onboarding.py',
+            'patches/v3_20_4_ani.py','patches/v3_20_5.py','patches/v3_20_6.py','patches/v3_20_7.py','patches/v3_20_8.py',
+            'patches/v3_20_9.py','patches/v3_20_10.py','patches/v3_20_11.py','patches/v3_20_12.py','patches/v3_20_13.py','patches/v3_20_13_winapi.py',
+            'patches/v3_20_14_corrected.py','patches/v3_20_14_final_polish.py','patches/v3_20_14_hotfix.py','patches/v3_20_14_content_pass.py','patches/v3_20_14_clean_icons.py',
+            'patches/v3_20_15_release_runner.py','patches/v3_20_16_release_polish.py'
+          )
+          foreach ($patch in $patches) {
+            python $patch
+            if ($LASTEXITCODE -ne 0) { throw "Patch failed: $patch" }
+          }
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          if ($LASTEXITCODE -ne 0) { throw 'Final source compile failed' }
+
+      - name: Validate v3.20.16 behavior markers
+        shell: pwsh
+        run: |
+          @'
+          import ast,os,pathlib
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          s=p.read_text(encoding='utf-8'); t=ast.parse(s)
+          cls=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          methods={n.name:(ast.get_source_segment(s,n) or '') for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          required=['_announce_secret_theme_reward','_flush_secret_unlock_announcements','_repair_theme_render_surfaces','_lazy_build_page_bugs','_lazy_build_page_suggestions','_feedback_submit_form','_secret_music_tick','_queue_scroll_step']
+          miss=[x for x in required if x not in methods]
+          if miss: raise SystemExit('Missing methods '+repr(miss))
+          markers=[
+            'APP_VERSION = "3.20.16"',
+            'spotify_music=bool(snap.get("ok")',
+            'if scrollable is theme_body',
+            '("bugs",self._L("REPORTAR BUG"',
+            '("suggestions",self._L("SUGERIR"',
+            'Não envie pedidos de exploit, cheat, bypass',
+            'self.after(1250,self._flush_secret_unlock_announcements)',
+            'nav._parent_canvas.configure(bg=sidebar)',
+            'stable_bg=t.get("panel",t["card"])',
+          ]
+          for m in markers:
+            if m not in s: raise SystemExit('Missing marker '+m)
+          tick=methods['_secret_music_tick']
+          if 'app_music' in tick or 'sounds_enabled' in tick or 'music_volume' in tick:
+            raise SystemExit('Frequency still counts internal app music')
+          if 'Spotify' not in tick and 'spotify' not in tick:
+            raise SystemExit('Frequency no longer tied to Spotify')
+          if 'SUGESTÕES & BUGS' in methods.get('_lazy_build_page_feedback',''):
+            raise SystemExit('Combined feedback page still active')
+          print('v3.20.16 source validation OK')
+          '@ | Set-Content validate_3216.py -Encoding UTF8
+          python validate_3216.py
+          if ($LASTEXITCODE -ne 0) { throw 'v3.20.16 validation failed' }
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Reuse validated v3.20.15 assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference='Stop'
+          New-Item -ItemType Directory -Force -Path prior | Out-Null
+          gh release download v3.20.15 --repo '${{ github.repository }}' --pattern 'ZKStrap-v3.20.15-win64.zip' --dir prior
+          if ($LASTEXITCODE -ne 0) { throw 'Could not download v3.20.15 release' }
+          Expand-Archive 'prior/ZKStrap-v3.20.15-win64.zip' -DestinationPath prior_app -Force
+          $srcAssets=Join-Path (Resolve-Path prior_app) '_internal/zkstrap_assets'
+          $dstAssets=Join-Path $env:ZK_SOURCE 'zkstrap_assets'
+          if (Test-Path $dstAssets) { Remove-Item $dstAssets -Recurse -Force }
+          Copy-Item $srcAssets $dstAssets -Recurse -Force
+          Copy-Item (Join-Path (Resolve-Path prior_app) 'ZKUpdater.exe') 'ZKUpdater.exe' -Force
+          @'
+          from pathlib import Path
+          import hashlib,os
+          root=Path(os.environ['ZK_SOURCE'])/'zkstrap_assets'
+          combo=root/'combo_icons'
+          pngs=list(combo.rglob('*.png'))
+          if len(pngs)<100:raise SystemExit(f'combo PNG count too low: {len(pngs)}')
+          packs=sorted(p.name for p in (root/'sounds/packs').iterdir() if p.is_dir())
+          expected=sorted(['abyss','after_hours','final_phase','low_gravity','midnight_exe','neon_heart','overclock','redline','sunset_mode'])
+          if packs!=expected:raise SystemExit('unexpected sound packs '+repr(packs))
+          protected={
+            root/'sounds/packs/abyss/ambient_v3213_abyss.wav':'0e89bd07eb9a15a24dad25cc31731fe6c3c9aa5cd19bd8520ba53a8a261f894a',
+            root/'sounds/packs/low_gravity/ambient_v3213_low_gravity.wav':'0498561fafe7222c847944f7937777e5dc701de864bc0f86e988e59c35279591',
+          }
+          for p,h in protected.items():
+            got=hashlib.sha256(p.read_bytes()).hexdigest()
+            if got!=h:raise SystemExit(f'protected audio changed: {p}')
+          print('Assets validated:',len(pngs),'combo PNGs, 9 sound packs')
+          '@ | Set-Content validate_assets.py -Encoding UTF8
+          python validate_assets.py
+
+      - name: Build ZKStrap ONEDIR
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" --hidden-import "pycaw.api.endpointvolume" --hidden-import "comtypes" --hidden-import "comtypes.client" `
+            --collect-all "pycaw" --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" --add-data "zkstrap_icon.ico;." --add-data "zkstrap_icon.png;." --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if ($LASTEXITCODE -ne 0) { throw 'PyInstaller failed' }
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap.exe missing' }
+          Copy-Item "$env:GITHUB_WORKSPACE/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+          if (-not (Test-Path "dist/ZKStrap/ZKUpdater.exe")) { throw 'ZKUpdater.exe missing' }
+          $pngCount=(Get-ChildItem 'dist/ZKStrap/_internal/zkstrap_assets/combo_icons' -Recurse -Filter '*.png').Count
+          if ($pngCount -lt 100) { throw "Packaged combo PNG count too low: $pngCount" }
+
+      - name: Package build
+        shell: pwsh
+        run: |
+          $dist=Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.20.16-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          $size=(Get-Item $name).Length
+          Write-Host "SHA256=$hash SIZE=$size"
+          "PACKAGE_SHA256=$hash" >> $env:GITHUB_ENV
+          "PACKAGE_SIZE=$size" >> $env:GITHUB_ENV
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrap-v3.20.16-win64
+          path: ZKStrap-v3.20.16-win64.zip
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Build summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### ZKStrap v3.20.16 candidate'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'First-run secret reward toast, Personalizar/theme render stabilization, Spotify-only Frequency progress, and separate Bugs/Suggestions pages.'
+          Add-Content $env:GITHUB_STEP_SUMMARY "SHA-256: $env:PACKAGE_SHA256"
+          Add-Content $env:GITHUB_STEP_SUMMARY "Size: $env:PACKAGE_SIZE bytes"
