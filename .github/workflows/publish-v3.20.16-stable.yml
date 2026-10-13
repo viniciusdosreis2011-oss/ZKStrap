@@ -1,0 +1,142 @@
+name: Publish ZKStrap v3.20.16 Stable
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/publish-v3.20.16-stable.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download validated v3.20.16 package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p publish
+          gh run download 38436349471 --repo '${{ github.repository }}' --name 'ZKStrap-v3.20.16-final-win64' --dir publish
+          test -f publish/ZKStrap-v3.20.16-win64.zip
+
+      - name: Verify exact validated package
+        id: verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACKAGE='publish/ZKStrap-v3.20.16-win64.zip'
+          EXPECTED_SHA='a14acafdc02ba037f78fc182ccbbc12d9149a830bf073456d4c88a35b624ed4e'
+          EXPECTED_SIZE='119957079'
+          SHA=$(sha256sum "$PACKAGE" | awk '{print $1}')
+          SIZE=$(stat -c%s "$PACKAGE")
+          test "$SHA" = "$EXPECTED_SHA"
+          test "$SIZE" = "$EXPECTED_SIZE"
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          p=Path('publish/ZKStrap-v3.20.16-win64.zip')
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              names=z.namelist()
+              assert 'ZKStrap.exe' in names
+              assert 'ZKUpdater.exe' in names
+              pngs=[n for n in names if '/combo_icons/' in n.replace('\\','/') and n.lower().endswith('.png')]
+              assert len(pngs)>=100, len(pngs)
+          print('Package verification OK')
+          PY
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+
+      - name: Create or refresh GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          PACKAGE='publish/ZKStrap-v3.20.16-win64.zip'
+          cat > release-notes.md <<'EOF'
+          ZKStrap v3.20.16
+
+          - Mostra corretamente a mensagem de tema secreto desbloqueado quando a recompensa vem do setup inicial.
+          - Estabiliza o scroll da aba Personalizar para reduzir artefatos de renderização.
+          - Corrige resíduos visuais de um tema anterior ao trocar de tema, com repaint completo e rebuild apenas da página visível.
+          - O tema secreto Frequency agora conta somente tempo de música reproduzida pelo Spotify; música interna do ZKStrap não conta.
+          - Separa Reportar Bug e Sugerir em páginas próprias.
+          - A página Sugerir aceita ideias de temas, FastFlags seguras, recursos, visual, áudio e qualidade de vida, sem pedidos de exploit, cheat, bypass ou recursos com objetivo de causar ban.
+          - Mantém os cinco idiomas: PT, EN, ES, ZH e FR.
+          EOF
+          if gh release view v3.20.16 --repo '${{ github.repository }}' >/dev/null 2>&1; then
+            gh release upload v3.20.16 "$PACKAGE" --repo '${{ github.repository }}' --clobber
+            gh release edit v3.20.16 --repo '${{ github.repository }}' --title 'ZKStrap v3.20.16' --notes-file release-notes.md --latest
+          else
+            gh release create v3.20.16 "$PACKAGE" --repo '${{ github.repository }}' --target 'd806e77bb59e8a34aeb08265a81d00fba55b8dbb' --title 'ZKStrap v3.20.16' --notes-file release-notes.md --latest
+          fi
+
+      - name: Update Stable channel on main
+        env:
+          PACKAGE_SHA: ${{ steps.verify.outputs.sha }}
+          PACKAGE_SIZE: ${{ steps.verify.outputs.size }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+          python - <<'PY'
+          from pathlib import Path
+          from datetime import datetime, timezone
+          import json, os
+          data={
+            'channel':'stable',
+            'version':'3.20.16',
+            'published_at':datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z'),
+            'mandatory':False,
+            'min_updater_version':'1.0.0',
+            'package_url':'https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.16/ZKStrap-v3.20.16-win64.zip',
+            'sha256':os.environ['PACKAGE_SHA'],
+            'size_bytes':int(os.environ['PACKAGE_SIZE']),
+            'notes':[
+              'Mostra o aviso de tema secreto desbloqueado também no setup inicial.',
+              'Estabiliza o scroll de Personalizar e corrige resíduos visuais ao trocar de tema.',
+              'O progresso secreto de 1 minuto de música agora conta somente Spotify.',
+              'Separa Reportar Bug e Sugerir em páginas próprias.',
+              'Sugestões podem incluir temas, FastFlags seguras, recursos, visual e áudio, sem cheats, exploits ou recursos com risco de ban.'
+            ]
+          }
+          Path('channels').mkdir(exist_ok=True)
+          Path('channels/stable.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/stable.json
+          if git diff --cached --quiet; then
+            echo 'Stable channel already current.'
+          else
+            git commit -m 'Publish ZKStrap v3.20.16 stable channel'
+            git push origin main
+          fi
+
+      - name: Verify published channel and release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh release view v3.20.16 --repo '${{ github.repository }}' --json tagName,assets,publishedAt
+          git fetch origin main
+          python - <<'PY'
+          import json, subprocess
+          raw=subprocess.check_output(['git','show','origin/main:channels/stable.json'],text=True,encoding='utf-8')
+          data=json.loads(raw)
+          assert data['version']=='3.20.16'
+          assert data['sha256']=='a14acafdc02ba037f78fc182ccbbc12d9149a830bf073456d4c88a35b624ed4e'
+          assert data['size_bytes']==119957079
+          print('Published stable channel verification OK')
+          PY
