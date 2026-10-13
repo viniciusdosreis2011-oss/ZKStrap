@@ -1,0 +1,188 @@
+name: Build ZKStrap v3.20.14 Clean Icons
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/build-v3.20.14-clean-icons.yml'
+      - 'patches/v3_20_14_clean_icons.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 70
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode bootstrap and v3.20.14 corrected patch
+        shell: pwsh
+        run: |
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+          $joined=(Get-ChildItem 'patches/v3214_corrected/part*.b64' | Sort-Object Name | ForEach-Object { (Get-Content $_.FullName -Raw).Trim() }) -join ''
+          if ($joined.Length -ne 50048) { throw "Corrected patch payload length mismatch: $($joined.Length)" }
+          [IO.File]::WriteAllBytes('v3_20_14_corrected.gz',[Convert]::FromBase64String($joined))
+          python -c "import gzip,pathlib; pathlib.Path('patches/v3_20_14_corrected.py').write_bytes(gzip.decompress(pathlib.Path('v3_20_14_corrected.gz').read_bytes()))"
+          python -m py_compile patches/v3_20_14_corrected.py patches/v3_20_14_final_polish.py patches/v3_20_14_hotfix.py patches/v3_20_14_content_pass.py patches/v3_20_14_clean_icons.py
+
+      - name: Rebuild pristine v3.20.13
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python v3_18_1_base.py
+          python v3_18_1_post.py
+          python v3_18_2.py
+          python patches/v3_18_3.py
+          python v3_18_4.py
+          python patches/v3_18_5.py
+          python patches/v3_18_6.py
+          python patches/v3_18_7.py
+          python patches/v3_18_8.py
+          python patches/v3_18_9.py
+          python patches/v3_19_0.py
+          python patches/v3_19_1.py
+          python patches/v3_19_2.py
+          python patches/v3_19_3.py
+          python patches/v3_19_4_fixed.py
+          python patches/v3_19_5.py
+          python patches/v3_19_6.py
+          python patches/v3_19_7_runtime.py
+          python patches/v3_19_8.py
+          python patches/v3_19_9.py
+          python patches/v3_20_0.py
+          python patches/v3_20_1.py
+          python patches/v3_20_2.py
+          python patches/v3_20_3.py
+          python patches/v3_20_4_onboarding.py
+          python patches/v3_20_4_ani.py
+          python patches/v3_20_5.py
+          python patches/v3_20_6.py
+          python patches/v3_20_7.py
+          python patches/v3_20_8.py
+          python patches/v3_20_9.py
+          python patches/v3_20_10.py
+          python patches/v3_20_11.py
+          python patches/v3_20_12.py
+          python patches/v3_20_13.py
+          python patches/v3_20_13_winapi.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+
+      - name: Apply current v3.20.14 plus clean icon pass
+        shell: pwsh
+        run: |
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          python patches/v3_20_14_corrected.py
+          python patches/v3_20_14_final_polish.py
+          python patches/v3_20_14_hotfix.py
+          python patches/v3_20_14_content_pass.py
+          python patches/v3_20_14_clean_icons.py
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+
+      - name: Validate icon system and ZK Assist removal
+        shell: pwsh
+        run: |
+          @'
+          import ast, os, pathlib
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'; s=p.read_text(encoding='utf-8'); t=ast.parse(s)
+          app=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          m={n.name:(ast.get_source_segment(s,n) or '') for n in app.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          icons=m['_ui_pictogram_ctk']
+          required=['textures','grass','msaa','lod','frm_low','voxelizer','d3d11','dpi','performance_boost','fps_unlock','gray_sky','ping_boost','telemetry_off','micro_opt','draco_aura','cursor','font','cache','update','theme','spotify','combo','roulette','creator','setups','maintenance','recovery','feedback','home']
+          missing=[x for x in required if x not in icons]
+          if missing: raise SystemExit('missing clean icon identities: '+','.join(missing))
+          if 'key.startswith("audio:")' not in icons: raise SystemExit('audio shared icon rule missing')
+          if '"page":"ai"' in s: raise SystemExit('AI route still exposed in universal search')
+          if '("ai","ZK ASSIST")' in s: raise SystemExit('ZK Assist still exposed in navigation')
+          if '"ai": self._lazy_build_page_ai' in s: raise SystemExit('ZK Assist builder still exposed')
+          if 'if key=="ai": key="feedback"' not in m['show_page']: raise SystemExit('stale ZK Assist route does not redirect to feedback')
+          print('Clean/pro icon identities + ZK Assist removal validated')
+          '@ | Set-Content validate_clean_icons.py -Encoding UTF8
+          python validate_clean_icons.py
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Reuse validated assets from content pass
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path prior_artifact | Out-Null
+          gh run download 38333565661 --repo '${{ github.repository }}' --name 'ZKStrap-v3.20.14-content-pass-win64' --dir prior_artifact
+          $inner=Get-ChildItem prior_artifact -Recurse -Filter 'ZKStrap-v3.20.14-content-pass-win64.zip' | Select-Object -First 1
+          if (-not $inner) { throw 'Content-pass package not found.' }
+          Expand-Archive $inner.FullName -DestinationPath prior_app -Force
+          $srcAssets=Join-Path (Resolve-Path prior_app) '_internal/zkstrap_assets'
+          $dstAssets=Join-Path $env:ZK_SOURCE 'zkstrap_assets'
+          if (Test-Path $dstAssets) { Remove-Item $dstAssets -Recurse -Force }
+          Copy-Item $srcAssets $dstAssets -Recurse -Force
+          Copy-Item (Join-Path (Resolve-Path prior_app) 'ZKUpdater.exe') 'ZKUpdater.exe' -Force
+          $packs=Join-Path $dstAssets 'sounds/packs'
+          $actual=@(Get-ChildItem $packs -Directory | Select-Object -ExpandProperty Name | Sort-Object)
+          $expected=@('abyss','after_hours','final_phase','low_gravity','midnight_exe','neon_heart','overclock','redline','sunset_mode')
+          $expected=@($expected | Sort-Object)
+          if (($actual -join ',') -ne ($expected -join ',')) { throw "Unexpected reused sound packs: $($actual -join ',')" }
+
+      - name: Build ZKStrap ONEDIR
+        shell: pwsh
+        run: |
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" --hidden-import "pycaw.api.endpointvolume" --hidden-import "comtypes" --hidden-import "comtypes.client" `
+            --collect-all "pycaw" --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" --add-data "zkstrap_icon.ico;." --add-data "zkstrap_icon.png;." --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap build failed.' }
+          Copy-Item "$env:GITHUB_WORKSPACE/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+
+      - name: Package clean icon build
+        shell: pwsh
+        run: |
+          $dist=Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.20.14-clean-icons-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower()
+          Write-Host "SHA256=$hash"
+
+      - name: Upload clean icon artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrap-v3.20.14-clean-icons-win64
+          path: ZKStrap-v3.20.14-clean-icons-win64.zip
+          retention-days: 14
+          if-no-files-found: error
