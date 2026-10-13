@@ -1,0 +1,74 @@
+name: Debug export v3.20.14 final source
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/debug-export-v3.20.14-source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode bootstrap and corrected patch
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+          }
+          python patches/v3_18_5_patchfix.py
+          $joined=(Get-ChildItem 'patches/v3214_corrected/part*.b64' | Sort-Object Name | ForEach-Object { (Get-Content $_.FullName -Raw).Trim() }) -join ''
+          [IO.File]::WriteAllBytes('v3_20_14_corrected.gz',[Convert]::FromBase64String($joined))
+          python -c "import gzip,pathlib; pathlib.Path('patches/v3_20_14_corrected.py').write_bytes(gzip.decompress(pathlib.Path('v3_20_14_corrected.gz').read_bytes()))"
+
+      - name: Rebuild and apply current v3.20.14 chain
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          $patches=@(
+            'v3_18_1_base.py','v3_18_1_post.py','v3_18_2.py','patches/v3_18_3.py','v3_18_4.py',
+            'patches/v3_18_5.py','patches/v3_18_6.py','patches/v3_18_7.py','patches/v3_18_8.py','patches/v3_18_9.py',
+            'patches/v3_19_0.py','patches/v3_19_1.py','patches/v3_19_2.py','patches/v3_19_3.py','patches/v3_19_4_fixed.py',
+            'patches/v3_19_5.py','patches/v3_19_6.py','patches/v3_19_7_runtime.py','patches/v3_19_8.py','patches/v3_19_9.py',
+            'patches/v3_20_0.py','patches/v3_20_1.py','patches/v3_20_2.py','patches/v3_20_3.py','patches/v3_20_4_onboarding.py',
+            'patches/v3_20_4_ani.py','patches/v3_20_5.py','patches/v3_20_6.py','patches/v3_20_7.py','patches/v3_20_8.py',
+            'patches/v3_20_9.py','patches/v3_20_10.py','patches/v3_20_11.py','patches/v3_20_12.py','patches/v3_20_13.py','patches/v3_20_13_winapi.py',
+            'patches/v3_20_14_corrected.py','patches/v3_20_14_final_polish.py','patches/v3_20_14_hotfix.py',
+            'patches/v3_20_14_content_pass.py','patches/v3_20_14_clean_icons.py','patches/v3_20_14_support_pix_runner.py'
+          )
+          foreach ($patch in $patches) {
+            python $patch
+            if ($LASTEXITCODE -ne 0) { throw "Patch failed: $patch" }
+          }
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          Copy-Item "$env:ZK_SOURCE/ZKStrap_v3_18_0.py" final_v3_20_14_source.py -Force
+
+      - name: Upload final source
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrap-v3.20.14-final-source-debug
+          path: final_v3_20_14_source.py
+          retention-days: 2
