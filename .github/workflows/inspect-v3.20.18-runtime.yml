@@ -68,26 +68,25 @@ jobs:
       - name: Print relevant methods
         shell: pwsh
         run: |
+          $env:PYTHONIOENCODING='utf-8'
           @'
-          import ast,pathlib,re
+          import ast,pathlib
           p=pathlib.Path('current_v3218.py');s=p.read_text(encoding='utf-8');t=ast.parse(s)
           cls=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
-          methods=[]
           for n in cls.body:
-              if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):
-                  low=n.name.lower()
-                  src=ast.get_source_segment(s,n) or ''
-                  if any(k in low for k in ('chall','roulette','theme','scroll')) or any(k in src.lower() for k in ('trocar','2/2','swap','reroll','fast_scroll')):
-                      methods.append((n.name,src))
-          for name,src in methods:
-              if any(k in name.lower() for k in ('chall','roulette','theme','scroll')) or any(k in src.lower() for k in ('trocar','swap','reroll','fast_scroll')):
-                  print('\n===== '+name+' =====\n'+src[:16000])
+              if not isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):continue
+              src=ast.get_source_segment(s,n) or ''
+              low=(n.name+' '+src).lower()
+              if any(k in low for k in ('chall','roulette','theme','scroll','trocar','swap','reroll','fast_scroll')):
+                  print('\n===== '+n.name+' =====\n'+src[:12000])
           '@ | Set-Content inspect.py -Encoding UTF8
           python inspect.py
 
       - name: Upload reconstructed source
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: zkstrap-v3.20.18-current-source
           path: current_v3218.py
           retention-days: 2
+          if-no-files-found: error
