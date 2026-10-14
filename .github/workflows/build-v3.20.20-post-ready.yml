@@ -1,0 +1,197 @@
+name: Build ZKStrap v3.20.20 Post Ready
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/build-v3.20.20-post-ready.yml'
+      - 'patches/v3_20_20_post_ready_fixes.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 80
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Download v3.18.0 source package
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force -Path input | Out-Null
+          gh release download v3.18.0 --repo '${{ github.repository }}' --pattern 'ZKStrap_v3_18_0_UPDATE_CENTER.zip' --dir input
+          Expand-Archive -Path 'input/ZKStrap_v3_18_0_UPDATE_CENTER.zip' -DestinationPath source -Force
+          $root = Get-ChildItem source -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Could not find extracted source.' }
+          "ZK_SOURCE=$($root.FullName)" >> $env:GITHUB_ENV
+
+      - name: Decode bootstrap and corrected patch
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          foreach ($name in @('v3_18_1_base','v3_18_1_post','v3_18_2','v3_18_4')) {
+            $b64=(Get-Content "patches/$name.py.gz.b64" -Raw).Trim()
+            [IO.File]::WriteAllBytes("$name.gz",[Convert]::FromBase64String($b64))
+            python -c "import gzip,pathlib; n='$name'; pathlib.Path(n+'.py').write_bytes(gzip.decompress(pathlib.Path(n+'.gz').read_bytes()))"
+            if ($LASTEXITCODE -ne 0) { throw "Failed decoding $name" }
+          }
+          python patches/v3_18_5_patchfix.py
+          if ($LASTEXITCODE -ne 0) { throw 'v3.18.5 bootstrap fix failed' }
+          $joined=(Get-ChildItem 'patches/v3214_corrected/part*.b64' | Sort-Object Name | ForEach-Object { (Get-Content $_.FullName -Raw).Trim() }) -join ''
+          if ($joined.Length -ne 50048) { throw "Corrected patch payload length mismatch: $($joined.Length)" }
+          [IO.File]::WriteAllBytes('v3_20_14_corrected.gz',[Convert]::FromBase64String($joined))
+          python -c "import gzip,pathlib; pathlib.Path('patches/v3_20_14_corrected.py').write_bytes(gzip.decompress(pathlib.Path('v3_20_14_corrected.gz').read_bytes()))"
+          python -m py_compile patches/v3_20_14_corrected.py patches/v3_20_14_final_polish.py patches/v3_20_14_hotfix.py patches/v3_20_14_content_pass.py patches/v3_20_14_clean_icons.py patches/v3_20_15_release_runner.py patches/v3_20_16_release_polish.py patches/v3_20_16_theme_swap_cleanup.py patches/v3_20_17_scroll_and_collapsible.py patches/v3_20_18_restore_scroll.py patches/v3_20_19_final_candidate.py patches/v3_20_20_post_ready_fixes.py
+          if ($LASTEXITCODE -ne 0) { throw 'Patch compile validation failed' }
+
+      - name: Rebuild source chain
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          $env:ZK_SOURCE_DIR=$env:ZK_SOURCE
+          $patches=@(
+            'v3_18_1_base.py','v3_18_1_post.py','v3_18_2.py','patches/v3_18_3.py','v3_18_4.py',
+            'patches/v3_18_5.py','patches/v3_18_6.py','patches/v3_18_7.py','patches/v3_18_8.py','patches/v3_18_9.py',
+            'patches/v3_19_0.py','patches/v3_19_1.py','patches/v3_19_2.py','patches/v3_19_3.py','patches/v3_19_4_fixed.py',
+            'patches/v3_19_5.py','patches/v3_19_6.py','patches/v3_19_7_runtime.py','patches/v3_19_8.py','patches/v3_19_9.py',
+            'patches/v3_20_0.py','patches/v3_20_1.py','patches/v3_20_2.py','patches/v3_20_3.py','patches/v3_20_4_onboarding.py',
+            'patches/v3_20_4_ani.py','patches/v3_20_5.py','patches/v3_20_6.py','patches/v3_20_7.py','patches/v3_20_8.py',
+            'patches/v3_20_9.py','patches/v3_20_10.py','patches/v3_20_11.py','patches/v3_20_12.py','patches/v3_20_13.py','patches/v3_20_13_winapi.py',
+            'patches/v3_20_14_corrected.py','patches/v3_20_14_final_polish.py','patches/v3_20_14_hotfix.py','patches/v3_20_14_content_pass.py','patches/v3_20_14_clean_icons.py',
+            'patches/v3_20_15_release_runner.py','patches/v3_20_16_release_polish.py','patches/v3_20_16_theme_swap_cleanup.py','patches/v3_20_17_scroll_and_collapsible.py','patches/v3_20_18_restore_scroll.py','patches/v3_20_19_final_candidate.py','patches/v3_20_20_post_ready_fixes.py'
+          )
+          foreach ($patch in $patches) {
+            python $patch
+            if ($LASTEXITCODE -ne 0) { throw "Patch failed: $patch" }
+          }
+          python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
+          if ($LASTEXITCODE -ne 0) { throw 'Final source compile failed' }
+
+      - name: Validate v3.20.20 behavior
+        shell: pwsh
+        run: |
+          $env:PYTHONIOENCODING='utf-8'
+          @'
+          import ast,os,pathlib,re,hashlib
+          p=pathlib.Path(os.environ['ZK_SOURCE'])/'ZKStrap_v3_18_0.py'
+          s=p.read_text(encoding='utf-8'); t=ast.parse(s)
+          cls=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='ModernConfigApp')
+          methods={n.name:(ast.get_source_segment(s,n) or '') for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))}
+          if 'APP_VERSION = "3.20.20"' not in s: raise SystemExit('wrong version')
+          swap=methods.get('creator_swap_challenge',''); page=methods.get('creator_refresh_challenges','')
+          for m in ('_creator_session_swaps_used','used_swaps>=2','roulette_bump','DESAFIO TROCADO'):
+              if m not in swap: raise SystemExit('swap fix missing '+m)
+          if 'TROCAR  {used_swaps}/2' not in page or 'used_swaps<2' not in page: raise SystemExit('swap counter must be used/2')
+          gen=methods.get('creator_generate_challenges',''); done=methods.get('_creator_session_complete_if_ready','')
+          if '_creator_session_swaps_used=0' not in gen or '_creator_session_swaps_used=0' not in done: raise SystemExit('swap reset regressed')
+          if '"RAIN SIGNAL": {"folder":"abyss"' not in s: raise SystemExit('Rain Signal mapping missing')
+          if '"ABYSS":"RAIN SIGNAL"' not in s: raise SystemExit('ABYSS migration alias missing')
+          if '"ABYSS": {"folder":"abyss"' in s: raise SystemExit('old ABYSS label remains')
+          detect=methods.get('_detect_roblox_with_feedback',''); recovery=methods.get('_lazy_build_page_recovery','')
+          for m in ('atualizar_pasta_roblox_atual','tentar_achar_roblox_automatico','show_toast','tools_roblox_status_label'):
+              if m not in detect: raise SystemExit('detect feedback missing '+m)
+          if 'command=self._detect_roblox_with_feedback' not in recovery: raise SystemExit('detect button not rewired')
+          art=methods.get('_draw_theme_art','')
+          for m in ('Movimento calmo, mas perceptível','canvas.create_oval(bx-r,by-r,bx+r,by+r','shimmer_x='):
+              if m not in art: raise SystemExit('Pacific motion missing '+m)
+          if '_scroll_active_until' in methods.get('animar_chuva_matrix_frame',''): raise SystemExit('theme animations freeze on scroll')
+          print('v3.20.20 source validation OK')
+          '@ | Set-Content validate_3220.py -Encoding UTF8
+          python validate_3220.py
+          if ($LASTEXITCODE -ne 0) { throw 'v3.20.20 validation failed' }
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+
+      - name: Install build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r "$env:ZK_SOURCE/requirements.txt" pyinstaller
+
+      - name: Reuse validated release assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference='Stop'
+          New-Item -ItemType Directory -Force -Path prior | Out-Null
+          gh release download v3.20.16 --repo '${{ github.repository }}' --pattern 'ZKStrap-v3.20.16-win64.zip' --dir prior
+          Expand-Archive 'prior/ZKStrap-v3.20.16-win64.zip' -DestinationPath prior_app -Force
+          $srcAssets=Join-Path (Resolve-Path prior_app) '_internal/zkstrap_assets'
+          $dstAssets=Join-Path $env:ZK_SOURCE 'zkstrap_assets'
+          if (Test-Path $dstAssets) { Remove-Item $dstAssets -Recurse -Force }
+          Copy-Item $srcAssets $dstAssets -Recurse -Force
+          Copy-Item (Join-Path (Resolve-Path prior_app) 'ZKUpdater.exe') 'ZKUpdater.exe' -Force
+          @'
+          from pathlib import Path
+          import hashlib,os
+          root=Path(os.environ['ZK_SOURCE'])/'zkstrap_assets'; combo=root/'combo_icons'
+          pngs=list(combo.rglob('*.png'))
+          if len(pngs)<100: raise SystemExit(f'combo PNG count too low: {len(pngs)}')
+          packs=sorted(p.name for p in (root/'sounds/packs').iterdir() if p.is_dir())
+          expected=sorted(['abyss','after_hours','final_phase','low_gravity','midnight_exe','neon_heart','overclock','redline','sunset_mode'])
+          if packs!=expected: raise SystemExit('unexpected sound packs '+repr(packs))
+          protected={
+            root/'sounds/packs/abyss/ambient_v3213_abyss.wav':'0e89bd07eb9a15a24dad25cc31731fe6c3c9aa5cd19bd8520ba53a8a261f894a',
+            root/'sounds/packs/low_gravity/ambient_v3213_low_gravity.wav':'0498561fafe7222c847944f7937777e5dc701de864bc0f86e988e59c35279591'}
+          for p,h in protected.items():
+              if hashlib.sha256(p.read_bytes()).hexdigest()!=h: raise SystemExit('protected audio changed: '+str(p))
+          print('assets OK',len(pngs),packs)
+          '@ | Set-Content validate_assets.py -Encoding UTF8
+          python validate_assets.py
+
+      - name: Build ZKStrap ONEDIR
+        shell: pwsh
+        run: |
+          $ErrorActionPreference='Stop'
+          Set-Location $env:ZK_SOURCE
+          python -m PyInstaller --noconfirm --clean --onedir --windowed --name "ZKStrap" `
+            --hidden-import "winrt.windows.media.control" --hidden-import "winrt.windows.storage.streams" `
+            --hidden-import "winrt.windows.foundation" --hidden-import "winrt.windows.foundation.collections" `
+            --collect-all "winrt.windows.media.control" --collect-all "winrt.windows.storage.streams" `
+            --collect-all "winrt.windows.foundation" --collect-all "winrt.windows.foundation.collections" `
+            --hidden-import "pycaw.pycaw" --hidden-import "pycaw.api.endpointvolume" --hidden-import "comtypes" --hidden-import "comtypes.client" `
+            --collect-all "pycaw" --collect-all "comtypes" `
+            --icon "zkstrap_icon.ico" --add-data "zkstrap_icon.ico;." --add-data "zkstrap_icon.png;." --add-data "zkstrap_assets;zkstrap_assets" `
+            "ZKStrap_v3_18_0.py"
+          if ($LASTEXITCODE -ne 0) { throw 'PyInstaller failed' }
+          if (-not (Test-Path "dist/ZKStrap/ZKStrap.exe")) { throw 'ZKStrap.exe missing' }
+          Copy-Item "$env:GITHUB_WORKSPACE/ZKUpdater.exe" "dist/ZKStrap/ZKUpdater.exe" -Force
+          if (-not (Test-Path "dist/ZKStrap/ZKUpdater.exe")) { throw 'ZKUpdater.exe missing' }
+
+      - name: Package build
+        shell: pwsh
+        run: |
+          $dist=Join-Path $env:ZK_SOURCE 'dist/ZKStrap'
+          $name='ZKStrap-v3.20.20-win64.zip'
+          Compress-Archive -Path "$dist/*" -DestinationPath $name -CompressionLevel Optimal -Force
+          $hash=(Get-FileHash $name -Algorithm SHA256).Hash.ToLower(); $size=(Get-Item $name).Length
+          "PACKAGE_SHA256=$hash" >> $env:GITHUB_ENV; "PACKAGE_SIZE=$size" >> $env:GITHUB_ENV
+          Write-Host "SHA256=$hash SIZE=$size"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZKStrap-v3.20.20-post-ready-win64
+          path: ZKStrap-v3.20.20-win64.zip
+          retention-days: 14
+          if-no-files-found: error
+
+      - name: Build summary
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_STEP_SUMMARY '### ZKStrap v3.20.20 post-ready candidate'
+          Add-Content $env:GITHUB_STEP_SUMMARY 'Fixes Creator 0/2 rerolls, Roblox detect feedback, stronger Pacífico motion, and renames ABYSS to RAIN SIGNAL without touching audio bytes.'
+          Add-Content $env:GITHUB_STEP_SUMMARY "SHA-256: $env:PACKAGE_SHA256"
+          Add-Content $env:GITHUB_STEP_SUMMARY "Size: $env:PACKAGE_SIZE bytes"
