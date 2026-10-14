@@ -10,17 +10,17 @@ b=src.find('# Structural/static validation.',a)
 if section<0 or a<0 or b<0:
     raise SystemExit('v3.20.20 runner: could not locate Pacific patch section')
 
-replacement=r'''# Locate the Pacífico motion branch by its unique comment instead of matching
+replacement=r"""# Locate the Pacífico motion branch by its unique comment instead of matching
 # the whole branch byte-for-byte. Earlier theme patches can alter whitespace.
 motion_marker='# Movimento quase imperceptível:'
 mid=s.find(motion_marker)
 if mid<0:
     raise SystemExit('v3.20.20 Pacific motion marker missing')
-branch_start=s.rfind('            elif theme_name=="Pacífico":',0,mid)
-branch_end=s.find('            elif theme_name=="ZKStrap Core":',mid)
+branch_start=s.rfind('            elif theme_name==\"Pacífico\":',0,mid)
+branch_end=s.find('            elif theme_name==\"ZKStrap Core\":',mid)
 if branch_start<0 or branch_end<0 or branch_end<=branch_start:
     raise SystemExit('v3.20.20 Pacific motion branch bounds missing')
-new_branch='''            elif theme_name=="Pacífico":
+new_branch='''            elif theme_name==\"Pacífico\":
                 # Movimento calmo, mas perceptível: duas marés em parallax,
                 # reflexos viajando na superfície e bolhas subindo devagar.
                 for row,(yyf,speed,amp) in enumerate(((.59,.095,4.0),(.74,.070,5.2))):
@@ -44,7 +44,7 @@ new_branch='''            elif theme_name=="Pacífico":
 '''
 s=s[:branch_start]+new_branch+s[branch_end:]
 
-'''
+"""
 
 patched=src[:a]+replacement+src[b:]
 code=compile(patched,str(base),'exec')
