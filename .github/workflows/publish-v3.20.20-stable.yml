@@ -1,0 +1,143 @@
+name: Publish ZKStrap v3.20.20 Stable
+
+on:
+  push:
+    branches: [work/v3.20.14-corrected]
+    paths:
+      - '.github/workflows/publish-v3.20.20-stable.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download validated v3.20.20 Final Post package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p publish
+          gh run download 38969233212 --repo '${{ github.repository }}' --name 'ZKStrap-v3.20.20-final-post-win64' --dir publish
+          test -f publish/ZKStrap-v3.20.20-win64.zip
+
+      - name: Verify Final Post package
+        id: verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          PACKAGE='publish/ZKStrap-v3.20.20-win64.zip'
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          p=Path('publish/ZKStrap-v3.20.20-win64.zip')
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              names={n.replace('\\','/') for n in z.namelist()}
+              for required in ('ZKStrap.exe','ZKUpdater.exe','ZKStrap-Downloads.html','VER DOWNLOADS.bat'):
+                  assert required in names, required
+              assert any(n.startswith('_internal/') for n in names)
+          print('FINAL POST package verification OK')
+          PY
+          SHA=$(sha256sum "$PACKAGE" | awk '{print $1}')
+          SIZE=$(stat -c%s "$PACKAGE")
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+          echo "PACKAGE_SHA=$SHA" >> "$GITHUB_ENV"
+          echo "PACKAGE_SIZE=$SIZE" >> "$GITHUB_ENV"
+          echo "SHA256=$SHA SIZE=$SIZE"
+
+      - name: Create or refresh GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          PACKAGE='publish/ZKStrap-v3.20.20-win64.zip'
+          cat > release-notes.md <<'EOF'
+          ZKStrap v3.20.20 — Final Post
+
+          - Finaliza a fase intensiva de desenvolvimento em 33 dias (~792 horas) sem alterar a contagem total do projeto.
+          - Inclui o painel VER DOWNLOADS para acompanhar os downloads das Releases oficiais pelo próprio GitHub.
+          - Creator Mode mostra corretamente as trocas usadas (0/2 → 1/2 → 2/2) e reseta por rodada.
+          - DETECTAR ROBLOX agora sempre dá feedback visual do resultado.
+          - O tema Pacífico ganhou movimento calmo mais perceptível.
+          - ABYSS passa a aparecer como RAIN SIGNAL, mantendo compatibilidade com configurações antigas.
+          - Mantém todas as correções, ferramentas, temas, áudio e recursos da build post-ready 3.20.20.
+          EOF
+          if gh release view v3.20.20 --repo '${{ github.repository }}' >/dev/null 2>&1; then
+            gh release upload v3.20.20 "$PACKAGE" --repo '${{ github.repository }}' --clobber
+            gh release edit v3.20.20 --repo '${{ github.repository }}' --title 'ZKStrap v3.20.20 — Final Post' --notes-file release-notes.md --latest
+          else
+            gh release create v3.20.20 "$PACKAGE" --repo '${{ github.repository }}' --target 'e035fbd3105929ba6f8be45143978614a38849a4' --title 'ZKStrap v3.20.20 — Final Post' --notes-file release-notes.md --latest
+          fi
+
+      - name: Update stable channel on main
+        env:
+          PACKAGE_SHA: ${{ steps.verify.outputs.sha }}
+          PACKAGE_SIZE: ${{ steps.verify.outputs.size }}
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B main origin/main
+          python - <<'PY'
+          from pathlib import Path
+          from datetime import datetime, timezone
+          import json, os
+          data={
+            'channel':'stable',
+            'version':'3.20.20',
+            'published_at':datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z'),
+            'mandatory':False,
+            'min_updater_version':'1.0.0',
+            'package_url':'https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.20/ZKStrap-v3.20.20-win64.zip',
+            'sha256':os.environ['PACKAGE_SHA'],
+            'size_bytes':int(os.environ['PACKAGE_SIZE']),
+            'notes':[
+              'Final Post: fase intensiva de desenvolvimento finalizada em 33 dias (~792 h), mantendo a contagem total do projeto dinâmica.',
+              'Inclui painel local para acompanhar os downloads das Releases oficiais do ZKStrap.',
+              'Creator Mode corrige o contador de trocas por rodada (0/2 → 1/2 → 2/2).',
+              'DETECTAR ROBLOX agora sempre informa visualmente se encontrou a instalação.',
+              'Pacífico ganhou movimento mais perceptível e ABYSS passa a aparecer como RAIN SIGNAL.'
+            ]
+          }
+          Path('channels').mkdir(exist_ok=True)
+          Path('channels/stable.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add channels/stable.json
+          if git diff --cached --quiet; then
+            echo 'Stable channel already current.'
+          else
+            git commit -m 'Publish ZKStrap v3.20.20 stable channel'
+            git push origin main
+          fi
+
+      - name: Verify published release and stable channel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_SHA: ${{ steps.verify.outputs.sha }}
+          EXPECTED_SIZE: ${{ steps.verify.outputs.size }}
+        run: |
+          set -euo pipefail
+          gh release view v3.20.20 --repo '${{ github.repository }}' --json tagName,name,assets,publishedAt,isLatest
+          git fetch origin main
+          python - <<'PY'
+          import json, os, subprocess
+          raw=subprocess.check_output(['git','show','origin/main:channels/stable.json'],text=True,encoding='utf-8')
+          data=json.loads(raw)
+          assert data['version']=='3.20.20'
+          assert data['sha256']==os.environ['EXPECTED_SHA']
+          assert data['size_bytes']==int(os.environ['EXPECTED_SIZE'])
+          assert data['package_url'].endswith('/v3.20.20/ZKStrap-v3.20.20-win64.zip')
+          print('v3.20.20 release + stable channel verification OK')
+          PY
