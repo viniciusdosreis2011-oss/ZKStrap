@@ -75,6 +75,14 @@ jobs:
           python -m py_compile "$env:ZK_SOURCE/ZKStrap_v3_18_0.py"
           if ($LASTEXITCODE -ne 0) { throw 'Final source compile failed' }
 
+      - name: Upload source snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: zkstrap-v3.20.20-source-snapshot
+          path: ${{ env.ZK_SOURCE }}/ZKStrap_v3_18_0.py
+          retention-days: 1
+          if-no-files-found: error
+
       - name: Validate v3.20.20 behavior
         shell: pwsh
         run: |
