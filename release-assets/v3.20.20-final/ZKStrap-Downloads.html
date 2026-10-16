@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ZKStrap // Downloads</title>
+<style>
+:root{color-scheme:dark;--bg:#08090d;--card:#11141b;--card2:#171b24;--line:#252b38;--txt:#eef1f7;--muted:#8993a5;--acc:#8b5cf6;--acc2:#36d6ff;--ok:#5df2ac;--bad:#ff6b7d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 18% 0,#17132b 0,transparent 35%),radial-gradient(circle at 100% 15%,#08212a 0,transparent 28%),var(--bg);color:var(--txt);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}.wrap{max-width:1080px;margin:auto;padding:34px 22px 56px}.top{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:20px}.eyebrow{font:700 12px/1 Consolas,monospace;letter-spacing:.17em;color:var(--acc2);text-transform:uppercase}.title{font-size:34px;font-weight:850;letter-spacing:-.04em;margin:8px 0 5px}.sub{color:var(--muted);font-size:14px}.actions{display:flex;gap:9px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:var(--card2);color:var(--txt);padding:11px 15px;border-radius:11px;font-weight:750;cursor:pointer}.btn:hover{border-color:var(--acc);transform:translateY(-1px)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{border:1px solid var(--line);background:linear-gradient(145deg,rgba(17,20,27,.95),rgba(11,13,18,.95));border-radius:16px;padding:17px 18px;min-height:120px}.stat .k{font:700 11px Consolas,monospace;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.stat .v{font-size:35px;font-weight:900;letter-spacing:-.05em;margin-top:16px}.stat .m{font-size:12px;color:var(--muted);margin-top:4px}.panel{margin-top:15px;border:1px solid var(--line);background:rgba(15,18,24,.92);border-radius:16px;overflow:hidden}.panelhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panelhead b{font:800 12px Consolas,monospace;letter-spacing:.1em}.status{font-size:12px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--muted);margin-right:7px;box-shadow:0 0 12px currentColor}.ok{color:var(--ok)}.bad{color:var(--bad)}table{border-collapse:collapse;width:100%}th,td{padding:13px 17px;text-align:left;border-bottom:1px solid #1d222d;font-size:13px}th{font:700 10px Consolas,monospace;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}tr:last-child td{border-bottom:0}.num{text-align:right;font-weight:850;font-variant-numeric:tabular-nums}.asset{color:var(--muted);font:12px Consolas,monospace}.tag{display:inline-flex;padding:4px 7px;border-radius:999px;background:#1a1630;border:1px solid #31275a;color:#c7b8ff;font:700 10px Consolas,monospace}.note{margin-top:14px;padding:13px 15px;border:1px solid var(--line);border-radius:13px;color:var(--muted);font-size:12px;line-height:1.55}.foot{margin-top:16px;color:#596273;font:11px Consolas,monospace}.empty{padding:28px 17px;color:var(--muted);text-align:center}@media(max-width:760px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.title{font-size:28px}th:nth-child(2),td:nth-child(2){display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><div class="eyebrow">ZK Owner // Analytics</div><div class="title">Downloads do ZKStrap</div><div class="sub">Contagem ao vivo pelas Releases oficiais do GitHub.</div></div>
+    <div class="actions"><button class="btn" id="refresh">↻ Atualizar</button></div>
+  </div>
+
+  <div class="grid">
+    <div class="stat"><div class="k">Downloads oficiais</div><div class="v" id="total">—</div><div class="m">soma dos arquivos públicos de distribuição</div></div>
+    <div class="stat"><div class="k">Release mais recente</div><div class="v" id="latest">—</div><div class="m" id="latestLabel">aguardando GitHub…</div></div>
+    <div class="stat"><div class="k">Releases contabilizadas</div><div class="v" id="releases">—</div><div class="m" id="updated">—</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panelhead"><b>HISTÓRICO // RELEASE ASSETS</b><div class="status" id="status"><span class="dot"></span>conectando…</div></div>
+    <div style="overflow:auto"><table><thead><tr><th>Versão</th><th>Arquivo</th><th style="text-align:right">Downloads</th></tr></thead><tbody id="rows"><tr><td colspan="3" class="empty">Carregando dados…</td></tr></tbody></table></div>
+  </div>
+
+  <div class="note"><b>Importante:</b> o GitHub informa número de <b>downloads</b>, não pessoas únicas. Se a mesma pessoa baixar duas versões, reinstalar ou baixar ZIP + instalador, isso pode contar mais de uma vez. Arquivos técnicos (source, payload, patch, update center, checksum etc.) são ignorados.</div>
+  <div class="foot">API pública • sem login • sem servidor pago • repo: viniciusdosreis2011-oss/ZKStrap</div>
+</div>
+<script>
+const API='https://api.github.com/repos/viniciusdosreis2011-oss/ZKStrap/releases?per_page=100';
+const $=id=>document.getElementById(id);
+const fmt=n=>new Intl.NumberFormat('pt-BR').format(n||0);
+function isDistribution(name){
+  const n=(name||'').toLowerCase();
+  if(!n.includes('zkstrap')) return false;
+  if(/source|update[ _-]?center|payload|patch|debug|symbol|checksum|sha256|manifest|portable-source|current-source/.test(n)) return false;
+  return /\.(zip|exe|msi)$/.test(n);
+}
+async function load(){
+  $('status').innerHTML='<span class="dot"></span>consultando GitHub…';
+  $('refresh').disabled=true;
+  try{
+    const r=await fetch(API,{headers:{'Accept':'application/vnd.github+json'}});
+    if(!r.ok) throw new Error('GitHub API: '+r.status);
+    const releases=await r.json();
+    const items=[];
+    for(const rel of releases){
+      if(rel.draft) continue;
+      for(const a of (rel.assets||[])) if(isDistribution(a.name)) items.push({tag:rel.tag_name||rel.name||'—',name:a.name,count:Number(a.download_count||0),published:rel.published_at||rel.created_at||''});
+    }
+    const total=items.reduce((s,x)=>s+x.count,0);
+    const newestTag=(releases.find(x=>!x.draft)||{}).tag_name||'—';
+    const latestItems=items.filter(x=>x.tag===newestTag);
+    const latestCount=latestItems.reduce((s,x)=>s+x.count,0);
+    const countedTags=new Set(items.map(x=>x.tag));
+    $('total').textContent=fmt(total);
+    $('latest').textContent=fmt(latestCount);
+    $('latestLabel').textContent=newestTag==='—'?'nenhuma release encontrada':newestTag;
+    $('releases').textContent=fmt(countedTags.size);
+    $('updated').textContent='atualizado agora • '+new Date().toLocaleString('pt-BR');
+    $('rows').innerHTML=items.length?items.map(x=>`<tr><td><span class="tag">${esc(x.tag)}</span></td><td class="asset">${esc(x.name)}</td><td class="num">${fmt(x.count)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Nenhum arquivo público de distribuição encontrado.</td></tr>';
+    $('status').innerHTML='<span class="dot ok"></span><span class="ok">online</span> • dados carregados';
+  }catch(e){
+    $('status').innerHTML='<span class="dot bad"></span><span class="bad">erro</span> • '+esc(e.message||String(e));
+    $('rows').innerHTML='<tr><td colspan="3" class="empty">Não consegui consultar o GitHub. Verifique a internet e clique em Atualizar.</td></tr>';
+  }finally{$('refresh').disabled=false}
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('refresh').addEventListener('click',load);load();
+</script>
+</body>
+</html>
