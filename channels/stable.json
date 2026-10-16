@@ -1,17 +1,17 @@
 {
   "channel": "stable",
-  "version": "3.20.16",
-  "published_at": "2026-10-13T17:17:08Z",
+  "version": "3.20.20",
+  "published_at": "2026-10-16T21:30:28Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.16/ZKStrap-v3.20.16-win64.zip",
-  "sha256": "a14acafdc02ba037f78fc182ccbbc12d9149a830bf073456d4c88a35b624ed4e",
-  "size_bytes": 119957079,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.20/ZKStrap-v3.20.20-win64.zip",
+  "sha256": "997f669ec27c7260f3f61ba43d48b44d1d015f07acc85a1eab8eb78eb92d43b8",
+  "size_bytes": 119974625,
   "notes": [
-    "Mostra o aviso de tema secreto desbloqueado também no setup inicial.",
-    "Estabiliza o scroll de Personalizar e corrige resíduos visuais ao trocar de tema.",
-    "O progresso secreto de 1 minuto de música agora conta somente Spotify.",
-    "Separa Reportar Bug e Sugerir em páginas próprias.",
-    "Sugestões podem incluir temas, FastFlags seguras, recursos, visual e áudio, sem cheats, exploits ou recursos com risco de ban."
+    "Final Post: fase intensiva de desenvolvimento finalizada em 33 dias (~792 h), mantendo a contagem total do projeto dinâmica.",
+    "Inclui painel local para acompanhar os downloads das Releases oficiais do ZKStrap.",
+    "Creator Mode corrige o contador de trocas por rodada (0/2 → 1/2 → 2/2).",
+    "DETECTAR ROBLOX agora sempre informa visualmente se encontrou a instalação.",
+    "Pacífico ganhou movimento mais perceptível e ABYSS passa a aparecer como RAIN SIGNAL."
   ]
 }
