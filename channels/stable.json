@@ -1,17 +1,17 @@
 {
   "channel": "stable",
-  "version": "3.20.23",
-  "published_at": "2026-10-20T18:47:38Z",
+  "version": "3.20.24",
+  "published_at": "2026-10-20T19:45:45Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.23/ZKStrap-v3.20.23-win64.zip",
-  "sha256": "69021a1d072b1f16fd65cf717e5371fce401cd35d07f0e83d420477ab2b79035",
-  "size_bytes": 120080070,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.24/ZKStrap-v3.20.24-win64.zip",
+  "sha256": "cbe8674894cb0cfd74074fc723bca20b44f0c3e077b382e2a18b3b51807478f0",
+  "size_bytes": 120088746,
   "notes": [
-    "Atualizador 1.1 mostra erros de instalação e orientações na tela.",
-    "Corrige diagnóstico de EXE antigo após atualizar e alerta sobre múltiplas pastas.",
-    "Verifica pacote e versão antes de instalar; mantém backup da instalação anterior.",
-    "Não instala em pasta temporária/ZIP, evitando atualizações que desaparecem.",
-    "Inclui melhorias do cursor da v3.20.22."
+    "Limpeza automática dos ZIPs antigos do atualizador após instalação concluída.",
+    "Preserva o backup de restauração mais recente e não remove arquivos particulares.",
+    "Limpeza segura de downloads e backups acumulados ao abrir a versão atualizada.",
+    "Recomendado extrair o ZIP inteiro para uma pasta permanente antes de iniciar.",
+    "Mantém a correção do cursor e as melhorias de atualização anteriores."
   ]
 }
