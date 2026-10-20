@@ -6,7 +6,7 @@ on:
     paths:
       - '.github/workflows/build-v3.20.21-public-launch.yml'
       - 'patches/v3_20_21_launch_hotfix.py'
-      - 'patches/v3_20_20_finalpost_freeze.py','patches/v3_20_21_launch_hotfix.py'
+      - 'patches/v3_20_20_finalpost_freeze.py'
       - 'release-assets/v3.20.20-final/**'
   workflow_dispatch:
 
