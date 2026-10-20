@@ -1,17 +1,15 @@
 {
   "channel": "stable",
-  "version": "3.20.20",
-  "published_at": "2026-10-16T21:30:28Z",
+  "version": "3.20.21",
+  "published_at": "2026-10-20T00:25:07Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.20/ZKStrap-v3.20.20-win64.zip",
-  "sha256": "997f669ec27c7260f3f61ba43d48b44d1d015f07acc85a1eab8eb78eb92d43b8",
-  "size_bytes": 119974625,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.21/ZKStrap-v3.20.21-win64.zip",
+  "sha256": "fed6ed91e79bda0bbaf91fcd1832e1ef63ff442e2befe7d3c2a9b9297bac6193",
+  "size_bytes": 120075235,
   "notes": [
-    "Final Post: fase intensiva de desenvolvimento finalizada em 33 dias (~792 h), mantendo a contagem total do projeto dinâmica.",
-    "Inclui painel local para acompanhar os downloads das Releases oficiais do ZKStrap.",
-    "Creator Mode corrige o contador de trocas por rodada (0/2 → 1/2 → 2/2).",
-    "DETECTAR ROBLOX agora sempre informa visualmente se encontrou a instalação.",
-    "Pacífico ganhou movimento mais perceptível e ABYSS passa a aparecer como RAIN SIGNAL."
+    "Tutorial automático aparece apenas no primeiro acesso local; continua acessível manualmente.",
+    "Indicador de tamanho do cursor em pixels acompanha o slider.",
+    "Mantém os recursos da v3.20.20."
   ]
 }
