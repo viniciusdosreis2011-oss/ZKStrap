@@ -1,15 +1,17 @@
 {
   "channel": "stable",
-  "version": "3.20.21",
-  "published_at": "2026-10-20T00:25:07Z",
+  "version": "3.20.22",
+  "published_at": "2026-10-20T18:14:59Z",
   "mandatory": false,
   "min_updater_version": "1.0.0",
-  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.21/ZKStrap-v3.20.21-win64.zip",
-  "sha256": "fed6ed91e79bda0bbaf91fcd1832e1ef63ff442e2befe7d3c2a9b9297bac6193",
-  "size_bytes": 120075235,
+  "package_url": "https://github.com/viniciusdosreis2011-oss/ZKStrap/releases/download/v3.20.22/ZKStrap-v3.20.22-win64.zip",
+  "sha256": "8ec8d0fed3cf82621999d082b206091d7462ee3284e25e6a9c866619f5c6d64f",
+  "size_bytes": 120077021,
   "notes": [
-    "Tutorial automático aparece apenas no primeiro acesso local; continua acessível manualmente.",
-    "Indicador de tamanho do cursor em pixels acompanha o slider.",
-    "Mantém os recursos da v3.20.20."
+    "Corrigida a troca de cursor: seleção e prévia antes de aplicar.",
+    "Botões Aplicar Cursor e Restaurar Original visíveis no topo da aba.",
+    "Importação de PNG e packs com seleção manual, sem aplicação imediata.",
+    "Layout compacto da aba Cursor sem o bloco vazio excessivo.",
+    "Mantidas as correções da v3.20.21."
   ]
 }
