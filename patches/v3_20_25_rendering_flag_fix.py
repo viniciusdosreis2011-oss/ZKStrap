@@ -112,11 +112,20 @@ replace_once(
     '"Junta textura mínima, MSAA 0, grama/LOD mínimos, voxelizer e D3D11. A qualidade FRM fica sob controle do Roblox."',
     "performance profile tooltip PT",
 )
-replace_once(
-    '"Combines minimum textures, MSAA 0, minimum grass/LOD, voxelizer and D3D11 in one switch. FRM quality stays under Roblox control; gray sky remains separate."',
-    '"Combines minimum textures, MSAA 0, minimum grass/LOD, voxelizer and D3D11 in one switch. FRM quality stays under Roblox control; gray sky remains separate."',
-    "performance profile tooltip EN",
+# The v3.20.14 content pass can rewrite this copy, so anchor to the module key.
+module_start = s.index("FLAG_MODULES.update({")
+module_end = s.index("MAIN_MODULE_KEYS =", module_start)
+module_block = s[module_start:module_end]
+module_block, n = re.subn(
+    r'("performance_boost"\s*:\s*\{.*?"tooltip_en"\s*:\s*)"[^"]*"',
+    r'\1"Combines minimum textures, MSAA 0, minimum grass/LOD, voxelizer and D3D11 in one switch. FRM quality stays under Roblox control; gray sky remains separate."',
+    module_block,
+    count=1,
+    flags=re.S,
 )
+if n != 1:
+    raise SystemExit("v3.20.25: performance_boost English tooltip anchor missing")
+s = s[:module_start] + module_block + s[module_end:]
 
 # Migrate settings saved by older versions, regardless of their previous FRM value.
 replace_once(
