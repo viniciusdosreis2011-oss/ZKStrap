@@ -113,7 +113,7 @@ replace_once(
     "performance profile tooltip PT",
 )
 replace_once(
-    '"Combines minimum textures, MSAA 0, minimum grass/LOD, low FRM, voxelizer and D3D11 in one switch. Gray sky stays separate so you can choose normal or gray visuals."',
+    '"Combines minimum textures, MSAA 0, minimum grass/LOD, voxelizer and D3D11 in one switch. FRM quality stays under Roblox control; gray sky remains separate."',
     '"Combines minimum textures, MSAA 0, minimum grass/LOD, voxelizer and D3D11 in one switch. FRM quality stays under Roblox control; gray sky remains separate."',
     "performance profile tooltip EN",
 )
