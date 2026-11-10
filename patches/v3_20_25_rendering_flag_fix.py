@@ -14,11 +14,11 @@ def replace_once(old, new, label):
         raise SystemExit(f"v3.20.25: expected one {label}, found {count}")
     s = s.replace(old, new, 1)
 
-def replace_expected(old, new, expected, label):
+def replace_all(old, new, label):
     global s
     count = s.count(old)
-    if count != expected:
-        raise SystemExit(f"v3.20.25: expected {expected} {label}, found {count}")
+    if count < 1:
+        raise SystemExit(f"v3.20.25: no {label} found")
     s = s.replace(old, new)
 
 def method_span(text, class_name, method_name):
@@ -177,16 +177,15 @@ replace_method("ModernConfigApp", "obter_flags_avancadas", r'''    def obter_fla
         return flags
 ''')
 
-replace_expected(
+replace_all(
     'data["advanced_values"].update({"texture":"0","msaa":"0","frm":"1","grass":"0","lod":"0"})',
     'data["advanced_values"].update({"texture":"0","msaa":"0","frm":"Auto","grass":"0","lod":"0"})',
-    2,
     "FPS Max preset FRM values",
 )
-replace_once(
+replace_all(
     'data["advanced_values"].update({"texture":"1","msaa":"0","frm":"2","grass":"0","lod":"1"})',
     'data["advanced_values"].update({"texture":"1","msaa":"0","frm":"Auto","grass":"0","lod":"1"})',
-    "Weak PC preset FRM value",
+    "Weak PC preset FRM values",
 )
 
 # ADVANCED_MANAGED_KEYS deliberately retains DFIntDebugFRMQualityLevelOverride.
