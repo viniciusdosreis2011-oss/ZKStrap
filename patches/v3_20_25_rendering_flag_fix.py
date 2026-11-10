@@ -14,6 +14,13 @@ def replace_once(old, new, label):
         raise SystemExit(f"v3.20.25: expected one {label}, found {count}")
     s = s.replace(old, new, 1)
 
+def replace_expected(old, new, expected, label):
+    global s
+    count = s.count(old)
+    if count != expected:
+        raise SystemExit(f"v3.20.25: expected {expected} {label}, found {count}")
+    s = s.replace(old, new)
+
 def method_span(text, class_name, method_name):
     tree = ast.parse(text)
     cls = next(
@@ -170,10 +177,11 @@ replace_method("ModernConfigApp", "obter_flags_avancadas", r'''    def obter_fla
         return flags
 ''')
 
-replace_once(
+replace_expected(
     'data["advanced_values"].update({"texture":"0","msaa":"0","frm":"1","grass":"0","lod":"0"})',
     'data["advanced_values"].update({"texture":"0","msaa":"0","frm":"Auto","grass":"0","lod":"0"})',
-    "FPS Max preset FRM value",
+    2,
+    "FPS Max preset FRM values",
 )
 replace_once(
     'data["advanced_values"].update({"texture":"1","msaa":"0","frm":"2","grass":"0","lod":"1"})',
